@@ -1,4 +1,4 @@
-use crate::parser;
+use crate::{conversion, parser};
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -10,8 +10,10 @@ pub struct Color {
 
 impl Color {
     /// Creates a new [`Color`].
-    pub fn new(r: f64, g: f64, b: f64, a: f64) -> Self {
-        Color { rgba: (r, g, b, a) }
+    pub fn new(r: f64, g: f64, b: f64, alpha: f64) -> Self {
+        Color {
+            rgba: (r, g, b, alpha),
+        }
     }
 }
 
@@ -28,19 +30,25 @@ impl FromStr for Color {
     /// let color = Color::from_str(s).unwrap();
     /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
     ///
-    /// let s = "rgb(0, 0, 0)";
-    /// let color = s.parse::<Color>().unwrap();
-    /// assert_eq!(color, Color::new(0.0, 0.0, 0.0, 1.0));
+    /// let s = "#ffffff";
+    /// let color = Color::from_str(s).unwrap();
+    /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
     /// ```
     fn from_str(s: &str) -> Result<Self> {
         let color_str = s.trim().to_lowercase();
-        match &color_str {
+        let (r, g, b, a) = match &color_str {
             s if s.starts_with("rgb(") => {
                 let (r, g, b) = parser::rgb::parser_rgb_str(s)?;
-                Ok(Color::new(r, g, b, 1.0))
+                (r, g, b, 1.0)
             }
-            _ => Err(anyhow::anyhow!("{} is not a valid color", s)),
-        }
+            s if s.starts_with('#') => {
+                let hex_str = parser::hex::parse_hex_str(s)?;
+                let (r, g, b) = conversion::hex::hex2rgb(&hex_str);
+                (r, g, b, 1.0)
+            }
+            _ => return Err(anyhow::anyhow!("{} is not a valid color", s)),
+        };
+        Ok(Color::new(r, g, b, a))
     }
 }
 
@@ -84,6 +92,50 @@ mod tests {
         let color = Color::from_str(s);
         match color {
             Err(e) => assert_eq!(e.to_string(), "rgbbb(255, 255, 255) is not a valid color"),
+            _ => panic!("Should have failed"),
+        }
+    }
+
+    #[test]
+    fn test_color_from_hex_str() {
+        let s = "#ffffff";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
+
+        let s = "#000000";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(0.0, 0.0, 0.0, 1.0));
+
+        let s = "#ff0000";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(255.0, 0.0, 0.0, 1.0));
+
+        let s = "#00ff00";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(0.0, 255.0, 0.0, 1.0));
+
+        let s = "#ffff00";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(255.0, 255.0, 0.0, 1.0));
+
+        let s = "#00ffff";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(0.0, 255.0, 255.0, 1.0));
+    }
+
+    #[test]
+    fn test_color_from_hex_str_err() {
+        let s = "#gggggg";
+        let color = Color::from_str(s);
+        match color {
+            Err(e) => assert_eq!(e.to_string(), "Invalid hex string: #gggggg"),
+            _ => panic!("Should have failed"),
+        }
+
+        let s = "fff";
+        let color = Color::from_str(s);
+        match color {
+            Err(e) => assert_eq!(e.to_string(), "fff is not a valid color"),
             _ => panic!("Should have failed"),
         }
     }
