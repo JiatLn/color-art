@@ -1,0 +1,11 @@
+[package]
+name = "color-art"
+version = "0.1.0"
+edition = "2021"
+description = "A rust crate for working with colors and color spaces."
+license = "MIT"
+authors = ["JiatLn"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
