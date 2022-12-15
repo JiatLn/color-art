@@ -17,6 +17,7 @@ color-art = "0.1.0"
 Construct a color from a string. You can use the `from_str` method to construct a color from a string. Currently supported color spaces are:
 
 - RGB
+- RGBA
 - Hex
 
 For example:
@@ -26,6 +27,7 @@ use color_art::Color;
 use std::str::FromStr;
 
 let color = Color::from_str("rgb(255, 255, 0)").unwrap();
+let color = Color::from_str("rgba(255, 255, 0, 0.5)").unwrap();
 let color = Color::from_str("#ffff00").unwrap();
 ```
 

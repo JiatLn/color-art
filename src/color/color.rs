@@ -30,6 +30,10 @@ impl FromStr for Color {
     /// let color = Color::from_str(s).unwrap();
     /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
     ///
+    /// let s = "rgba(255, 255, 255, 0.5)";
+    /// let color = Color::from_str(s).unwrap();
+    /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 0.5));
+    ///
     /// let s = "#ffffff";
     /// let color = Color::from_str(s).unwrap();
     /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
@@ -40,6 +44,10 @@ impl FromStr for Color {
             s if s.starts_with("rgb(") => {
                 let (r, g, b) = parser::rgb::parser_rgb_str(s)?;
                 (r, g, b, 1.0)
+            }
+            s if s.starts_with("rgba(") => {
+                let (r, g, b, a) = parser::rgba::parser_rgba_str(s)?;
+                (r, g, b, a)
             }
             s if s.starts_with('#') => {
                 let hex_str = parser::hex::parse_hex_str(s)?;
@@ -94,6 +102,63 @@ mod tests {
             Err(e) => assert_eq!(e.to_string(), "rgbbb(255, 255, 255) is not a valid color"),
             _ => panic!("Should have failed"),
         }
+    }
+
+    #[test]
+    fn test_color_from_rgba_str_err() {
+        let s = "rgba(256, 255, 255, 0.5)";
+        let color = Color::from_str(s);
+        match color {
+            Err(e) => assert_eq!(e.to_string(), "r must be between 0 and 255, got 256"),
+            _ => panic!("Should have failed"),
+        }
+
+        let s = "rgba(255, 255, 255, 1.5)";
+        let color = Color::from_str(s);
+        match color {
+            Err(e) => assert_eq!(e.to_string(), "alpha must be between 0 and 1, got 1.5"),
+            _ => panic!("Should have failed"),
+        }
+
+        let s = "rgba(255, 255, 255, -0.5)";
+        let color = Color::from_str(s);
+        match color {
+            Err(e) => assert_eq!(e.to_string(), "alpha must be between 0 and 1, got -0.5"),
+            _ => panic!("Should have failed"),
+        }
+
+        let s = "rgbbb(255, 255, 255, 0.5)";
+        let color = Color::from_str(s);
+        match color {
+            Err(e) => assert_eq!(
+                e.to_string(),
+                "rgbbb(255, 255, 255, 0.5) is not a valid color"
+            ),
+            _ => panic!("Should have failed"),
+        }
+    }
+
+    #[test]
+    fn test_color_from_rgba_str() {
+        let s = "rgba(255, 255, 255, 0.5)";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(255.0, 255.0, 255.0, 0.5));
+
+        let s = "rgba(255, 0, 0, 0.5)";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(255.0, 0.0, 0.0, 0.5));
+
+        let s = "rgba(0, 255, 0, 0.5)";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(0.0, 255.0, 0.0, 0.5));
+
+        let s = "rgba(255, 255, 0, 0.5)";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(255.0, 255.0, 0.0, 0.5));
+
+        let s = "rgba(0, 255, 255, 0.5)";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color, Color::new(0.0, 255.0, 255.0, 0.5));
     }
 
     #[test]
