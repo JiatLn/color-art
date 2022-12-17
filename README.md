@@ -31,6 +31,16 @@ let color = Color::from_str("rgba(255, 255, 0, 0.5)").unwrap();
 let color = Color::from_str("#ffff00").unwrap();
 ```
 
+#### random
+
+You can use the `random` method to construct a random color.
+
+```rust
+use color_art::Color;
+
+let color = Color::random();
+```
+
 ## License
 
 [MIT](./LICENSE) License © 2022-Present [JiatLn](https://github.com/JiatLn)
