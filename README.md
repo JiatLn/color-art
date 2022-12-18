@@ -31,6 +31,20 @@ let color = Color::from_str("rgba(255, 255, 0, 0.5)").unwrap();
 let color = Color::from_str("#ffff00").unwrap();
 ```
 
+#### Color Space
+
+Stringify a color to a string. You can use the `hex`, `rgb`, `rgba` method to stringify a color to a string. For example:
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let color = Color::from_str("rgb(255, 255, 0)").unwrap();
+color.hex(); // "#ffff00"
+color.rgb(); // "rgb(255, 255, 0)"
+color.rgba(); // "rgba(255, 255, 0, 1)"
+```
+
 #### random
 
 You can use the `random` method to construct a random color.
