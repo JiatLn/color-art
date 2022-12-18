@@ -9,7 +9,7 @@ More technical details, please refer to [RFC: Construct Color from Color Space](
 
 ```toml
 [dependencies]
-color-art = "0.1.0"
+color-art = "0.1"
 ```
 
 ### Color
