@@ -1,4 +1,7 @@
-use crate::{conversion::hex::rgb2hex, Color};
+use crate::{
+    conversion::{hex::rgb2hex, hsl::rgb2hsl},
+    Color,
+};
 
 /// Stringify a color to a string.
 impl Color {
@@ -46,6 +49,20 @@ impl Color {
         let g = g.round() as u8;
         let b = b.round() as u8;
         format!("rgba({}, {}, {}, {})", r, g, b, a)
+    }
+    /// `hsl` string of the color
+    ///
+    /// # Examples
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255.0, 255.0, 255.0, 0.5);
+    /// assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
+    /// ```
+    pub fn hsl(self) -> String {
+        let (r, g, b, _) = self.rgba;
+        let (h, s, l) = rgb2hsl((r, g, b));
+        format!("hsl({}, {}%, {}%)", h, s * 100., l * 100.)
     }
 }
 

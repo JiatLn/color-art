@@ -8,6 +8,7 @@
 
 mod color;
 mod conversion;
+mod helper;
 mod parser;
 
 pub use color::Color;

@@ -54,6 +54,11 @@ impl FromStr for Color {
                 let (r, g, b) = conversion::hex::hex2rgb(&hex_str);
                 (r, g, b, 1.0)
             }
+            s if s.starts_with("hsl(") => {
+                let hsl = parser::hsl::parse_hsl_str(s)?;
+                let (r, g, b) = conversion::hsl::hsl2rgb(hsl);
+                (r, g, b, 1.0)
+            }
             _ => return Err(anyhow::anyhow!("{} is not a valid color", s)),
         };
         Ok(Color::new(r, g, b, a))
@@ -203,5 +208,13 @@ mod tests {
             Err(e) => assert_eq!(e.to_string(), "fff is not a valid color"),
             _ => panic!("Should have failed"),
         }
+    }
+
+    #[test]
+    fn test_color_from_hsl_str() {
+        let s = "hsl(180, 100%, 50%)";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color.hsl(), "hsl(180, 100%, 50%)");
+        assert_eq!(color.rgb(), "rgb(0, 255, 255)");
     }
 }
