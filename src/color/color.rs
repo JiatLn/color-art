@@ -59,7 +59,7 @@ impl FromStr for Color {
                 let (r, g, b) = conversion::hsl::hsl2rgb(hsl);
                 (r, g, b, 1.0)
             }
-            _ => return Err(anyhow::anyhow!("{} is not a valid color", s)),
+            _ => anyhow::bail!("{} is not a valid color", s),
         };
         Ok(Color::new(r, g, b, a))
     }

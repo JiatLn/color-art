@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 
 pub fn parse_hex_str(s: &str) -> Result<String> {
     let len = s.len();
@@ -7,7 +7,7 @@ pub fn parse_hex_str(s: &str) -> Result<String> {
         || (len != 9 && len != 7 && len != 5 && len != 4)
         || !s.chars().skip(1).all(|c| c.is_ascii_hexdigit())
     {
-        return Err(anyhow!("Invalid hex string: {}", s));
+        anyhow::bail!("Invalid hex string: {}", s);
     }
     Ok(s.to_string())
 }

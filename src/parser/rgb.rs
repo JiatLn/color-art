@@ -15,13 +15,13 @@ pub fn parse_rgb_str(s: &str) -> Result<(f64, f64, f64)> {
     let b = s.next().unwrap().parse::<f64>()?;
 
     if r < 0.0 || r > 255.0 {
-        return Err(anyhow::anyhow!("r must be between 0 and 255, got {}", r));
+        anyhow::bail!("r must be between 0 and 255, got {}", r);
     }
     if g < 0.0 || g > 255.0 {
-        return Err(anyhow::anyhow!("g must be between 0 and 255, got {}", g));
+        anyhow::bail!("g must be between 0 and 255, got {}", g);
     }
     if b < 0.0 || b > 255.0 {
-        return Err(anyhow::anyhow!("b must be between 0 and 255, got {}", b));
+        anyhow::bail!("b must be between 0 and 255, got {}", b);
     }
 
     Ok((r, g, b))

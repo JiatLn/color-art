@@ -28,13 +28,13 @@ pub fn parse_hsl_str(hsl_str: &str) -> Result<(f64, f64, f64)> {
     let l = hsl_str[2];
 
     if h < 0. || h >= 360. {
-        return Err(anyhow::anyhow!("h must be between 0 and 360, got {}", h));
+        anyhow::bail!("h must be between 0 and 360, got {}", h);
     }
     if s < 0. || s > 1. {
-        return Err(anyhow::anyhow!("s must be between 0 and 1, got {}", s));
+        anyhow::bail!("s must be between 0 and 1, got {}", s);
     }
     if l < 0. || l > 1. {
-        return Err(anyhow::anyhow!("l must be between 0 and 1, got {}", l));
+        anyhow::bail!("l must be between 0 and 1, got {}", l);
     }
 
     Ok((h, s, l))
