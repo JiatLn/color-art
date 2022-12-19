@@ -42,11 +42,11 @@ impl FromStr for Color {
         let color_str = s.trim().to_lowercase();
         let (r, g, b, a) = match &color_str {
             s if s.starts_with("rgb(") => {
-                let (r, g, b) = parser::rgb::parser_rgb_str(s)?;
+                let (r, g, b) = parser::rgb::parse_rgb_str(s)?;
                 (r, g, b, 1.0)
             }
             s if s.starts_with("rgba(") => {
-                let (r, g, b, a) = parser::rgba::parser_rgba_str(s)?;
+                let (r, g, b, a) = parser::rgba::parse_rgba_str(s)?;
                 (r, g, b, a)
             }
             s if s.starts_with('#') => {
