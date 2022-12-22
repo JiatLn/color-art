@@ -64,7 +64,7 @@ use color_art::Color;
 let color = Color::random();
 ```
 
-#### Average a list of colors
+#### average
 
 You can use the `average` method to average a list of colors.
 
@@ -80,6 +80,19 @@ let colors = vec![
 
 let averaged_color = Color::average(&colors);
 averaged_color.hex(); // "#aa5555"
+```
+
+#### darken
+
+Decrease the lightness of a color in the HSL color space by an absolute amount.
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let color = Color::from_str("#ffff00").unwrap();
+let darkened_color = color.darken(0.2).unwrap();
+darkened_color.hex(); // "#999900"
 ```
 
 ## License
