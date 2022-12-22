@@ -18,8 +18,9 @@ Construct a color from a string. You can use the `from_str` method to construct 
 
 - RGB
 - RGBA
-- Hex
+- HEX
 - HSL
+- HSV
 
 For example:
 
@@ -31,21 +32,23 @@ let color = Color::from_str("rgb(255, 255, 0)").unwrap();
 let color = Color::from_str("rgba(255, 255, 0, 0.5)").unwrap();
 let color = Color::from_str("#ffff00").unwrap();
 let color = Color::from_str("hsl(60, 100%, 50%)").unwrap();
+let color = Color::from_str("hsv(60, 100%, 100%)").unwrap();
 ```
 
 #### Color Space
 
-Stringify a color to a string. You can use the `hex`, `rgb`, `rgba`, `hsl` method to stringify a color to a string. For example:
+Stringify a color to a string. You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv` method to stringify a color to a string. For example:
 
 ```rust
 use color_art::Color;
 use std::str::FromStr;
 
-let color = Color::from_str("rgb(255, 255, 0)").unwrap();
+let color = Color::from_str("#ffff00").unwrap();
 color.hex(); // "#ffff00"
 color.rgb(); // "rgb(255, 255, 0)"
 color.rgba(); // "rgba(255, 255, 0, 1)"
 color.hsl(); // "hsl(60, 100%, 50%)"
+color.hsv(); // "hsv(60, 100%, 100%)"
 ```
 
 #### random

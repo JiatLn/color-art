@@ -37,6 +37,14 @@ impl FromStr for Color {
     /// let s = "#ffffff";
     /// let color = Color::from_str(s).unwrap();
     /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
+    ///
+    /// let s = "hsl(0, 0%, 100%)";
+    /// let color = Color::from_str(s).unwrap();
+    /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
+    ///
+    /// let s = "hsv(0, 0%, 100%)";
+    /// let color = Color::from_str(s).unwrap();
+    /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
     /// ```
     fn from_str(s: &str) -> Result<Self> {
         let color_str = s.trim().to_lowercase();
@@ -57,6 +65,11 @@ impl FromStr for Color {
             s if s.starts_with("hsl(") => {
                 let hsl = parser::hsl::parse_hsl_str(s)?;
                 let (r, g, b) = conversion::hsl::hsl2rgb(hsl);
+                (r, g, b, 1.0)
+            }
+            s if s.starts_with("hsv(") => {
+                let hsv = parser::hsv::parse_hsv_str(s)?;
+                let (r, g, b) = conversion::hsv::hsv2rgb(hsv);
                 (r, g, b, 1.0)
             }
             _ => anyhow::bail!("{} is not a valid color", s),
@@ -215,6 +228,14 @@ mod tests {
         let s = "hsl(180, 100%, 50%)";
         let color = Color::from_str(s).unwrap();
         assert_eq!(color.hsl(), "hsl(180, 100%, 50%)");
+        assert_eq!(color.rgb(), "rgb(0, 255, 255)");
+    }
+
+    #[test]
+    fn test_color_from_hsv_str() {
+        let s = "hsv(180, 100%, 100%)";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color.hsv(), "hsv(180, 100%, 100%)");
         assert_eq!(color.rgb(), "rgb(0, 255, 255)");
     }
 }

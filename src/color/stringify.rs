@@ -1,5 +1,5 @@
 use crate::{
-    conversion::{hex::rgb2hex, hsl::rgb2hsl},
+    conversion::{hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv},
     helper::round,
     Color,
 };
@@ -57,13 +57,27 @@ impl Color {
     /// ```rust
     /// use color_art::Color;
     ///
-    /// let color = Color::new(255.0, 255.0, 255.0, 0.5);
+    /// let color = Color::new(255.0, 255.0, 255.0, 1.0);
     /// assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
     /// ```
     pub fn hsl(self) -> String {
         let (r, g, b, _) = self.rgba;
         let (h, s, l) = rgb2hsl((r, g, b));
         format!("hsl({}, {}%, {}%)", round(h, 0), s * 100., l * 100.)
+    }
+    /// `hsv` string of the color
+    ///
+    /// # Examples
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255.0, 255.0, 255.0, 1.0);
+    /// assert_eq!(color.hsv(), "hsv(0, 0%, 100%)");
+    /// ```
+    pub fn hsv(self) -> String {
+        let (r, g, b, _) = self.rgba;
+        let (h, s, v) = rgb2hsv((r, g, b));
+        format!("hsv({}, {}%, {}%)", round(h, 0), s * 100., v * 100.)
     }
 }
 
@@ -78,17 +92,20 @@ mod tests {
         assert_eq!(color.rgb(), "rgb(255, 255, 255)");
         assert_eq!(color.rgba(), "rgba(255, 255, 255, 1)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
+        assert_eq!(color.hsv(), "hsv(0, 0%, 100%)");
 
         let color = Color::new(0.0, 0.0, 0.0, 0.5);
         assert_eq!(color.hex(), "#000000");
         assert_eq!(color.rgb(), "rgb(0, 0, 0)");
         assert_eq!(color.rgba(), "rgba(0, 0, 0, 0.5)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 0%)");
+        assert_eq!(color.hsv(), "hsv(0, 0%, 0%)");
 
         let color = Color::new(0.0, 128.0, 128.4, 1.0);
         assert_eq!(color.hex(), "#008080");
         assert_eq!(color.rgb(), "rgb(0, 128, 128)");
         assert_eq!(color.rgba(), "rgba(0, 128, 128, 1)");
         assert_eq!(color.hsl(), "hsl(180, 100%, 25%)");
+        assert_eq!(color.hsv(), "hsv(180, 100%, 50%)");
     }
 }
