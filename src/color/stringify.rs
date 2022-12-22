@@ -1,5 +1,6 @@
 use crate::{
     conversion::{hex::rgb2hex, hsl::rgb2hsl},
+    helper::round,
     Color,
 };
 
@@ -62,7 +63,7 @@ impl Color {
     pub fn hsl(self) -> String {
         let (r, g, b, _) = self.rgba;
         let (h, s, l) = rgb2hsl((r, g, b));
-        format!("hsl({}, {}%, {}%)", h, s * 100., l * 100.)
+        format!("hsl({}, {}%, {}%)", round(h, 0), s * 100., l * 100.)
     }
 }
 
@@ -71,38 +72,23 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_hex() {
+    fn test_stringify_color() {
         let color = Color::new(255.0, 255.0, 255.0, 1.0);
         assert_eq!(color.hex(), "#ffffff");
+        assert_eq!(color.rgb(), "rgb(255, 255, 255)");
+        assert_eq!(color.rgba(), "rgba(255, 255, 255, 1)");
+        assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
 
-        let color = Color::new(0.0, 0.0, 0.0, 1.0);
+        let color = Color::new(0.0, 0.0, 0.0, 0.5);
         assert_eq!(color.hex(), "#000000");
+        assert_eq!(color.rgb(), "rgb(0, 0, 0)");
+        assert_eq!(color.rgba(), "rgba(0, 0, 0, 0.5)");
+        assert_eq!(color.hsl(), "hsl(0, 0%, 0%)");
 
         let color = Color::new(0.0, 128.0, 128.4, 1.0);
         assert_eq!(color.hex(), "#008080");
-    }
-
-    #[test]
-    fn test_rgb() {
-        let color = Color::new(255.0, 255.0, 255.0, 1.0);
-        assert_eq!(color.rgb(), "rgb(255, 255, 255)");
-
-        let color = Color::new(0.0, 0.0, 0.0, 1.0);
-        assert_eq!(color.rgb(), "rgb(0, 0, 0)");
-
-        let color = Color::new(0.0, 128.0, 128.4, 1.0);
         assert_eq!(color.rgb(), "rgb(0, 128, 128)");
-    }
-
-    #[test]
-    fn test_rgba() {
-        let color = Color::new(255.0, 255.0, 255.0, 0.5);
-        assert_eq!(color.rgba(), "rgba(255, 255, 255, 0.5)");
-
-        let color = Color::new(0.0, 0.0, 0.0, 0.5);
-        assert_eq!(color.rgba(), "rgba(0, 0, 0, 0.5)");
-
-        let color = Color::new(0.0, 128.0, 128.4, 0.5);
-        assert_eq!(color.rgba(), "rgba(0, 128, 128, 0.5)");
+        assert_eq!(color.rgba(), "rgba(0, 128, 128, 1)");
+        assert_eq!(color.hsl(), "hsl(180, 100%, 25%)");
     }
 }
