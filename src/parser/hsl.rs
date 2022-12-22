@@ -2,9 +2,10 @@ use anyhow::Result;
 use std::str::FromStr;
 
 /// HSL(Hue, Saturation, Lightness)
-pub fn parse_hsl_str(hsl_str: &str) -> Result<(f64, f64, f64)> {
+pub fn parse_hsl_str(hsl_str: impl ToString) -> Result<(f64, f64, f64)> {
     // hsl_str like "hsl(120°, 1, 0.75)"
     let hsl_str = hsl_str
+        .to_string()
         .trim()
         .to_lowercase()
         .replace(" ", "")

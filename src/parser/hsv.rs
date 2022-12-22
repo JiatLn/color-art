@@ -2,9 +2,10 @@ use anyhow::Result;
 use std::str::FromStr;
 
 /// HSV(Hue, Saturation, Value)
-pub fn parse_hsv_str(hsv_str: &str) -> Result<(f64, f64, f64)> {
+pub fn parse_hsv_str(hsv_str: impl ToString) -> Result<(f64, f64, f64)> {
     // hsv_str like "hsv(60°,100%,50%)"
     let hsv_str = hsv_str
+        .to_string()
         .trim()
         .to_lowercase()
         .replace(" ", "")

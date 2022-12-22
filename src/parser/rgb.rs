@@ -1,7 +1,8 @@
 use anyhow::Result;
 
-pub fn parse_rgb_str(s: &str) -> Result<(f64, f64, f64)> {
+pub fn parse_rgb_str(s: impl ToString) -> Result<(f64, f64, f64)> {
     let s = s
+        .to_string()
         .trim()
         .to_lowercase()
         .replace(" ", "")

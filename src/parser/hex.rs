@@ -1,6 +1,7 @@
 use anyhow::Result;
 
-pub fn parse_hex_str(s: &str) -> Result<String> {
+pub fn parse_hex_str(s: impl ToString) -> Result<String> {
+    let s = s.to_string();
     let len = s.len();
     // #rgb #rrggbb #rrggbbaa #rgba
     if !s.starts_with('#')
