@@ -45,6 +45,10 @@ impl FromStr for Color {
     /// let s = "hsv(0, 0%, 100%)";
     /// let color = Color::from_str(s).unwrap();
     /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
+    ///
+    /// let s = "deeppink";
+    /// let color = Color::from_str(s).unwrap();
+    /// assert_eq!(color, Color::new(255.0, 20.0, 147.0, 1.0));
     /// ```
     fn from_str(s: &str) -> Result<Self> {
         let color_str = s.trim().to_lowercase();
@@ -72,7 +76,16 @@ impl FromStr for Color {
                 let (r, g, b) = conversion::hsv::hsv2rgb(hsv);
                 (r, g, b, 1.0)
             }
-            _ => anyhow::bail!("{} is not a valid color", s),
+            _ => {
+                let found = crate::W3CX11.get(s);
+                match found {
+                    Some(hex) => {
+                        let (r, g, b) = conversion::hex::hex2rgb(hex);
+                        (r, g, b, 1.0)
+                    }
+                    None => anyhow::bail!("{} is not a valid color", s),
+                }
+            }
         };
         Ok(Color::new(r, g, b, a))
     }
@@ -237,5 +250,12 @@ mod tests {
         let color = Color::from_str(s).unwrap();
         assert_eq!(color.hsv(), "hsv(180, 100%, 100%)");
         assert_eq!(color.rgb(), "rgb(0, 255, 255)");
+    }
+
+    #[test]
+    fn test_color_from_name_str() {
+        let s = "red";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color.rgb(), "rgb(255, 0, 0)");
     }
 }

@@ -21,6 +21,7 @@ Construct a color from a string. You can use the `from_str` method to construct 
 - HEX
 - HSL
 - HSV
+- Named color from [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color)
 
 For example:
 
@@ -33,11 +34,12 @@ let color = Color::from_str("rgba(255, 255, 0, 0.5)").unwrap();
 let color = Color::from_str("#ffff00").unwrap();
 let color = Color::from_str("hsl(60, 100%, 50%)").unwrap();
 let color = Color::from_str("hsv(60, 100%, 100%)").unwrap();
+let color = Color::from_str("yellow").unwrap();
 ```
 
 #### Color Space
 
-Stringify a color to a string. You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv` method to stringify a color to a string. For example:
+Stringify a color to a string. You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv`, `name` method to stringify a color to a string. For example:
 
 ```rust
 use color_art::Color;
@@ -49,6 +51,7 @@ color.rgb(); // "rgb(255, 255, 0)"
 color.rgba(); // "rgba(255, 255, 0, 1)"
 color.hsl(); // "hsl(60, 100%, 50%)"
 color.hsv(); // "hsv(60, 100%, 100%)"
+color.name(); // "yellow"
 ```
 
 #### random

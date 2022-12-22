@@ -79,6 +79,33 @@ impl Color {
         let (h, s, v) = rgb2hsv((r, g, b));
         format!("hsv({}, {}%, {}%)", round(h, 0), s * 100., v * 100.)
     }
+    /// `name` of the color
+    ///
+    /// If the color is not in the [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color) color list, the hex string will be returned.
+    ///
+    /// # Examples
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255.0, 255.0, 255.0, 1.0);
+    /// assert_eq!(color.name(), "white");
+    ///
+    /// let color = Color::new(0.0, 42.0, 0.0, 1.0);
+    /// assert_eq!(color.name(), "#002a00");
+    /// ```
+    pub fn name(self) -> String {
+        let hex = self.hex();
+
+        let result = crate::W3CX11
+            .clone()
+            .into_iter()
+            .find(|(_k, v)| v.to_string() == hex);
+
+        match result {
+            Some((k, _v)) => String::from(k),
+            None => hex,
+        }
+    }
 }
 
 #[cfg(test)]

@@ -6,9 +6,14 @@
 //!
 //! A rust crate for working with colors and color spaces.
 
+#[macro_use]
+extern crate lazy_static;
+
 mod color;
 mod conversion;
+mod data;
 mod helper;
 mod parser;
 
 pub use color::Color;
+use data::w3cx11::W3CX11_HASHMAP as W3CX11;
