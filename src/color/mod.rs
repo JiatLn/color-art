@@ -1,3 +1,4 @@
+pub mod average;
 pub mod color;
 pub mod random;
 pub mod stringify;
