@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use crate::{Color, ColorModel};
+use crate::{Color, ColorSpace};
 use anyhow::Result;
 
 impl Color {
@@ -22,7 +22,7 @@ impl Color {
         if amount < 0.0 || amount > 1.0 {
             anyhow::bail!("Amount must be between 0.0 and 1.0")
         }
-        let color = self.model(ColorModel::Hsl)?;
+        let color = self.space(ColorSpace::Hsl)?;
         let h = color[0];
         let s = color[1];
         let l = color[2];

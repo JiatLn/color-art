@@ -10,12 +10,12 @@
 extern crate lazy_static;
 
 mod color;
-mod color_model;
+mod color_space;
 mod conversion;
 mod data;
 mod helper;
 mod parser;
 
 pub use color::Color;
-pub use color_model::ColorModel;
+pub use color_space::ColorSpace;
 use data::w3cx11::W3CX11_HASHMAP as W3CX11;
