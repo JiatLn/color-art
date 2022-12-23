@@ -120,6 +120,7 @@ TBD
 Some prior art that inspired this project:
 
 - [chroma.js](https://github.com/gka/chroma.js)
+- [lesscss](https://lesscss.org/functions/#color-operations)
 
 ## Unresolved questions
 

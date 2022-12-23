@@ -12,7 +12,9 @@ More technical details, please refer to [RFC: Construct Color from Color Space](
 color-art = "0.1"
 ```
 
-### Color
+### Color generation
+
+#### Color Space
 
 Construct a color from a string. You can use the `from_str` method to construct a color from a string. Currently supported color spaces are:
 
@@ -37,7 +39,19 @@ let color = Color::from_str("hsv(60, 100%, 100%)").unwrap();
 let color = Color::from_str("yellow").unwrap();
 ```
 
-#### Color Space
+#### Random
+
+You can use the `random` method to construct a random color.
+
+```rust
+use color_art::Color;
+
+let color = Color::random();
+```
+
+### Color conversion
+
+#### Stringify a color
 
 Stringify a color to a string. You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv`, `name` method to stringify a color to a string. For example:
 
@@ -54,15 +68,26 @@ color.hsv(); // "hsv(60, 100%, 100%)"
 color.name(); // "yellow"
 ```
 
-#### random
+### Color Channel
 
-You can use the `random` method to construct a random color.
+You can use the `red`, `green`, `blue`, `hue`, `saturation`, `lightness`, `alpha` method to extract the color channel.
 
 ```rust
 use color_art::Color;
+use std::str::FromStr;
 
-let color = Color::random();
+let color = Color::from_str("#ffff00").unwrap();
+color.red(); // 255
+color.green(); // 255
+color.blue(); // 0
+color.hue(); // 60.0
+color.saturation(); // 1.0
+color.lightness(); // 0.5
+color.alpha(); // 1.0
 ```
+
+
+### Color Operation
 
 #### average
 
