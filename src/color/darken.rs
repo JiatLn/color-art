@@ -19,7 +19,7 @@ impl Color {
     /// assert_eq!(color.hex(), "#213003");
     /// ```
     pub fn darken(&self, amount: f64) -> Result<Color> {
-        if amount < 0.0 || amount > 1.0 {
+        if amount.abs() > 1.0 {
             anyhow::bail!("Amount must be between 0.0 and 1.0")
         }
         let color = self.space(ColorSpace::Hsl)?;
@@ -31,6 +31,23 @@ impl Color {
         let l = if l > 1.0 { 1.0 } else { l };
         let color = Color::from_str(&format!("hsl({}, {}, {})", h, s, l))?;
         Ok(color)
+    }
+    /// Increase the lightness of a color in the HSL color space by an absolute amount.
+    ///
+    /// # Arguments
+    /// `amount` - The amount to increase the lightness by. Must be between 0.0 and 1.0.
+    ///
+    /// # Example
+    /// ```
+    /// use color_art::Color;
+    /// use std::str::FromStr;
+    ///
+    /// let color = Color::from_str("#80e619").unwrap();
+    /// let color = color.lighten(0.2).unwrap();
+    /// assert_eq!(color.hex(), "#b3f075");
+    /// ```
+    pub fn lighten(&self, amount: f64) -> Result<Color> {
+        Ok(self.darken(-amount)?)
     }
 }
 

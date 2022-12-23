@@ -95,6 +95,19 @@ let darkened_color = color.darken(0.2).unwrap();
 darkened_color.hex(); // "#999900"
 ```
 
+#### lighten
+
+Increase the lightness of a color in the HSL color space by an absolute amount.
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let color = Color::from_str("#ffff00").unwrap();
+let lightened_color = color.lighten(0.2).unwrap();
+lightened_color.hex(); // "#ffff66"
+```
+
 ## License
 
 [MIT](./LICENSE) License © 2022-Present [JiatLn](https://github.com/JiatLn)
