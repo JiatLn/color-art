@@ -1,5 +1,3 @@
-use std::str::FromStr;
-
 use crate::{Color, ColorSpace};
 use anyhow::Result;
 
@@ -26,11 +24,8 @@ impl Color {
         let h = color[0];
         let s = color[1];
         let l = color[2];
-        let l = l - amount;
-        let l = if l < 0.0 { 0.0 } else { l };
-        let l = if l > 1.0 { 1.0 } else { l };
-        let color = Color::from_str(&format!("hsl({}, {}, {})", h, s, l))?;
-        Ok(color)
+        let l = (l - amount).min(1.0).max(0.0);
+        Color::from_hsl(h, s, l)
     }
     /// Increase the lightness of a color in the HSL color space by an absolute amount.
     ///
@@ -54,6 +49,7 @@ impl Color {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::str::FromStr;
 
     #[test]
     fn test_darken() {

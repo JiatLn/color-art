@@ -1,5 +1,3 @@
-use std::str::FromStr;
-
 use anyhow::Result;
 
 use crate::{Color, ColorSpace};
@@ -27,11 +25,8 @@ impl Color {
         let h = color[0];
         let s = color[1];
         let l = color[2];
-        let s = s + amount;
-        let s = if s < 0.0 { 0.0 } else { s };
-        let s = if s > 1.0 { 1.0 } else { s };
-        let color = Color::from_str(&format!("hsl({}, {}, {})", h, s, l))?;
-        Ok(color)
+        let s = (s + amount).min(1.0).max(0.0);
+        Color::from_hsl(h, s, l)
     }
     /// Decrease the saturation of a color in the HSL color space by an absolute amount.
     ///
@@ -55,6 +50,7 @@ impl Color {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::str::FromStr;
 
     #[test]
     fn saturate() {

@@ -1,3 +1,4 @@
+use crate::ColorSpace;
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -28,15 +29,7 @@ pub fn parse_hsl_str(hsl_str: impl ToString) -> Result<(f64, f64, f64)> {
     let s = hsl_str[1];
     let l = hsl_str[2];
 
-    if h < 0. || h >= 360. {
-        anyhow::bail!("h must be between 0 and 360, got {}", h);
-    }
-    if s < 0. || s > 1. {
-        anyhow::bail!("s must be between 0 and 1, got {}", s);
-    }
-    if l < 0. || l > 1. {
-        anyhow::bail!("l must be between 0 and 1, got {}", l);
-    }
+    ColorSpace::Hsl.valid(vec![h, s, l])?;
 
     Ok((h, s, l))
 }
