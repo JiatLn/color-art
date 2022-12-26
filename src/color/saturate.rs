@@ -43,7 +43,23 @@ impl Color {
     /// assert_eq!(color.hex(), "#80cc33");
     /// ```
     pub fn desaturate(&self, amount: f64) -> Result<Color> {
-        Ok(self.saturate(-amount)?)
+        self.saturate(-amount)
+    }
+    /// greyscale
+    ///
+    /// Remove all saturation from a color in the HSL color space.
+    ///
+    /// # Example
+    /// ```
+    /// use color_art::Color;
+    /// use std::str::FromStr;
+    ///
+    /// let color = Color::from_str("#80e619").unwrap();
+    /// let color = color.greyscale().unwrap();
+    /// assert_eq!(color.hex(), "#808080");
+    /// ```
+    pub fn greyscale(&self) -> Result<Color> {
+        self.desaturate(1.0)
     }
 }
 
@@ -64,5 +80,20 @@ mod tests {
         let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
         let color = color.desaturate(0.2).unwrap();
         assert_eq!(color.hsl(), "hsl(60, 60%, 50%)");
+    }
+
+    #[test]
+    fn greyscale() {
+        let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+        let color = color.greyscale().unwrap();
+        assert_eq!(color.hex(), "#808080");
+
+        let color = Color::from_str("hsl(90, 0%, 50%)").unwrap();
+        let color = color.greyscale().unwrap();
+        assert_eq!(color.hex(), "#808080");
+
+        let color = Color::from_str("hsl(0, 0%, 50%)").unwrap();
+        let color = color.greyscale().unwrap();
+        assert_eq!(color.hex(), "#808080");
     }
 }
