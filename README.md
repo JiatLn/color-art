@@ -1,5 +1,15 @@
 # Color Art
+
+[<img alt="github" src="https://img.shields.io/badge/github-JiatLn/color_art-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/JiatLn/color-art)
+[<img alt="crates.io" src="https://img.shields.io/crates/v/color_art.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/color-art)
+[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-color_art-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/color_art)
+
+
 A rust crate for working with colors and color spaces.
+
+## Documentation
+
+See [Color Art](https://docs.rs/color-art).
 
 
 ## Usage
@@ -85,84 +95,23 @@ color.lightness(); // 0.5
 color.alpha(); // 1.0
 ```
 
-
 ### Color Operation
 
-#### average
+- [average](./docs/color_operation.md#average)
+- [darken](./docs/color_operation.md#darken)
+- [lighten](./docs/color_operation.md#lighten)
+- [saturate](./docs/color_operation.md#saturate)
+- [desaturate](./docs/color_operation.md#desaturate)
+- [fade](./docs/color_operation.md#fade)
+- [fade in](./docs/color_operation.md#fade-in)
+- [fade out](./docs/color_operation.md#fade-out)
 
-You can use the `average` method to average a list of colors.
-
-```rust
-use color_art::Color;
-use std::str::FromStr;
-
-let colors = vec![
-    Color::from_str("#ffff00").unwrap(),
-    Color::from_str("#ff0000").unwrap(),
-    Color::from_str("#0000ff").unwrap(),
-];
-
-let averaged_color = Color::average(&colors);
-averaged_color.hex(); // "#aa5555"
-```
-
-#### darken
-
-Decrease the lightness of a color in the HSL color space by an absolute amount.
-
-```rust
-use color_art::Color;
-use std::str::FromStr;
-
-let color = Color::from_str("#ffff00").unwrap();
-let darkened_color = color.darken(0.2).unwrap();
-darkened_color.hex(); // "#999900"
-```
-
-#### lighten
-
-Increase the lightness of a color in the HSL color space by an absolute amount.
-
-```rust
-use color_art::Color;
-use std::str::FromStr;
-
-let color = Color::from_str("#ffff00").unwrap();
-let lightened_color = color.lighten(0.2).unwrap();
-lightened_color.hex(); // "#ffff66"
-```
-
-#### saturate
-
-Increase the saturation of a color in the HSL color space by an absolute amount.
-
-```rust
-use color_art::Color;
-use std::str::FromStr;
-
-let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
-let saturated_color = color.saturate(0.2).unwrap();
-saturated_color.hsl(); // "hsl(60, 100%, 50%)"
-```
-
-#### desaturate
-
-Decrease the saturation of a color in the HSL color space by an absolute amount.
-
-```rust
-use color_art::Color;
-use std::str::FromStr;
-
-let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
-let desaturated_color = color.desaturate(0.2).unwrap();
-desaturated_color.hsl(); // "hsl(60, 60%, 50%)"
-```
+More details, please refer to [Color Operation](./docs/color_operation.md).
 
 ---
 
-More details, please refer to [Color Art API](https://docs.rs/color-art).
-For technical details, please refer to [RFC: Construct Color from Color Space](./rfcs/001-Construct%20Color%20from%20Color%20Space.md).
 
+Made with ❤️ by [JiatLn](https://github.com/JiatLn).
 
 ## License
 
