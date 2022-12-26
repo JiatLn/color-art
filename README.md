@@ -5,7 +5,7 @@
 [<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-color_art-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/color_art)
 
 
-A rust crate for working with colors and color spaces.
+> A rust crate for working with colors and color spaces.
 
 ## Documentation
 
