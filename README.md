@@ -133,6 +133,33 @@ let lightened_color = color.lighten(0.2).unwrap();
 lightened_color.hex(); // "#ffff66"
 ```
 
+#### saturate
+
+Increase the saturation of a color in the HSL color space by an absolute amount.
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+let saturated_color = color.saturate(0.2).unwrap();
+saturated_color.hsl(); // "hsl(60, 100%, 50%)"
+```
+
+#### desaturate
+
+Decrease the saturation of a color in the HSL color space by an absolute amount.
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+let desaturated_color = color.desaturate(0.2).unwrap();
+desaturated_color.hsl(); // "hsl(60, 60%, 50%)"
+```
+
+
 ## License
 
 [MIT](./LICENSE) License © 2022-Present [JiatLn](https://github.com/JiatLn)
