@@ -42,7 +42,7 @@ impl Color {
     /// assert_eq!(color.hex(), "#b3f075");
     /// ```
     pub fn lighten(&self, amount: f64) -> Result<Color> {
-        Ok(self.darken(-amount)?)
+        self.darken(-amount)
     }
 }
 
