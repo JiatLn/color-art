@@ -37,21 +37,21 @@ impl Color {
     }
     /// Extracts the hue channel of a color in the HSL color space.
     pub fn hue(&self) -> f64 {
-        match self.space(ColorSpace::Hsl) {
+        match self.space(ColorSpace::HSL) {
             Ok(hsl) => hsl[0],
             Err(_) => 0.0,
         }
     }
     /// Extracts the saturation channel of a color in the HSL color space.
     pub fn saturation(&self) -> f64 {
-        match self.space(ColorSpace::Hsl) {
+        match self.space(ColorSpace::HSL) {
             Ok(hsl) => hsl[1],
             Err(_) => 0.0,
         }
     }
     /// Extracts the lightness channel of a color in the HSL color space.
     pub fn lightness(&self) -> f64 {
-        match self.space(ColorSpace::Hsl) {
+        match self.space(ColorSpace::HSL) {
             Ok(hsl) => hsl[2],
             Err(_) => 0.0,
         }

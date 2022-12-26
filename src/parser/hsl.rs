@@ -29,7 +29,7 @@ pub fn parse_hsl_str(hsl_str: impl ToString) -> Result<(f64, f64, f64)> {
     let s = hsl_str[1];
     let l = hsl_str[2];
 
-    ColorSpace::Hsl.valid(vec![h, s, l])?;
+    ColorSpace::HSL.valid(vec![h, s, l])?;
 
     Ok((h, s, l))
 }

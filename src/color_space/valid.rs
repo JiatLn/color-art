@@ -5,9 +5,9 @@ impl ColorSpace {
     /// Check if a vector of values is valid for a given color space.
     pub fn valid(&self, vec: Vec<f64>) -> Result<()> {
         match self {
-            ColorSpace::Rgb => todo!(),
-            ColorSpace::Rgba => todo!(),
-            ColorSpace::Hsl => {
+            ColorSpace::RGB => todo!(),
+            ColorSpace::RGBA => todo!(),
+            ColorSpace::HSL => {
                 if vec.len() != 3 {
                     anyhow::bail!("HSL color space requires 3 values")
                 }
@@ -25,8 +25,8 @@ impl ColorSpace {
                 }
                 Ok(())
             }
-            ColorSpace::Hsv => todo!(),
-            ColorSpace::Hex => todo!(),
+            ColorSpace::HSV => todo!(),
+            ColorSpace::HEX => todo!(),
             ColorSpace::Unknown => todo!(),
         }
     }
