@@ -79,7 +79,7 @@ color.name(); // "yellow"
 
 ### Color Channel
 
-You can use the `red`, `green`, `blue`, `alpha`, `hue`, `saturation`, `lightness`, `luma`, `luminance` method to extract the color channel.
+You can use the `red`, `green`, `blue`, `alpha`, `hue`, `saturation`, `lightness`, `hsv_hue`, `hsv_saturation`, `hsv_value`, `luma`, `luminance` method to extract the color channel.
 
 ```rust
 use color_art::Color;
@@ -95,6 +95,10 @@ color.alpha(); // 1.0
 color.hue(); // 210.0
 color.saturation(); // 0.68
 color.lightness(); // 0.8
+
+color.hsv_hue(); // 210.0
+color.hsv_saturation(); // 0.28
+color.hsv_value(); // 0.94
 
 color.luma(); // 0.59
 color.luminance(); // 0.79

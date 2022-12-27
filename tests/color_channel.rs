@@ -14,6 +14,10 @@ fn test_color_channel() {
     assert_eq!(color.saturation(), 0.68);
     assert_eq!(color.lightness(), 0.8);
 
+    assert_eq!(color.hsv_hue(), 210.0);
+    assert_eq!(color.hsv_saturation(), 0.28);
+    assert_eq!(color.hsv_value(), 0.94);
+
     assert_eq!(color.luma(), 0.59);
     assert_eq!(color.luminance(), 0.79);
 }
