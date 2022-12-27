@@ -112,8 +112,9 @@ color.luminance(); // 0.79
 - [saturate](./docs/color_operation.md#saturate)
 - [desaturate](./docs/color_operation.md#desaturate)
 - [fade](./docs/color_operation.md#fade)
-- [fade in](./docs/color_operation.md#fade-in)
-- [fade out](./docs/color_operation.md#fade-out)
+- [fade in](./docs/color_operation.md#fade_in)
+- [fade out](./docs/color_operation.md#fade_out)
+- [spin](./docs/color_operation.md#spin)
 
 More details, please refer to [Color Operation](./docs/color_operation.md).
 

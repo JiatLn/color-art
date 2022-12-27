@@ -5,6 +5,7 @@ pub mod darken;
 pub mod fade;
 pub mod random;
 pub mod saturate;
+pub mod spin;
 pub mod stringify;
 
 pub use color::Color;

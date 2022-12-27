@@ -89,7 +89,7 @@ let faded_color = color.fade(0.5).unwrap();
 faded_color.rgba(); // "rgba(255, 0, 0, 0.5)"
 ```
 
-## fade in
+## fade_in
 
 Decrease the transparency (or increase the opacity) of a color, making it more opaque.
 
@@ -108,7 +108,7 @@ let faded_color = color.fade_in(0.1).unwrap();
 faded_color.rgba(); // "rgba(255, 0, 0, 0.9)"
 ```
 
-## fade out
+## fade_out
 
 Increase the transparency (or decrease the opacity) of a color, making it less opaque.
 
@@ -125,4 +125,23 @@ use std::str::FromStr;
 let mut color = Color::from_str("rgba(255, 0, 0, 0.8)").unwrap();
 let faded_color = color.fade_out(0.2).unwrap();
 faded_color.rgba(); // "rgba(255, 0, 0, 0.6)"
+```
+
+## spin
+
+Rotate the hue angle of a color in either direction.
+
+#### Parameters
+
+* `angle` - A number of degrees to rotate (+ or -).
+
+#### Example
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+let spun_color = color.spin(80.0).unwrap();
+spun_color.hsl(); // "hsl(140, 80%, 50%)"
 ```
