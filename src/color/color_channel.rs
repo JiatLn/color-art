@@ -56,6 +56,37 @@ impl Color {
             Err(_) => 0.0,
         }
     }
+    /// Calculates the [luma](http://en.wikipedia.org/wiki/Luma_%28video%29) (perceptual brightness) of a color.
+    pub fn luma(&self) -> f64 {
+        let (r, g, b, a) = self.rgba;
+        let r = r / 255.0;
+        let g = g / 255.0;
+        let b = b / 255.0;
+        let r = if r <= 0.03928 {
+            r / 12.92
+        } else {
+            ((r + 0.055) / 1.055).powf(2.4)
+        };
+        let g = if g <= 0.03928 {
+            g / 12.92
+        } else {
+            ((g + 0.055) / 1.055).powf(2.4)
+        };
+        let b = if b <= 0.03928 {
+            b / 12.92
+        } else {
+            ((b + 0.055) / 1.055).powf(2.4)
+        };
+        round(0.2126 * r + 0.7152 * g + 0.0722 * b * a, 2)
+    }
+    /// Calculates the value of the luma without gamma correction.
+    pub fn luminance(&self) -> f64 {
+        let (r, g, b, a) = self.rgba;
+        let r = r / 255.0;
+        let g = g / 255.0;
+        let b = b / 255.0;
+        round(0.2126 * r + 0.7152 * g + 0.0722 * b * a, 2)
+    }
 }
 
 #[cfg(test)]
@@ -72,10 +103,18 @@ mod tests {
         assert_eq!(color.green(), 20);
         assert_eq!(color.blue(), 30);
         assert_eq!(color.alpha(), 0.8);
+        assert_eq!(color.luma(), 0.01);
+        assert_eq!(color.luminance(), 0.07);
 
         let color = Color::from_str("hsl(90, 100%, 50%)").unwrap();
         assert_eq!(color.hue(), 90.0);
         assert_eq!(color.saturation(), 1.0);
         assert_eq!(color.lightness(), 0.5);
+        assert_eq!(color.luma(), 0.76);
+        assert_eq!(color.luminance(), 0.82);
+
+        let color = Color::from_str("rgb(100, 200, 30)").unwrap();
+        assert_eq!(color.luma(), 0.44);
+        assert_eq!(color.luminance(), 0.65);
     }
 }
