@@ -133,7 +133,7 @@ Rotate the hue angle of a color in either direction.
 
 #### Parameters
 
-* `angle` - A number of degrees to rotate (+ or -).
+* `angle` - The angle to rotate the hue by. Positive values rotate clockwise, negative values rotate counter-clockwise.
 
 #### Example
 
