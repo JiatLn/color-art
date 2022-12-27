@@ -79,20 +79,25 @@ color.name(); // "yellow"
 
 ### Color Channel
 
-You can use the `red`, `green`, `blue`, `hue`, `saturation`, `lightness`, `alpha` method to extract the color channel.
+You can use the `red`, `green`, `blue`, `alpha`, `hue`, `saturation`, `lightness`, `luma`, `luminance` method to extract the color channel.
 
 ```rust
 use color_art::Color;
 use std::str::FromStr;
 
-let color = Color::from_str("#ffff00").unwrap();
-color.red(); // 255
-color.green(); // 255
-color.blue(); // 0
-color.hue(); // 60.0
-color.saturation(); // 1.0
-color.lightness(); // 0.5
+let color = Color::from_str("#abcdef").unwrap();
+
+color.red(); // 171
+color.green(); // 205
+color.blue(); // 239
 color.alpha(); // 1.0
+
+color.hue(); // 210.0
+color.saturation(); // 0.68
+color.lightness(); // 0.8
+
+color.luma(); // 0.59
+color.luminance(); // 0.79
 ```
 
 ### Color Operation
