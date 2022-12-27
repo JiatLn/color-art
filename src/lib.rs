@@ -10,6 +10,7 @@
 extern crate lazy_static;
 
 mod color;
+mod color_ops;
 mod color_space;
 mod conversion;
 mod data;
