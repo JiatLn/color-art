@@ -1,15 +1,11 @@
 use crate::conversion::hsl;
-use crate::helper::round;
+use crate::helper::*;
 
 /// Convert RGB to HWB.
 ///
 /// Reference from [Converting sRGB Colors to HWB](https://w3c.github.io/csswg-drafts/css-color/#rgb-to-hwb)
 pub fn rgb2hwb(color: (f64, f64, f64)) -> (f64, f64, f64) {
-    let (r, g, b) = color;
-
-    let r = r / 255.0;
-    let g = g / 255.0;
-    let b = b / 255.0;
+    let (r, g, b) = normalize_color(color);
 
     let max = r.max(g).max(b);
     let min = r.min(g).min(b);

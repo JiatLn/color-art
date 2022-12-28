@@ -1,4 +1,4 @@
-use crate::helper::round;
+use crate::helper::*;
 
 /// [HSV to RGB color conversion](https://www.rapidtables.com/convert/color/hsv-to-rgb.html)
 pub fn hsv2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
@@ -23,11 +23,7 @@ pub fn hsv2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
 
 /// [RGB to HSV color conversion](https://www.rapidtables.com/convert/color/rgb-to-hsv.html)
 pub fn rgb2hsv(color: (f64, f64, f64)) -> (f64, f64, f64) {
-    let (r, g, b) = color;
-
-    let r = r / 255.;
-    let g = g / 255.;
-    let b = b / 255.;
+    let (r, g, b) = normalize_color(color);
 
     let max = r.max(g).max(b);
     let min = r.min(g).min(b);

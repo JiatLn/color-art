@@ -1,4 +1,4 @@
-use crate::helper::round;
+use crate::helper::*;
 
 /// [HSL to RGB color conversion](https://www.rapidtables.com/convert/color/hsl-to-rgb.html)
 pub fn hsl2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
@@ -23,11 +23,7 @@ pub fn hsl2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
 
 /// [RGB to HSL color conversion](https://www.rapidtables.com/convert/color/rgb-to-hsl.html)
 pub fn rgb2hsl(color: (f64, f64, f64)) -> (f64, f64, f64) {
-    let (r, g, b) = color;
-
-    let r = r / 255.;
-    let g = g / 255.;
-    let b = b / 255.;
+    let (r, g, b) = normalize_color(color);
 
     let max = r.max(g).max(b);
     let min = r.min(g).min(b);
