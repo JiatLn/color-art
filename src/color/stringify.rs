@@ -1,5 +1,5 @@
 use crate::{
-    conversion::{hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv},
+    conversion::{hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv, hwb::rgb2hwb},
     helper::round,
     Color,
 };
@@ -79,6 +79,20 @@ impl Color {
         let (h, s, v) = rgb2hsv((r, g, b));
         format!("hsv({}, {}%, {}%)", round(h, 0), s * 100., v * 100.)
     }
+    /// `hwb` string of the color
+    ///
+    /// # Examples
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255.0, 255.0, 255.0, 1.0);
+    /// assert_eq!(color.hwb(), "hwb(0, 100%, 0%)");
+    /// ```
+    pub fn hwb(self) -> String {
+        let (r, g, b, _) = self.rgba;
+        let (h, w, b) = rgb2hwb((r, g, b));
+        format!("hwb({}, {}%, {}%)", round(h, 0), w * 100., b * 100.)
+    }
     /// `name` of the color
     ///
     /// If the color is not in the [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color) color list, the hex string will be returned.
@@ -120,6 +134,7 @@ mod tests {
         assert_eq!(color.rgba(), "rgba(255, 255, 255, 1)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
         assert_eq!(color.hsv(), "hsv(0, 0%, 100%)");
+        assert_eq!(color.hwb(), "hwb(0, 100%, 0%)");
 
         let color = Color::new(0.0, 0.0, 0.0, 0.5);
         assert_eq!(color.hex(), "#000000");
@@ -127,12 +142,14 @@ mod tests {
         assert_eq!(color.rgba(), "rgba(0, 0, 0, 0.5)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 0%)");
         assert_eq!(color.hsv(), "hsv(0, 0%, 0%)");
+        assert_eq!(color.hwb(), "hwb(0, 0%, 100%)");
 
-        let color = Color::new(0.0, 128.0, 128.4, 1.0);
+        let color = Color::new(0.0, 128.0, 128.0, 1.0);
         assert_eq!(color.hex(), "#008080");
         assert_eq!(color.rgb(), "rgb(0, 128, 128)");
         assert_eq!(color.rgba(), "rgba(0, 128, 128, 1)");
         assert_eq!(color.hsl(), "hsl(180, 100%, 25%)");
         assert_eq!(color.hsv(), "hsv(180, 100%, 50%)");
+        assert_eq!(color.hwb(), "hwb(180, 0%, 50%)");
     }
 }

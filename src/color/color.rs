@@ -76,6 +76,11 @@ impl FromStr for Color {
                 let (r, g, b) = conversion::hsv::hsv2rgb(hsv);
                 (r, g, b, 1.0)
             }
+            s if s.starts_with("hwb(") => {
+                let hwb = parser::hwb::parse_hwb_str(s)?;
+                let (r, g, b) = conversion::hwb::hwb2rgb(hwb);
+                (r, g, b, 1.0)
+            }
             _ => {
                 let found = crate::W3CX11.get(s);
                 match found {
@@ -249,6 +254,14 @@ mod tests {
         let s = "hsv(180, 100%, 100%)";
         let color = Color::from_str(s).unwrap();
         assert_eq!(color.hsv(), "hsv(180, 100%, 100%)");
+        assert_eq!(color.rgb(), "rgb(0, 255, 255)");
+    }
+
+    #[test]
+    fn test_color_from_hwb_str() {
+        let s = "hwb(180, 0%, 0%)";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color.hwb(), "hwb(180, 0%, 0%)");
         assert_eq!(color.rgb(), "rgb(0, 255, 255)");
     }
 

@@ -23,6 +23,10 @@ pub enum ColorSpace {
     ///
     /// Hex stands for hexadecimal.
     HEX,
+    /// HWB color space.
+    ///
+    /// HWB stands for hue, whiteness, and blackness.
+    HWB,
     /// Unknown color space.
     ///
     /// To be used when the color space is not known.
@@ -41,6 +45,7 @@ where
             "hsl" => ColorSpace::HSL,
             "hsv" => ColorSpace::HSV,
             "hex" => ColorSpace::HEX,
+            "hwb" => ColorSpace::HWB,
             _ => ColorSpace::Unknown,
         }
     }
@@ -65,6 +70,10 @@ impl Color {
             ColorSpace::HSV => {
                 let (h, s, v) = hsv::parse_hsv_str(self.hsv())?;
                 Ok(vec![h, s, v])
+            }
+            ColorSpace::HWB => {
+                let (h, w, b) = hwb::parse_hwb_str(self.hwb())?;
+                Ok(vec![h, w, b])
             }
             ColorSpace::HEX | ColorSpace::Unknown => {
                 anyhow::bail!("not implemented yet")

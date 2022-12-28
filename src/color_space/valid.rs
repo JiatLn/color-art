@@ -27,6 +27,7 @@ impl ColorSpace {
             }
             ColorSpace::HSV => todo!(),
             ColorSpace::HEX => todo!(),
+            ColorSpace::HWB => todo!(),
             ColorSpace::Unknown => todo!(),
         }
     }

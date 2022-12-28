@@ -19,4 +19,7 @@ fn main() {
 
     let hsv = color.hsv();
     println!("{}", hsv);
+
+    let hwb = color.hwb();
+    println!("{}", hwb);
 }
