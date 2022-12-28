@@ -21,11 +21,11 @@ See [Color Art](https://docs.rs/color-art).
 color-art = "0.1"
 ```
 
-### Color generation
+### Color generator
 
-#### Color Space
+You can use the `from_str` method to construct a color from a string. 
 
-Construct a color from a string. You can use the `from_str` method to construct a color from a string. Currently supported color spaces are:
+Currently supported color formats:
 
 - RGB
 - RGBA
@@ -48,15 +48,11 @@ let color = Color::from_str("hsv(60, 100%, 100%)").unwrap();
 let color = Color::from_str("yellow").unwrap();
 ```
 
-#### Random
+Other color generator methods:
 
-You can use the `random` method to construct a random color.
-
-```rust
-use color_art::Color;
-
-let color = Color::random();
-```
+- [random](./docs/color_generator.md#random) - Generate a random color.
+- [mix](./docs/color_generator.md#mix) - Mix two colors.
+- [average](./docs/color_generator.md#average) - Average a list of colors.
 
 ### Color conversion
 
@@ -106,15 +102,14 @@ color.luminance(); // 0.79
 
 ### Color Operation
 
-- [average](./docs/color_operation.md#average)
-- [darken](./docs/color_operation.md#darken)
-- [lighten](./docs/color_operation.md#lighten)
-- [saturate](./docs/color_operation.md#saturate)
-- [desaturate](./docs/color_operation.md#desaturate)
-- [fade](./docs/color_operation.md#fade)
-- [fade in](./docs/color_operation.md#fade_in)
-- [fade out](./docs/color_operation.md#fade_out)
-- [spin](./docs/color_operation.md#spin)
+- [darken](./docs/color_operation.md#darken) - Darken a color.
+- [lighten](./docs/color_operation.md#lighten) - Lighten a color.
+- [saturate](./docs/color_operation.md#saturate) - Saturate a color.
+- [desaturate](./docs/color_operation.md#desaturate) - Desaturate a color.
+- [fade](./docs/color_operation.md#fade) - Fade a color.
+- [fade in](./docs/color_operation.md#fade_in) - Fade in a color.
+- [fade out](./docs/color_operation.md#fade_out) - Fade out a color.
+- [spin](./docs/color_operation.md#spin) - Spin a color.
 
 More details, please refer to [Color Operation](./docs/color_operation.md).
 

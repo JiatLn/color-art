@@ -1,23 +1,5 @@
 # Color Operation
 
-## average
-
-You can use the `average` method to average a list of colors.
-
-```rust
-use color_art::Color;
-use std::str::FromStr;
-
-let colors = vec![
-    Color::from_str("#ffff00").unwrap(),
-    Color::from_str("#ff0000").unwrap(),
-    Color::from_str("#0000ff").unwrap(),
-];
-
-let averaged_color = Color::average(&colors);
-averaged_color.hex(); // "#aa5555"
-```
-
 ## darken
 
 Decrease the lightness of a color in the HSL color space by an absolute amount.
