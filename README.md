@@ -113,6 +113,9 @@ color.luminance(); // 0.79
 - [fade in](./docs/color_operation.md#fade_in) - Fade in a color.
 - [fade out](./docs/color_operation.md#fade_out) - Fade out a color.
 - [spin](./docs/color_operation.md#spin) - Spin a color.
+- [mix](./docs/color_operation.md#mix) - Mix with another color.
+- [tint](./docs/color_operation.md#tint) - Tint a color.
+- [shade](./docs/color_operation.md#shade) - Shade a color.
 
 More details, please refer to [Color Operation](./docs/color_operation.md).
 

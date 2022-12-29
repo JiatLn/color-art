@@ -127,3 +127,62 @@ let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
 let spun_color = color.spin(80.0).unwrap();
 spun_color.hsl(); // "hsl(140, 80%, 50%)"
 ```
+
+## mix_with
+
+Mix a color with another color by a given amount.
+
+#### Parameters
+
+* `other` - The color to mix with.
+* `amount` - The amount to mix the colors by. Must be between 0 and 1.
+
+#### Example
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let mut color = Color::from_str("#ff0000").unwrap();
+let other_color = Color::from_str("#0000ff").unwrap();
+color.mix_with(&other_color, 0.5).unwrap()
+color.hex(); // "#800080"
+```
+
+## tint
+
+Tint a color by mixing it with white.
+
+#### Parameters
+
+* `amount` - The amount to tint the color by. Must be between 0 and 1.
+
+#### Example
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let mut color = Color::from_str("#ff00ff").unwrap();
+color.tint(0.5).unwrap();
+color.hex(); // "#ff80ff"
+```
+
+## shade
+
+Shade a color by mixing it with black.
+
+#### Parameters
+
+* `amount` - The amount to shade the color by. Must be between 0 and 1.
+
+#### Example
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let mut color = Color::from_str("#ff00ff").unwrap();
+color.shade(0.5).unwrap();
+color.hex(); // "#800080"
+```
