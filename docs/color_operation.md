@@ -137,8 +137,8 @@ Rotate the hue angle of a color in either direction.
 use color_art::Color;
 use std::str::FromStr;
 
-let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
-let spun_color = color.spin(80.0).unwrap();
+let mut color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+color.spin(80.0).unwrap();
 spun_color.hsl(); // "hsl(140, 80%, 50%)"
 ```
 

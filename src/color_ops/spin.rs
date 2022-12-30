@@ -1,4 +1,4 @@
-use crate::{Color, ColorSpace};
+use crate::{conversion, Color, ColorSpace};
 use anyhow::Result;
 
 impl Color {
@@ -14,22 +14,26 @@ impl Color {
     /// use color_art::Color;
     /// use std::str::FromStr;
     ///
-    /// let color = Color::from_str("hsl(10, 90%, 50%)").unwrap();
-    /// let color = color.spin(30.0).unwrap();
+    /// let mut color = Color::from_str("hsl(10, 90%, 50%)").unwrap();
+    /// color.spin(30.0).unwrap();
     /// assert_eq!(color.hsl(), "hsl(40, 90%, 50%)");
     ///
-    /// let color = Color::from_str("hsl(10, 90%, 50%)").unwrap();
-    /// let color = color.spin(-30.0).unwrap();
+    /// let mut color = Color::from_str("hsl(10, 90%, 50%)").unwrap();
+    /// color.spin(-30.0).unwrap();
     /// assert_eq!(color.hsl(), "hsl(340, 90%, 50%)");
     /// ```
-    pub fn spin(&self, angle: f64) -> Result<Color> {
+    pub fn spin(&mut self, angle: f64) -> Result<Self> {
         let color = self.space(ColorSpace::HSL)?;
         let h = color[0];
         let s = color[1];
         let l = color[2];
         let h = (h + angle) % 360.0;
         let h = if h < 0.0 { h + 360.0 } else { h };
-        Color::from_hsl(h, s, l)
+        let (r, g, b) = conversion::hsl::hsl2rgb((h, s, l));
+        self.rgba.0 = r;
+        self.rgba.1 = g;
+        self.rgba.2 = b;
+        Ok(*self)
     }
 }
 
@@ -40,12 +44,12 @@ mod tests {
 
     #[test]
     fn test_spin() {
-        let color = Color::from_str("hsl(10, 90%, 50%)").unwrap();
-        let color = color.spin(30.0).unwrap();
+        let mut color = Color::from_str("hsl(10, 90%, 50%)").unwrap();
+        color.spin(30.0).unwrap();
         assert_eq!(color.hsl(), "hsl(40, 90%, 50%)");
 
-        let color = Color::from_str("hsl(10, 90%, 50%)").unwrap();
-        let color = color.spin(-30.0).unwrap();
+        let mut color = Color::from_str("hsl(10, 90%, 50%)").unwrap();
+        color.spin(-30.0).unwrap();
         assert_eq!(color.hsl(), "hsl(340, 90%, 50%)");
     }
 }
