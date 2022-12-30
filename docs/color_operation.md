@@ -34,9 +34,9 @@ Increase the saturation of a color in the HSL color space by an absolute amount.
 use color_art::Color;
 use std::str::FromStr;
 
-let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
-let saturated_color = color.saturate(0.2).unwrap();
-saturated_color.hsl(); // "hsl(60, 100%, 50%)"
+let mut color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+color.saturate(0.2).unwrap();
+color.hsl(); // "hsl(60, 100%, 50%)"
 ```
 
 ## desaturate
@@ -47,9 +47,23 @@ Decrease the saturation of a color in the HSL color space by an absolute amount.
 use color_art::Color;
 use std::str::FromStr;
 
-let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
-let desaturated_color = color.desaturate(0.2).unwrap();
-desaturated_color.hsl(); // "hsl(60, 60%, 50%)"
+let mut color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+color.desaturate(0.2).unwrap();
+color.hsl(); // "hsl(60, 60%, 50%)"
+```
+
+## greyscale
+
+Remove all saturation from a color in the HSL color space.
+# Example
+
+```rust
+use color_art::Color;
+use std::str::FromStr;
+
+let mut color = Color::from_str("#80e619").unwrap();
+color.greyscale().unwrap();
+color.hex(); // "#808080"
 ```
 
 ## fade

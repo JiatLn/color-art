@@ -109,6 +109,7 @@ color.luminance(); // 0.79
 - [lighten](./docs/color_operation.md#lighten) - Lighten a color.
 - [saturate](./docs/color_operation.md#saturate) - Saturate a color.
 - [desaturate](./docs/color_operation.md#desaturate) - Desaturate a color.
+- [greyscale](./docs/color_operation.md#greyscale) - Greyscale a color.
 - [fade](./docs/color_operation.md#fade) - Fade a color.
 - [fade in](./docs/color_operation.md#fade_in) - Fade in a color.
 - [fade out](./docs/color_operation.md#fade_out) - Fade out a color.

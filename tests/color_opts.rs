@@ -13,5 +13,5 @@ fn test_color_channel() {
 
     let mut color = Color::from_str("#007fff").unwrap();
     color.shade(0.5).unwrap();
-    assert_eq!(color.rgba(), "rgba(0, 63, 127, 1)");
+    assert_eq!(color.rgba(), "rgba(0, 64, 128, 1)");
 }

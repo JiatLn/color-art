@@ -1,6 +1,6 @@
 use anyhow::Result;
 
-use crate::{Color, ColorSpace};
+use crate::{conversion, Color, ColorSpace};
 
 impl Color {
     /// Increase the saturation of a color in the HSL color space by an absolute amount.
@@ -13,11 +13,11 @@ impl Color {
     /// use color_art::Color;
     /// use std::str::FromStr;
     ///
-    /// let color = Color::from_str("#80e619").unwrap();
-    /// let color = color.saturate(0.2).unwrap();
+    /// let mut color = Color::from_str("#80e619").unwrap();
+    /// color.saturate(0.2).unwrap();
     /// assert_eq!(color.hex(), "#80ff00");
     /// ```
-    pub fn saturate(&self, amount: f64) -> Result<Color> {
+    pub fn saturate(&mut self, amount: f64) -> Result<Self> {
         if amount.abs() > 1.0 {
             anyhow::bail!("Amount must be between 0.0 and 1.0")
         }
@@ -26,7 +26,11 @@ impl Color {
         let s = color[1];
         let l = color[2];
         let s = (s + amount).min(1.0).max(0.0);
-        Color::from_hsl(h, s, l)
+        let (r, g, b) = conversion::hsl::hsl2rgb((h, s, l));
+        self.rgba.0 = r;
+        self.rgba.1 = g;
+        self.rgba.2 = b;
+        Ok(*self)
     }
     /// Decrease the saturation of a color in the HSL color space by an absolute amount.
     ///
@@ -38,11 +42,11 @@ impl Color {
     /// use color_art::Color;
     /// use std::str::FromStr;
     ///
-    /// let color = Color::from_str("#80e619").unwrap();
-    /// let color = color.desaturate(0.2).unwrap();
+    /// let mut color = Color::from_str("#80e619").unwrap();
+    /// color.desaturate(0.2).unwrap();
     /// assert_eq!(color.hex(), "#80cc33");
     /// ```
-    pub fn desaturate(&self, amount: f64) -> Result<Color> {
+    pub fn desaturate(&mut self, amount: f64) -> Result<Self> {
         self.saturate(-amount)
     }
     /// greyscale
@@ -54,11 +58,11 @@ impl Color {
     /// use color_art::Color;
     /// use std::str::FromStr;
     ///
-    /// let color = Color::from_str("#80e619").unwrap();
-    /// let color = color.greyscale().unwrap();
+    /// let mut color = Color::from_str("#80e619").unwrap();
+    /// color.greyscale().unwrap();
     /// assert_eq!(color.hex(), "#808080");
     /// ```
-    pub fn greyscale(&self) -> Result<Color> {
+    pub fn greyscale(&mut self) -> Result<Self> {
         self.desaturate(1.0)
     }
 }
@@ -70,30 +74,30 @@ mod tests {
 
     #[test]
     fn saturate() {
-        let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
-        let color = color.saturate(0.2).unwrap();
+        let mut color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+        color.saturate(0.2).unwrap();
         assert_eq!(color.hsl(), "hsl(60, 100%, 50%)");
     }
 
     #[test]
     fn desaturate() {
-        let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
-        let color = color.desaturate(0.2).unwrap();
+        let mut color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+        color.desaturate(0.2).unwrap();
         assert_eq!(color.hsl(), "hsl(60, 60%, 50%)");
     }
 
     #[test]
     fn greyscale() {
-        let color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
-        let color = color.greyscale().unwrap();
+        let mut color = Color::from_str("hsl(60, 80%, 50%)").unwrap();
+        color.greyscale().unwrap();
         assert_eq!(color.hex(), "#808080");
 
-        let color = Color::from_str("hsl(90, 0%, 50%)").unwrap();
-        let color = color.greyscale().unwrap();
+        let mut color = Color::from_str("hsl(90, 0%, 50%)").unwrap();
+        color.greyscale().unwrap();
         assert_eq!(color.hex(), "#808080");
 
-        let color = Color::from_str("hsl(0, 0%, 50%)").unwrap();
-        let color = color.greyscale().unwrap();
+        let mut color = Color::from_str("hsl(0, 0%, 50%)").unwrap();
+        color.greyscale().unwrap();
         assert_eq!(color.hex(), "#808080");
     }
 }
