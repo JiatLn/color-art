@@ -18,7 +18,7 @@ See [Color Art](https://docs.rs/color-art).
 
 ```toml
 [dependencies]
-color-art = "0.1"
+color-art = "0.2"
 ```
 
 ### Color generator
