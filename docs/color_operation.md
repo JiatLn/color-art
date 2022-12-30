@@ -8,9 +8,9 @@ Decrease the lightness of a color in the HSL color space by an absolute amount.
 use color_art::Color;
 use std::str::FromStr;
 
-let color = Color::from_str("#ffff00").unwrap();
-let darkened_color = color.darken(0.2).unwrap();
-darkened_color.hex(); // "#999900"
+let mut color = Color::from_str("#ffff00").unwrap();
+color.darken(0.2).unwrap();
+color.hex(); // "#999900"
 ```
 
 ## lighten
@@ -21,9 +21,9 @@ Increase the lightness of a color in the HSL color space by an absolute amount.
 use color_art::Color;
 use std::str::FromStr;
 
-let color = Color::from_str("#ffff00").unwrap();
-let lightened_color = color.lighten(0.2).unwrap();
-lightened_color.hex(); // "#ffff66"
+let mut color = Color::from_str("#ffff00").unwrap();
+color.lighten(0.2).unwrap();
+color.hex(); // "#ffff66"
 ```
 
 ## saturate
