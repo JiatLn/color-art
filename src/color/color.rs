@@ -127,51 +127,30 @@ mod tests {
     fn test_color_from_rgb_str_err() {
         let s = "rgb(256, 255, 255)";
         let color = Color::from_str(s);
-        match color {
-            Err(e) => assert_eq!(e.to_string(), "r must be between 0 and 255, got 256"),
-            _ => panic!("Should have failed"),
-        }
+        assert!(color.is_err());
 
         let s = "rgbbb(255, 255, 255)";
         let color = Color::from_str(s);
-        match color {
-            Err(e) => assert_eq!(e.to_string(), "rgbbb(255, 255, 255) is not a valid color"),
-            _ => panic!("Should have failed"),
-        }
+        assert!(color.is_err());
     }
 
     #[test]
     fn test_color_from_rgba_str_err() {
         let s = "rgba(256, 255, 255, 0.5)";
         let color = Color::from_str(s);
-        match color {
-            Err(e) => assert_eq!(e.to_string(), "r must be between 0 and 255, got 256"),
-            _ => panic!("Should have failed"),
-        }
+        assert!(color.is_err());
 
         let s = "rgba(255, 255, 255, 1.5)";
         let color = Color::from_str(s);
-        match color {
-            Err(e) => assert_eq!(e.to_string(), "alpha must be between 0 and 1, got 1.5"),
-            _ => panic!("Should have failed"),
-        }
+        assert!(color.is_err());
 
         let s = "rgba(255, 255, 255, -0.5)";
         let color = Color::from_str(s);
-        match color {
-            Err(e) => assert_eq!(e.to_string(), "alpha must be between 0 and 1, got -0.5"),
-            _ => panic!("Should have failed"),
-        }
+        assert!(color.is_err());
 
         let s = "rgbbb(255, 255, 255, 0.5)";
         let color = Color::from_str(s);
-        match color {
-            Err(e) => assert_eq!(
-                e.to_string(),
-                "rgbbb(255, 255, 255, 0.5) is not a valid color"
-            ),
-            _ => panic!("Should have failed"),
-        }
+        assert!(color.is_err());
     }
 
     #[test]

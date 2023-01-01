@@ -1,3 +1,4 @@
+use crate::ColorSpace;
 use anyhow::Result;
 
 pub fn parse_rgba_str(s: impl ToString) -> Result<(f64, f64, f64, f64)> {
@@ -16,18 +17,7 @@ pub fn parse_rgba_str(s: impl ToString) -> Result<(f64, f64, f64, f64)> {
     let b = s.next().unwrap().parse::<f64>()?;
     let a = s.next().unwrap().parse::<f64>()?;
 
-    if r < 0.0 || r > 255.0 {
-        anyhow::bail!("r must be between 0 and 255, got {}", r);
-    }
-    if g < 0.0 || g > 255.0 {
-        anyhow::bail!("g must be between 0 and 255, got {}", g);
-    }
-    if b < 0.0 || b > 255.0 {
-        anyhow::bail!("b must be between 0 and 255, got {}", b);
-    }
-    if a < 0.0 || a > 1.0 {
-        anyhow::bail!("alpha must be between 0 and 1, got {}", a);
-    }
+    ColorSpace::RGBA.valid(vec![r, g, b, a])?;
 
     Ok((r, g, b, a))
 }
