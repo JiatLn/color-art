@@ -1,3 +1,4 @@
+use crate::ColorSpace;
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -24,19 +25,11 @@ pub fn parse_hwb_str(hwb_str: impl ToString) -> Result<(f64, f64, f64)> {
         })
         .collect::<Vec<f64>>();
 
+    ColorSpace::HWB.valid(&hwb_vec)?;
+
     let h = hwb_vec[0];
     let w = hwb_vec[1];
     let b = hwb_vec[2];
-
-    if h < 0. || h >= 360. {
-        anyhow::bail!("h must be between 0 and 360, got {}", h);
-    }
-    if w < 0. || w > 1. {
-        anyhow::bail!("w must be between 0 and 1, got {}", w);
-    }
-    if b < 0. || b > 1. {
-        anyhow::bail!("b must be between 0 and 1, got {}", b);
-    }
 
     Ok((h, w, b))
 }

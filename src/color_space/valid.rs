@@ -82,7 +82,24 @@ impl ColorSpace {
                 Ok(())
             }
             ColorSpace::HEX => todo!(),
-            ColorSpace::HWB => todo!(),
+            ColorSpace::HWB => {
+                if vec.len() != 3 {
+                    anyhow::bail!("HWB color space requires 3 values")
+                }
+                let h = vec[0];
+                let w = vec[1];
+                let b = vec[2];
+                if h < 0.0 || h > 360.0 {
+                    anyhow::bail!("Hue must be between 0.0 and 360.0, got {}", h)
+                }
+                if w < 0.0 || w > 1.0 {
+                    anyhow::bail!("Whiteness must be between 0.0 and 1.0, got {}", w)
+                }
+                if b < 0.0 || b > 1.0 {
+                    anyhow::bail!("Blackness must be between 0.0 and 1.0, got {}", b)
+                }
+                Ok(())
+            }
             ColorSpace::Unknown => todo!(),
         }
     }
