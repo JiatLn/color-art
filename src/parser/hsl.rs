@@ -1,4 +1,4 @@
-use crate::ColorSpace;
+use crate::{helper::vec2tuple, ColorSpace};
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -27,9 +27,5 @@ pub fn parse_hsl_str(hsl_str: impl ToString) -> Result<(f64, f64, f64)> {
 
     ColorSpace::HSL.valid(&hsl_vec)?;
 
-    let h = hsl_vec[0];
-    let s = hsl_vec[1];
-    let l = hsl_vec[2];
-
-    Ok((h, s, l))
+    Ok(vec2tuple(hsl_vec))
 }

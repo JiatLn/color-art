@@ -1,4 +1,4 @@
-use crate::ColorSpace;
+use crate::{helper::vec2tuple, ColorSpace};
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -28,11 +28,7 @@ pub fn parse_hsv_str(hsv_str: impl ToString) -> Result<(f64, f64, f64)> {
 
     ColorSpace::HSV.valid(&hsv_vec)?;
 
-    let h = hsv_vec[0];
-    let s = hsv_vec[1];
-    let v = hsv_vec[2];
-
-    Ok((h, s, v))
+    Ok(vec2tuple(hsv_vec))
 }
 
 #[cfg(test)]

@@ -1,4 +1,4 @@
-use crate::ColorSpace;
+use crate::{helper::vec2tuple, ColorSpace};
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -27,11 +27,7 @@ pub fn parse_hwb_str(hwb_str: impl ToString) -> Result<(f64, f64, f64)> {
 
     ColorSpace::HWB.valid(&hwb_vec)?;
 
-    let h = hwb_vec[0];
-    let w = hwb_vec[1];
-    let b = hwb_vec[2];
-
-    Ok((h, w, b))
+    Ok(vec2tuple(hwb_vec))
 }
 
 #[cfg(test)]

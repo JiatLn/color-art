@@ -34,7 +34,7 @@ pub fn hwb2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
         rgb_vec[i] += whiteness * 255.;
         rgb_vec[i] = round(rgb_vec[i], 0)
     }
-    (rgb_vec[0], rgb_vec[1], rgb_vec[2])
+    vec2tuple(rgb_vec)
 }
 
 #[cfg(test)]

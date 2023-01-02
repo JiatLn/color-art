@@ -7,3 +7,8 @@ pub(crate) fn normalize_color(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (r, g, b) = color;
     (r / 255.0, g / 255.0, b / 255.0)
 }
+
+/// Convert a vector of f64 to a tuple of f64
+pub(crate) fn vec2tuple(vec: Vec<f64>) -> (f64, f64, f64) {
+    (vec[0], vec[1], vec[2])
+}
