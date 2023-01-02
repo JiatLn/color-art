@@ -14,7 +14,7 @@ pub fn parse_hsl_str(hsl_str: impl ToString) -> Result<(f64, f64, f64)> {
         .replace("hsl(", "")
         .replace(")", "");
 
-    let hsl_str = hsl_str
+    let hsl_vec = hsl_str
         .split(",")
         .map(|s| {
             if s.contains('%') {
@@ -25,11 +25,11 @@ pub fn parse_hsl_str(hsl_str: impl ToString) -> Result<(f64, f64, f64)> {
         })
         .collect::<Vec<f64>>();
 
-    let h = hsl_str[0];
-    let s = hsl_str[1];
-    let l = hsl_str[2];
+    ColorSpace::HSL.valid(&hsl_vec)?;
 
-    ColorSpace::HSL.valid(vec![h, s, l])?;
+    let h = hsl_vec[0];
+    let s = hsl_vec[1];
+    let l = hsl_vec[2];
 
     Ok((h, s, l))
 }

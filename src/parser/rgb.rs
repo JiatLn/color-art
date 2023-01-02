@@ -16,7 +16,7 @@ pub fn parse_rgb_str(s: impl ToString) -> Result<(f64, f64, f64)> {
     let g = s.next().unwrap().parse::<f64>()?;
     let b = s.next().unwrap().parse::<f64>()?;
 
-    ColorSpace::RGB.valid(vec![r, g, b])?;
+    ColorSpace::RGB.valid(&vec![r, g, b])?;
 
     Ok((r, g, b))
 }

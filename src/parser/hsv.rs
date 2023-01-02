@@ -1,3 +1,4 @@
+use crate::ColorSpace;
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -13,7 +14,7 @@ pub fn parse_hsv_str(hsv_str: impl ToString) -> Result<(f64, f64, f64)> {
         .replace("hsv(", "")
         .replace(")", "");
 
-    let hsv_str = hsv_str
+    let hsv_vec = hsv_str
         .split(",")
         .map(|s| {
             if s.contains('%') {
@@ -25,19 +26,11 @@ pub fn parse_hsv_str(hsv_str: impl ToString) -> Result<(f64, f64, f64)> {
         })
         .collect::<Vec<f64>>();
 
-    let h = hsv_str[0];
-    let s = hsv_str[1];
-    let v = hsv_str[2];
+    ColorSpace::HSV.valid(&hsv_vec)?;
 
-    if h < 0. || h >= 360. {
-        anyhow::bail!("h must be between 0 and 360, got {}", h);
-    }
-    if s < 0. || s > 1. {
-        anyhow::bail!("s must be between 0 and 1, got {}", s);
-    }
-    if v < 0. || v > 1. {
-        anyhow::bail!("v must be between 0 and 1, got {}", v);
-    }
+    let h = hsv_vec[0];
+    let s = hsv_vec[1];
+    let v = hsv_vec[2];
 
     Ok((h, s, v))
 }

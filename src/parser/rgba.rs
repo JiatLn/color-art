@@ -17,7 +17,7 @@ pub fn parse_rgba_str(s: impl ToString) -> Result<(f64, f64, f64, f64)> {
     let b = s.next().unwrap().parse::<f64>()?;
     let a = s.next().unwrap().parse::<f64>()?;
 
-    ColorSpace::RGBA.valid(vec![r, g, b, a])?;
+    ColorSpace::RGBA.valid(&vec![r, g, b, a])?;
 
     Ok((r, g, b, a))
 }
