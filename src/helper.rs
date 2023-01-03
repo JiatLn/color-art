@@ -3,6 +3,7 @@ pub(crate) fn round(val: f64, precision: u32) -> f64 {
     (val * factor).round() / factor
 }
 
+/// normalize color values 0..255 to 0..1
 pub(crate) fn normalize_color(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (r, g, b) = color;
     (r / 255.0, g / 255.0, b / 255.0)

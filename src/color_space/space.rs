@@ -27,6 +27,10 @@ pub enum ColorSpace {
     ///
     /// HWB stands for hue, whiteness, and blackness.
     HWB,
+    /// CMYK color space.
+    ///
+    /// CMYK means Cyan Magenta Yellow Black
+    CMYK,
     /// Unknown color space.
     ///
     /// To be used when the color space is not known.
@@ -38,14 +42,14 @@ where
     T: ToString,
 {
     fn from(s: T) -> Self {
-        let s = s.to_string();
-        match s.as_str() {
+        match s.to_string().as_str() {
             "rgb" => ColorSpace::RGB,
             "rgba" => ColorSpace::RGBA,
             "hsl" => ColorSpace::HSL,
             "hsv" => ColorSpace::HSV,
             "hex" => ColorSpace::HEX,
             "hwb" => ColorSpace::HWB,
+            "cmyk" => ColorSpace::CMYK,
             _ => ColorSpace::Unknown,
         }
     }
@@ -74,6 +78,10 @@ impl Color {
             ColorSpace::HWB => {
                 let (h, w, b) = hwb::parse_hwb_str(self.hwb())?;
                 Ok(vec![h, w, b])
+            }
+            ColorSpace::CMYK => {
+                let (c, m, y, k) = cmyk::parse_cmyk_str(self.cmyk())?;
+                Ok(vec![c, m, y, k])
             }
             ColorSpace::HEX | ColorSpace::Unknown => {
                 anyhow::bail!("not implemented yet")

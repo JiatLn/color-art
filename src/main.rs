@@ -22,4 +22,7 @@ fn main() {
 
     let hwb = color.hwb();
     println!("{}", hwb);
+
+    let cmyk = color.cmyk();
+    println!("{}", cmyk);
 }

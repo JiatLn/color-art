@@ -1,5 +1,5 @@
 use crate::{
-    conversion::{hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv, hwb::rgb2hwb},
+    conversion::{cmyk::rgb2cmyk, hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv, hwb::rgb2hwb},
     helper::round,
     Color,
 };
@@ -63,7 +63,12 @@ impl Color {
     pub fn hsl(self) -> String {
         let (r, g, b, _) = self.rgba;
         let (h, s, l) = rgb2hsl((r, g, b));
-        format!("hsl({}, {}%, {}%)", round(h, 0), s * 100., l * 100.)
+        format!(
+            "hsl({}, {}%, {}%)",
+            round(h, 0),
+            round(s * 100., 0),
+            round(l * 100., 0),
+        )
     }
     /// `hsv` string of the color
     ///
@@ -77,7 +82,12 @@ impl Color {
     pub fn hsv(self) -> String {
         let (r, g, b, _) = self.rgba;
         let (h, s, v) = rgb2hsv((r, g, b));
-        format!("hsv({}, {}%, {}%)", round(h, 0), s * 100., v * 100.)
+        format!(
+            "hsv({}, {}%, {}%)",
+            round(h, 0),
+            round(s * 100., 0),
+            round(v * 100., 0),
+        )
     }
     /// `hwb` string of the color
     ///
@@ -91,7 +101,32 @@ impl Color {
     pub fn hwb(self) -> String {
         let (r, g, b, _) = self.rgba;
         let (h, w, b) = rgb2hwb((r, g, b));
-        format!("hwb({}, {}%, {}%)", round(h, 0), w * 100., b * 100.)
+        format!(
+            "hwb({}, {}%, {}%)",
+            round(h, 0),
+            round(w * 100., 0),
+            round(b * 100., 0),
+        )
+    }
+    /// `cmyk` string of the color
+    ///
+    /// # Examples
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255.0, 255.0, 255.0, 1.0);
+    /// assert_eq!(color.cmyk(), "cmyk(0%, 0%, 0%, 0%)");
+    /// ```
+    pub fn cmyk(self) -> String {
+        let (r, g, b, _) = self.rgba;
+        let (c, m, y, k) = rgb2cmyk((r, g, b));
+        format!(
+            "cmyk({}%, {}%, {}%, {}%)",
+            round(c * 100., 0),
+            round(m * 100., 0),
+            round(y * 100., 0),
+            round(k * 100., 0),
+        )
     }
     /// `name` of the color
     ///

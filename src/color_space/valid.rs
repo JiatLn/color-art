@@ -100,6 +100,28 @@ impl ColorSpace {
                 }
                 Ok(())
             }
+            ColorSpace::CMYK => {
+                if vec.len() != 4 {
+                    anyhow::bail!("CMYK color space requires 4 values")
+                }
+                let c = vec[0];
+                let m = vec[1];
+                let y = vec[2];
+                let k = vec[3];
+                if c < 0.0 || c > 1.0 {
+                    anyhow::bail!("cyan color must be between 0.0 and 1.0, got {}", c)
+                }
+                if m < 0.0 || m > 1.0 {
+                    anyhow::bail!("magenta color must be between 0.0 and 1.0, got {}", m)
+                }
+                if y < 0.0 || y > 1.0 {
+                    anyhow::bail!("yellow color must be between 0.0 and 1.0, got {}", y)
+                }
+                if k < 0.0 || k > 1.0 {
+                    anyhow::bail!("black color must be between 0.0 and 1.0, got {}", k)
+                }
+                Ok(())
+            }
             ColorSpace::Unknown => todo!(),
         }
     }
