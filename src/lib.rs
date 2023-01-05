@@ -10,6 +10,7 @@
 extern crate lazy_static;
 
 mod color;
+mod color_calc;
 mod color_generator;
 mod color_ops;
 mod color_space;
@@ -19,5 +20,6 @@ mod helper;
 mod parser;
 
 pub use color::Color;
+pub use color_calc::distance::*;
 pub use color_space::ColorSpace;
 use data::w3cx11::W3CX11_HASHMAP as W3CX11;
