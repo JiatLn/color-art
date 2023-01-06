@@ -2,6 +2,7 @@ use crate::{parser::*, Color};
 use anyhow::{Ok, Result};
 
 /// Color space enum.
+#[derive(Clone)]
 pub enum ColorSpace {
     /// RGB color space.
     ///
