@@ -1,22 +1,47 @@
 use crate::{Color, ColorSpace};
 
+/// ### blend mode enum
+///
+/// The blend mode defines the formula that must be used to mix the colors with the backdrop.
 pub enum BlendMode {
-    /// Multiply 正片叠底
+    /// ### multiply blend mode
     ///
-    /// https://www.w3.org/TR/compositing-1/#blendingmultiply
+    /// The source color is multiplied by the destination color and replaces the destination.
+    ///
+    /// The resultant color is always at least as dark as either the source or destination color. Multiplying any color with black results in black. Multiplying any color with white preserves the original color.
     Multiply,
-    /// Darken 变暗
+    /// ### darken blend mode
+    ///
+    /// Selects the darker of the backdrop and source colors.
+    ///
+    /// The backdrop is replaced with the source where the source is darker; otherwise, it is left unchanged.
     Darken,
-    /// Lighten 变亮
+    /// ### lighten blend mode
+    ///
+    /// Selects the lighter of the backdrop and source colors.
+    ///
+    /// The backdrop is replaced with the source where the source is lighter; otherwise, it is left unchanged.
     Lighten,
-    /// Screen 滤色
+    /// ### screen blend mode
+    ///
+    /// Multiplies the complements of the backdrop and source color values, then complements the result.
+    ///
+    /// The result color is always at least as light as either of the two constituent colors. Screening any color with white produces white; screening with black leaves the original color unchanged. The effect is similar to projecting multiple photographic slides simultaneously onto a single screen.
     Screen,
-    /// Overlay 叠加
+    /// ### overlay blend mode
+    ///
+    /// Multiplies or screens the colors, depending on the backdrop color value.
+    ///
+    /// Source colors overlay the backdrop while preserving its highlights and shadows. The backdrop color is not replaced but is mixed with the source color to reflect the lightness or darkness of the backdrop.
     Overlay,
-    /// Color Burn 颜色加深
-    Burn,
-    /// Color Dodge 颜色减淡
-    Dodge,
+    /// ### color-burn blend mode
+    ///
+    /// Darkens the backdrop color to reflect the source color. Painting with white produces no change.
+    ColorBurn,
+    /// ### color-dodge blend mode
+    ///
+    /// Brightens the backdrop color to reflect the source color. Painting with black produces no changes.
+    ColorDodge,
 }
 
 /// Blends two colors using RGB channel-wise blend functions.
@@ -35,8 +60,8 @@ pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> C
         BlendMode::Lighten => zip_vec.map(|(a, b)| max(a, b)).collect(),
         BlendMode::Screen => zip_vec.map(|(a, b)| screen(a, b)).collect(),
         BlendMode::Overlay => zip_vec.map(|(a, b)| overlay(a, b)).collect(),
-        BlendMode::Burn => zip_vec.map(|(a, b)| burn(a, b)).collect(),
-        BlendMode::Dodge => zip_vec.map(|(a, b)| dodge(a, b)).collect(),
+        BlendMode::ColorBurn => zip_vec.map(|(a, b)| burn(a, b)).collect(),
+        BlendMode::ColorDodge => zip_vec.map(|(a, b)| dodge(a, b)).collect(),
     };
     let r = v[0] * 255.;
     let g = v[1] * 255.;
@@ -60,7 +85,6 @@ fn multiply(a: f64, b: f64) -> f64 {
     a * b
 }
 
-/// https://www.w3.org/TR/compositing-1/#blendingscreen
 fn screen(a: f64, b: f64) -> f64 {
     1. - (1. - a) * (1. - b)
 }
@@ -109,13 +133,13 @@ mod tests {
         let color = blend(&color1, &color2, BlendMode::Screen);
         assert_eq!(color.hex(), "#f3fafc");
 
-        let color = blend(&color1, &color2, BlendMode::Burn);
+        let color = blend(&color1, &color2, BlendMode::ColorBurn);
         assert_eq!(color.hex(), "#3fb6e9");
 
         let color = blend(&color1, &color2, BlendMode::Overlay);
         assert_eq!(color.hex(), "#8ef6fa");
 
-        let color = blend(&color1, &color2, BlendMode::Dodge);
+        let color = blend(&color1, &color2, BlendMode::ColorDodge);
         assert_eq!(color.hex(), "#ffffff");
     }
 }
