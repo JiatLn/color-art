@@ -156,12 +156,14 @@ fn soft_light(a: f64, b: f64) -> f64 {
     if b <= 0.5 {
         a - (1. - 2. * b) * a * (1. - a)
     } else {
-        let da = if a <= 0.25 {
-            ((16. * a - 12.) * a + 4.) * a
-        } else {
-            a.sqrt()
+        let d = |a: f64| {
+            if a <= 0.25 {
+                ((16. * a - 12.) * a + 4.) * a
+            } else {
+                a.sqrt()
+            }
         };
-        a + (2. * b - 1.) * (da - a)
+        a + (2. * b - 1.) * (d(a) - a)
     }
 }
 
