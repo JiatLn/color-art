@@ -68,7 +68,42 @@ pub enum BlendMode {
 
 /// Blends two colors using RGB channel-wise blend functions.
 ///
-/// blend mode formulas taken from [blending](https://www.w3.org/TR/compositing-1/#blending)
+/// Supports the following blend modes:
+///
+/// * Normal
+/// * Multiply
+/// * Darken
+/// * Lighten
+/// * Screen
+/// * Overlay
+/// * ColorBurn
+/// * ColorDodge
+/// * HardLight
+/// * SoftLight
+/// * Difference
+/// * Exclusion
+///
+/// The blend mode formulas taken from [blending](https://www.w3.org/TR/compositing-1/#blending).
+///
+/// # Arguments
+///
+/// * `backdrop_color` - The color of the backdrop.
+/// * `source_color` - The color of the source.
+/// * `mode` - The blend mode to use. See [BlendMode](enum.BlendMode.html) for more information.
+///
+/// # Example
+///
+/// ```
+/// use color_art::{Color, BlendMode, blend};
+/// use std::str::FromStr;
+///
+///
+/// let color1 = Color::from_str("#4cbbfc").unwrap();
+/// let color2 = Color::from_str("#eeee22").unwrap();
+///
+/// let blended_color = blend(&color1, &color2, BlendMode::Overlay);
+/// assert_eq!(blended_color.hex(), "#8ef6fa");
+/// ```
 pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> Color {
     let backdrop_vec = backdrop_color.space(ColorSpace::RGB).unwrap();
     let source_vec = source_color.space(ColorSpace::RGB).unwrap();
@@ -182,8 +217,8 @@ mod tests {
 
     #[test]
     fn test_blend() {
-        let color1 = Color::from_str("#4CBBFC").unwrap();
-        let color2 = Color::from_str("#EEEE22").unwrap();
+        let color1 = Color::from_str("#4cbbfc").unwrap();
+        let color2 = Color::from_str("#eeee22").unwrap();
 
         let color = blend(&color1, &color2, BlendMode::Multiply);
         assert_eq!(color.hex(), "#47af22");
