@@ -4,6 +4,10 @@ use crate::{Color, ColorSpace};
 ///
 /// The blend mode defines the formula that must be used to mix the colors with the backdrop.
 pub enum BlendMode {
+    /// ### normal blend mode
+    ///
+    /// This is the default attribute which specifies no blending. The blending formula simply selects the source color.
+    Normal,
     /// ### multiply blend mode
     ///
     /// The source color is multiplied by the destination color and replaces the destination.
@@ -42,6 +46,24 @@ pub enum BlendMode {
     ///
     /// Brightens the backdrop color to reflect the source color. Painting with black produces no changes.
     ColorDodge,
+    /// ### hard-light blend mode
+    ///
+    /// Multiplies or screens the colors, depending on the source color value. The effect is similar to shining a harsh spotlight on the backdrop.
+    HardLight,
+    /// ### soft-light blend mode
+    ///
+    /// Darkens or lightens the colors, depending on the source color value. The effect is similar to shining a diffused spotlight on the backdrop.
+    SoftLight,
+    /// ### difference blend mode
+    ///
+    /// Subtracts the darker of the two constituent colors from the lighter color.
+    ///
+    /// Painting with white inverts the backdrop color; painting with black produces no change.
+    Difference,
+    /// ### exclusion blend mode
+    ///
+    /// Produces an effect similar to that of the Difference mode but lower in contrast. Painting with white inverts the backdrop color; painting with black produces no change.
+    Exclusion,
 }
 
 /// Blends two colors using RGB channel-wise blend functions.
@@ -50,11 +72,14 @@ pub enum BlendMode {
 pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> Color {
     let backdrop_vec = backdrop_color.space(ColorSpace::RGB).unwrap();
     let source_vec = source_color.space(ColorSpace::RGB).unwrap();
+
     let zip_vec: _ = backdrop_vec
         .iter()
         .zip(source_vec.iter())
         .map(|(a, b)| (a / 255., b / 255.));
+
     let v: Vec<_> = match mode {
+        BlendMode::Normal => zip_vec.map(|(a, b)| normal(a, b)).collect(),
         BlendMode::Multiply => zip_vec.map(|(a, b)| multiply(a, b)).collect(),
         BlendMode::Darken => zip_vec.map(|(a, b)| min(a, b)).collect(),
         BlendMode::Lighten => zip_vec.map(|(a, b)| max(a, b)).collect(),
@@ -62,10 +87,16 @@ pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> C
         BlendMode::Overlay => zip_vec.map(|(a, b)| overlay(a, b)).collect(),
         BlendMode::ColorBurn => zip_vec.map(|(a, b)| burn(a, b)).collect(),
         BlendMode::ColorDodge => zip_vec.map(|(a, b)| dodge(a, b)).collect(),
+        BlendMode::HardLight => zip_vec.map(|(a, b)| hard_light(a, b)).collect(),
+        BlendMode::SoftLight => zip_vec.map(|(a, b)| soft_light(a, b)).collect(),
+        BlendMode::Difference => zip_vec.map(|(a, b)| difference(a, b)).collect(),
+        BlendMode::Exclusion => zip_vec.map(|(a, b)| exclusion(a, b)).collect(),
     };
+
     let r = v[0] * 255.;
     let g = v[1] * 255.;
     let b = v[2] * 255.;
+
     Color::new(r, g, b, 1.0)
 }
 
@@ -86,7 +117,7 @@ fn multiply(a: f64, b: f64) -> f64 {
 }
 
 fn screen(a: f64, b: f64) -> f64 {
-    1. - (1. - a) * (1. - b)
+    a + b - a * b
 }
 
 fn overlay(a: f64, b: f64) -> f64 {
@@ -98,7 +129,13 @@ fn overlay(a: f64, b: f64) -> f64 {
 }
 
 fn burn(a: f64, b: f64) -> f64 {
-    1.0 - (1.0 - a) / b
+    if a == 1. {
+        1.
+    } else if b == 0. {
+        0.
+    } else {
+        1. - min(1., (1. - a) / b)
+    }
 }
 
 fn dodge(a: f64, b: f64) -> f64 {
@@ -109,6 +146,31 @@ fn dodge(a: f64, b: f64) -> f64 {
     } else {
         (a / (1. - b)).min(1.)
     }
+}
+
+fn hard_light(a: f64, b: f64) -> f64 {
+    overlay(b, a)
+}
+
+fn soft_light(a: f64, b: f64) -> f64 {
+    if b <= 0.5 {
+        a - (1. - 2. * b) * a * (1. - a)
+    } else {
+        let da = if a <= 0.25 {
+            ((16. * a - 12.) * a + 4.) * a
+        } else {
+            a.sqrt()
+        };
+        a + (2. * b - 1.) * (da - a)
+    }
+}
+
+fn difference(a: f64, b: f64) -> f64 {
+    (a - b).abs()
+}
+
+fn exclusion(a: f64, b: f64) -> f64 {
+    a + b - 2. * a * b
 }
 
 #[cfg(test)]
@@ -141,5 +203,8 @@ mod tests {
 
         let color = blend(&color1, &color2, BlendMode::ColorDodge);
         assert_eq!(color.hex(), "#ffffff");
+
+        let color = blend(&color1, &color2, BlendMode::HardLight);
+        assert_eq!(color.hex(), "#e7f643");
     }
 }
