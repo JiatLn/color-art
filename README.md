@@ -1,11 +1,7 @@
-# Color Art
-
-[<img alt="github" src="https://img.shields.io/badge/github-JiatLn/color_art-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/JiatLn/color-art)
-[<img alt="crates.io" src="https://img.shields.io/crates/v/color_art.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/color-art)
-[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-color_art-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/color_art)
+<br>
 
 <p align="center">
-<img src="./graphs/logo.png" alt="ColorArt - A rust crate for working with colors and color spaces." width="100">
+<img src="./graphs/logo.png" alt="ColorArt - A rust crate for working with colors and color spaces." width="120">
 </p>
 
 <h1 align="center">Color Art</h1>
@@ -14,7 +10,11 @@
 A rust crate for working with colors and color spaces.
 </p>
 
- 
+<br>
+
+[<img alt="github" src="https://img.shields.io/badge/github-JiatLn/color_art-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/JiatLn/color-art)
+[<img alt="crates.io" src="https://img.shields.io/crates/v/color_art.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/color-art)
+[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-color_art-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/color_art)
 
 ## Documentation
 
