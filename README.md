@@ -56,6 +56,7 @@ Other color generator methods:
 
 - [random](./docs/color_generator.md#random) - Generate a random color.
 - [mix](./docs/color_generator.md#mix) - Mix two colors.
+- [blend](./docs/color_generator.md#blend) - Blend two colors with a blending mode.
 - [average](./docs/color_generator.md#average) - Average a list of colors.
 
 ### Color conversion

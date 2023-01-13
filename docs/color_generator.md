@@ -42,3 +42,33 @@ let colors = vec![
 let averaged_color = Color::average(&colors);
 averaged_color.hex(); // "#aa5555"
 ```
+
+## blend
+
+Blend two colors with a blending mode.
+
+Current supported blending modes:
+
+- Normal
+- Multiply
+- Screen
+- Overlay
+- Darken
+- Lighten
+- ColorDodge
+- ColorBurn
+- HardLight
+- SoftLight
+- Difference
+- Exclusion
+
+```rust
+use color_art::{Color, BlendMode, blend};
+use std::str::FromStr;
+
+let color1 = Color::from_str("#4cbbfc").unwrap();
+let color2 = Color::from_str("#eeee22").unwrap();
+
+let blended_color = blend(&color1, &color2, BlendMode::Overlay);
+blended_color.hex() // "#8ef6fa"
+```
