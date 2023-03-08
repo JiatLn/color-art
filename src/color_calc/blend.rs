@@ -1,4 +1,4 @@
-use crate::{Color, ColorSpace};
+use crate::{utils::blend_fn::*, Color, ColorSpace};
 
 /// ### blend mode enum
 ///
@@ -133,81 +133,6 @@ pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> C
     let b = v[2] * 255.;
 
     Color::new(r, g, b, 1.0)
-}
-
-fn min(a: f64, b: f64) -> f64 {
-    a.min(b)
-}
-
-fn max(a: f64, b: f64) -> f64 {
-    a.max(b)
-}
-
-fn normal(_a: f64, b: f64) -> f64 {
-    b
-}
-
-fn multiply(a: f64, b: f64) -> f64 {
-    a * b
-}
-
-fn screen(a: f64, b: f64) -> f64 {
-    a + b - a * b
-}
-
-fn overlay(a: f64, b: f64) -> f64 {
-    if a <= 0.5 {
-        multiply(a, 2. * b)
-    } else {
-        screen(a, 2. * b - 1.)
-    }
-}
-
-fn burn(a: f64, b: f64) -> f64 {
-    if a == 1. {
-        1.
-    } else if b == 0. {
-        0.
-    } else {
-        1. - min(1., (1. - a) / b)
-    }
-}
-
-fn dodge(a: f64, b: f64) -> f64 {
-    if a == 0. {
-        0.
-    } else if b == 1. {
-        1.
-    } else {
-        (a / (1. - b)).min(1.)
-    }
-}
-
-fn hard_light(a: f64, b: f64) -> f64 {
-    overlay(b, a)
-}
-
-fn soft_light(a: f64, b: f64) -> f64 {
-    if b <= 0.5 {
-        a - (1. - 2. * b) * a * (1. - a)
-    } else {
-        let d = |a: f64| {
-            if a <= 0.25 {
-                ((16. * a - 12.) * a + 4.) * a
-            } else {
-                a.sqrt()
-            }
-        };
-        a + (2. * b - 1.) * (d(a) - a)
-    }
-}
-
-fn difference(a: f64, b: f64) -> f64 {
-    (a - b).abs()
-}
-
-fn exclusion(a: f64, b: f64) -> f64 {
-    a + b - 2. * a * b
 }
 
 #[cfg(test)]

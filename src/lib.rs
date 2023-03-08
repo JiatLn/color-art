@@ -18,6 +18,7 @@ mod conversion;
 mod data;
 mod helper;
 mod parser;
+mod utils;
 
 pub use color::Color;
 pub use color_calc::blend::*;
