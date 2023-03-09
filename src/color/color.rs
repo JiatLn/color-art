@@ -86,6 +86,11 @@ impl FromStr for Color {
                 let (r, g, b) = conversion::cmyk::cmyk2rgb(cmyk);
                 (r, g, b, 1.0)
             }
+            s if s.starts_with("xyz(") => {
+                let xyz = parser::xyz::parse_xyz_str(s)?;
+                let (r, g, b) = conversion::xyz::xyz2rgb(xyz);
+                (r, g, b, 1.0)
+            }
             _ => {
                 let found = crate::W3CX11.get(s);
                 match found {
@@ -278,5 +283,14 @@ mod tests {
 
         let color = Color::from_str("cmyk(35%, 0, 60%, 0)").unwrap();
         assert_eq!(color.hex(), "#a6ff66");
+    }
+
+    #[test]
+    fn test_color_from_xyz_str() {
+        let color = Color::from_str("xyz(0.412453, 0.212671, 0.019334)").unwrap();
+        assert_eq!(color.rgb(), "rgb(255, 0, 0)");
+
+        let color = Color::from_str("xyz(0.70047, 0.723315, 1.048516)").unwrap();
+        assert_eq!(color.rgb(), "rgb(162, 184, 255)");
     }
 }

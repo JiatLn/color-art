@@ -2,7 +2,6 @@ use crate::helper::vec2tuple;
 use anyhow::Result;
 use std::str::FromStr;
 
-#[allow(dead_code)]
 pub fn parse_xyz_str(xyz_str: impl ToString) -> Result<(f64, f64, f64)> {
     // xyz_str like "xyz(0.412453, 0.212671, 0.019334)"
     let xyz_str = xyz_str
