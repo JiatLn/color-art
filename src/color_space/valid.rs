@@ -122,6 +122,24 @@ impl ColorSpace {
                 }
                 Ok(())
             }
+            ColorSpace::XYZ => {
+                if vec.len() != 3 {
+                    anyhow::bail!("XYZ color space requires 3 values")
+                }
+                let x = vec[0];
+                let y = vec[1];
+                let z = vec[2];
+                if x < 0.0 || x > 0.950456 {
+                    anyhow::bail!("X must be between 0.0 and 0.950456, got {}", x)
+                }
+                if y < 0.0 || y > 1.0 {
+                    anyhow::bail!("Y must be between 0.0 and 1.0, got {}", y)
+                }
+                if z < 0.0 || z > 1.088754 {
+                    anyhow::bail!("Z must be between 0.0 and 1.088754, got {}", z)
+                }
+                Ok(())
+            }
             ColorSpace::Unknown => todo!(),
         }
     }

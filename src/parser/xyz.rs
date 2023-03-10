@@ -1,4 +1,4 @@
-use crate::helper::vec2tuple;
+use crate::{helper::vec2tuple, ColorSpace};
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -17,7 +17,7 @@ pub fn parse_xyz_str(xyz_str: impl ToString) -> Result<(f64, f64, f64)> {
         .map(|s| f64::from_str(s).unwrap())
         .collect::<Vec<f64>>();
 
-    // TODO: validate xyz value
+    ColorSpace::XYZ.valid(&xyz_vec)?;
 
     Ok(vec2tuple(xyz_vec))
 }
