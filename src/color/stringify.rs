@@ -137,12 +137,12 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::new(255.0, 0.0, 0.0, 1.0);
-    /// assert_eq!(color.xyz(), "xyz(0.412453, 0.212671, 0.019334)");
+    /// assert_eq!(color.xyz(), "xyz(0.757088, 0.596903, 0.260887)");
     /// ```
     pub fn xyz(self) -> String {
         let (r, g, b, _) = self.rgba;
         let (x, y, z) = rgb2xyz((r, g, b));
-        format!("xyz({}, {}, {})", x, y, z)
+        format!("xyz({}, {}, {})", round(x, 6), round(y, 6), round(z, 6))
     }
     /// `name` of the color
     ///
@@ -186,7 +186,7 @@ mod tests {
         assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
         assert_eq!(color.hsv(), "hsv(0, 0%, 100%)");
         assert_eq!(color.hwb(), "hwb(0, 100%, 0%)");
-        assert_eq!(color.xyz(), "xyz(0.950456, 1, 1.088754)");
+        assert_eq!(color.xyz(), "xyz(1, 1, 1)");
 
         let color = Color::new(0.0, 0.0, 0.0, 0.5);
         assert_eq!(color.hex(), "#000000");
@@ -195,7 +195,7 @@ mod tests {
         assert_eq!(color.hsl(), "hsl(0, 0%, 0%)");
         assert_eq!(color.hsv(), "hsv(0, 0%, 0%)");
         assert_eq!(color.hwb(), "hwb(0, 0%, 100%)");
-        assert_eq!(color.xyz(), "xyz(0, 0, 0)");
+        assert_eq!(color.xyz(), "xyz(0.137931, 0.137931, 0.137931)");
 
         let color = Color::new(0.0, 128.0, 128.0, 1.0);
         assert_eq!(color.hex(), "#008080");
@@ -204,6 +204,6 @@ mod tests {
         assert_eq!(color.hsl(), "hsl(180, 100%, 25%)");
         assert_eq!(color.hsv(), "hsv(180, 100%, 50%)");
         assert_eq!(color.hwb(), "hwb(180, 0%, 50%)");
-        assert_eq!(color.xyz(), "xyz(0.270056, 0.395208, 0.536807)");
+        assert_eq!(color.xyz(), "xyz(0.496222, 0.553915, 0.596299)");
     }
 }
