@@ -11,7 +11,7 @@ pub fn rgb2cmyk(color: (f64, f64, f64)) -> (f64, f64, f64, f64) {
     let m = (1. - g - k) * (1. - k);
     let y = (1. - b - k) * (1. - k);
 
-    (c, y, m, k)
+    (c, m, y, k)
 }
 
 /// [CMYK to RGB color conversion](https://www.rapidtables.com/convert/color/cmyk-to-rgb.html)
