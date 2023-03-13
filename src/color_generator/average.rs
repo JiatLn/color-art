@@ -6,6 +6,7 @@ impl Color {
     /// This function will return a new color that is the average of the colors
     /// in the list.
     /// It will calculate the average of the RGB channels and alpha values of the colors.
+    /// If the list length is 0, it will return a black color.
     ///
     /// # Examples
     /// ```rust
@@ -20,26 +21,23 @@ impl Color {
     /// let averaged_color = Color::average(&colors);
     /// assert_eq!(averaged_color.rgba(), "rgba(128, 51, 0, 0.75)");
     /// ```
-    pub fn average(colors: &Vec<Color>) -> Color {
-        let len = colors.len() as f64;
-
-        if len == 0.0 {
-            return Color::new(0.0, 0.0, 0.0, 0.0);
+    pub fn average(colors: &[Color]) -> Color {
+        if colors.is_empty() {
+            return Color::new(0.0, 0.0, 0.0, 1.0);
         }
 
-        let mut r = 0.0;
-        let mut g = 0.0;
-        let mut b = 0.0;
-        let mut a = 0.0;
+        let vec = colors
+            .iter()
+            .fold([0.0, 0.0, 0.0, 0.0], |acc, color| {
+                let (r, g, b) = color.rgb;
+                let a = color.alpha;
+                [acc[0] + r, acc[1] + g, acc[2] + b, acc[3] + a]
+            })
+            .iter()
+            .map(|v| v / colors.len() as f64)
+            .collect::<Vec<f64>>();
 
-        for color in colors {
-            r += color.rgb.0;
-            g += color.rgb.1;
-            b += color.rgb.2;
-            a += color.alpha;
-        }
-
-        Color::new(r / len, g / len, b / len, a / len)
+        Color::new(vec[0], vec[1], vec[2], vec[3])
     }
 }
 
@@ -73,5 +71,11 @@ mod tests {
         ];
         let averaged_color = Color::average(&colors);
         assert_eq!(averaged_color.hex(), "#aa5555");
+    }
+
+    #[test]
+    fn test_average_empty_list() {
+        let averaged_color = Color::average(&vec![]);
+        assert_eq!(averaged_color.rgba(), "rgba(0, 0, 0, 1)");
     }
 }
