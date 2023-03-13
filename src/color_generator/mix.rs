@@ -59,4 +59,12 @@ mod tests {
         let color7 = Color::mix(color1, color2, 1.0).unwrap();
         assert_eq!(color7.hex(), "#003366");
     }
+
+    #[test]
+    fn test_mix_error() {
+        let color1 = Color::from_str("#003366").unwrap();
+        let color2 = Color::from_str("#d2e1dd").unwrap();
+        let result = Color::mix(color1, color2, 1.1);
+        assert!(result.is_err());
+    }
 }
