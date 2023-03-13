@@ -26,10 +26,7 @@ impl Color {
         let s = color[1];
         let l = color[2];
         let s = (s + amount).min(1.0).max(0.0);
-        let (r, g, b) = conversion::hsl::hsl2rgb((h, s, l));
-        self.rgba.0 = r;
-        self.rgba.1 = g;
-        self.rgba.2 = b;
+        self.rgb = conversion::hsl::hsl2rgb((h, s, l));
         Ok(*self)
     }
     /// Decrease the saturation of a color in the HSL color space by an absolute amount.

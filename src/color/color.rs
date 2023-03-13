@@ -5,14 +5,16 @@ use std::str::FromStr;
 /// Color is a struct that represents a color.
 #[derive(PartialEq, Debug, Clone, Copy)]
 pub struct Color {
-    pub(crate) rgba: (f64, f64, f64, f64),
+    pub(crate) rgb: (f64, f64, f64),
+    pub(crate) alpha: f64,
 }
 
 impl Color {
     /// Creates a new [`Color`].
     pub fn new(r: f64, g: f64, b: f64, alpha: f64) -> Self {
         Color {
-            rgba: (r, g, b, alpha),
+            rgb: (r, g, b),
+            alpha,
         }
     }
 }
@@ -57,10 +59,7 @@ impl FromStr for Color {
                 let (r, g, b) = parser::rgb::parse_rgb_str(s)?;
                 (r, g, b, 1.0)
             }
-            s if s.starts_with("rgba(") => {
-                let (r, g, b, a) = parser::rgba::parse_rgba_str(s)?;
-                (r, g, b, a)
-            }
+            s if s.starts_with("rgba(") => parser::rgba::parse_rgba_str(s)?,
             s if s.starts_with('#') => {
                 let hex_str = parser::hex::parse_hex_str(s)?;
                 let (r, g, b) = conversion::hex::hex2rgb(&hex_str);

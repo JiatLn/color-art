@@ -33,10 +33,10 @@ impl Color {
         let mut a = 0.0;
 
         for color in colors {
-            r += color.rgba.0;
-            g += color.rgba.1;
-            b += color.rgba.2;
-            a += color.rgba.3;
+            r += color.rgb.0;
+            g += color.rgb.1;
+            b += color.rgb.2;
+            a += color.alpha;
         }
 
         Color::new(r / len, g / len, b / len, a / len)

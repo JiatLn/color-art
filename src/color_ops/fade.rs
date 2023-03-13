@@ -20,7 +20,7 @@ impl Color {
         if amount < 0.0 || amount > 1.0 {
             bail!("Amount must be between 0.0 and 1.0");
         }
-        self.rgba.3 = amount;
+        self.alpha = amount;
         Ok(*self)
     }
     /// Decrease the transparency (or increase the opacity) of a color, making it more opaque.

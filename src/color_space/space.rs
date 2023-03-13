@@ -64,12 +64,12 @@ impl Color {
     pub fn space(&self, space: ColorSpace) -> Result<Vec<f64>> {
         match space {
             ColorSpace::RGB => {
-                let (r, g, b, _a) = self.rgba;
+                let (r, g, b) = self.rgb;
                 Ok(vec![r, g, b])
             }
             ColorSpace::RGBA => {
-                let (r, g, b, a) = self.rgba;
-                Ok(vec![r, g, b, a])
+                let (r, g, b) = self.rgb;
+                Ok(vec![r, g, b, self.alpha])
             }
             ColorSpace::HSL => {
                 let (h, s, l) = hsl::parse_hsl_str(self.hsl())?;

@@ -24,14 +24,16 @@ impl Color {
         if weight < 0.0 || weight > 1.0 {
             bail!("weight must be between 0.0 and 1.0");
         }
-        let rgba1 = self.rgba;
-        let rgba2 = color.rgba;
+        let rgb1 = self.rgb;
+        let rgb2 = color.rgb;
         let w1 = weight;
         let w2 = 1.0 - weight;
-        self.rgba.0 = rgba1.0 * w1 + rgba2.0 * w2;
-        self.rgba.1 = rgba1.1 * w1 + rgba2.1 * w2;
-        self.rgba.2 = rgba1.2 * w1 + rgba2.2 * w2;
-        self.rgba.3 = rgba1.3 * w1 + rgba2.3 * w2;
+        self.rgb = (
+            rgb1.0 * w1 + rgb2.0 * w2,
+            rgb1.1 * w1 + rgb2.1 * w2,
+            rgb1.2 * w1 + rgb2.2 * w2,
+        );
+        self.alpha = self.alpha * w1 + color.alpha * w2;
         Ok(*self)
     }
     /// Mix color with white in variable proportion.

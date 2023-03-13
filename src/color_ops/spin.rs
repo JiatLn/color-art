@@ -29,10 +29,7 @@ impl Color {
         let l = color[2];
         let h = (h + angle) % 360.0;
         let h = if h < 0.0 { h + 360.0 } else { h };
-        let (r, g, b) = conversion::hsl::hsl2rgb((h, s, l));
-        self.rgba.0 = r;
-        self.rgba.1 = g;
-        self.rgba.2 = b;
+        self.rgb = conversion::hsl::hsl2rgb((h, s, l));
         Ok(*self)
     }
 }

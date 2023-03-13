@@ -25,14 +25,14 @@ impl Color {
         if weight < 0.0 || weight > 1.0 {
             bail!("weight must be between 0.0 and 1.0");
         }
-        let rgba1 = color1.rgba;
-        let rgba2 = color2.rgba;
+        let rgb1 = color1.rgb;
+        let rgb2 = color2.rgb;
         let w1 = weight;
         let w2 = 1.0 - weight;
-        let r = rgba1.0 * w1 + rgba2.0 * w2;
-        let g = rgba1.1 * w1 + rgba2.1 * w2;
-        let b = rgba1.2 * w1 + rgba2.2 * w2;
-        let a = rgba1.3 * w1 + rgba2.3 * w2;
+        let r = rgb1.0 * w1 + rgb2.0 * w2;
+        let g = rgb1.1 * w1 + rgb2.1 * w2;
+        let b = rgb1.2 * w1 + rgb2.2 * w2;
+        let a = color1.alpha * w1 + color2.alpha * w2;
         Ok(Color::new(r, g, b, a))
     }
 }
