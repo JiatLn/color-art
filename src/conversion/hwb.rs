@@ -27,7 +27,6 @@ pub fn hwb2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
         return (gray, gray, gray);
     }
     let rgb = hsl::hsl2rgb((hue, 1.0, 0.5));
-    dbg!(rgb);
     let mut rgb_vec = vec![rgb.0, rgb.1, rgb.2];
     for i in 0..3 {
         rgb_vec[i] *= 1.0 - whiteness - blackness;
