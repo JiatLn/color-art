@@ -1,14 +1,5 @@
+use super::utils::{rgb_xyz, xyz_lab, XN, YN, ZN};
 use crate::helper::*;
-
-// D65 standard referent
-const XN: f64 = 0.950470;
-const YN: f64 = 1.0;
-const ZN: f64 = 1.088830;
-
-const T0: f64 = 4.0 / 29.0;
-const T1: f64 = 6.0 / 29.0;
-const T2: f64 = 3.0 * T1 * T1;
-const T3: f64 = T1 * T1 * T1;
 
 /// Convert RGB to XYZ.
 pub fn rgb2xyz(color: (f64, f64, f64)) -> (f64, f64, f64) {
@@ -27,22 +18,6 @@ pub fn rgb2xyz(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let z = xyz_lab(z);
 
     (x, y, z)
-}
-
-fn xyz_lab(t: f64) -> f64 {
-    if t > T3 {
-        t.powf(1.0 / 3.0)
-    } else {
-        t / T2 + T0
-    }
-}
-
-fn rgb_xyz(r: f64) -> f64 {
-    if r <= 0.04045 {
-        r / 12.92
-    } else {
-        ((r + 0.055) / 1.055).powf(2.4)
-    }
 }
 
 /// Convert XYZ to RGB.
