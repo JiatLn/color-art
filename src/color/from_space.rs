@@ -15,6 +15,18 @@ impl Color {
         ColorSpace::RGB.valid(&vec![r, g, b])?;
         Ok(Color::new(r, g, b, 1.0))
     }
+    /// Create a color from RGBA values.
+    ///
+    /// # Example
+    /// ```
+    /// use color_art::Color;
+    /// let color = Color::from_rgba(255.0, 51.0, 153.0, 0.5).unwrap();
+    /// assert_eq!(color.rgba(), "rgba(255, 51, 153, 0.5)");
+    /// ```
+    pub fn from_rgba(r: f64, g: f64, b: f64, a: f64) -> Result<Color> {
+        ColorSpace::RGBA.valid(&vec![r, g, b, a])?;
+        Ok(Color::new(r, g, b, a))
+    }
     /// Create a color from HSL values.
     ///
     /// # Example
@@ -53,6 +65,12 @@ mod tests {
     fn test_color_from_rgb() {
         let color = Color::from_rgb(255.0, 51.0, 153.0).unwrap();
         assert_eq!(color.hex(), "#ff3399");
+    }
+
+    #[test]
+    fn test_color_from_rgba() {
+        let color = Color::from_rgba(255.0, 51.0, 153.0, 0.5).unwrap();
+        assert_eq!(color.rgba(), "rgba(255, 51, 153, 0.5)");
     }
 
     #[test]
