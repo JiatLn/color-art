@@ -4,7 +4,10 @@ version = "0.2.4"
 edition = "2021"
 description = "A rust crate for working with colors and color spaces."
 license = "MIT"
-authors = ["JiatLn"]
+authors = ["JiatLn <lne128gene980@163.com>"]
+repository = "https://www.github.com/JiatLn/color-art"
+readme = "README.md"
+keywords = ["color", "art", "color-space", "color-art"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
