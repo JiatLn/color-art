@@ -23,7 +23,7 @@ impl Color {
     /// ```
     pub fn average(colors: &[Color]) -> Color {
         if colors.is_empty() {
-            return Color::new(0.0, 0.0, 0.0, 1.0);
+            return Color::default();
         }
 
         let vec = colors

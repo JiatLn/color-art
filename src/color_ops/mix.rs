@@ -73,7 +73,7 @@ impl Color {
     /// assert_eq!(color.hex(), "#800080");
     /// ```
     pub fn shade(&mut self, amount: f64) -> Result<Self> {
-        let black = Color::new(0.0, 0.0, 0.0, 1.0);
+        let black = Color::default();
         self.mix_with(&black, 1.0 - amount)
     }
 }

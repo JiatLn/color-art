@@ -9,6 +9,16 @@ pub struct Color {
     pub(crate) alpha: f64,
 }
 
+impl Default for Color {
+    /// default returns a black color.
+    fn default() -> Self {
+        Color {
+            rgb: (0.0, 0.0, 0.0),
+            alpha: 1.0,
+        }
+    }
+}
+
 impl Color {
     /// Creates a new [`Color`].
     pub fn new(r: f64, g: f64, b: f64, alpha: f64) -> Self {
@@ -108,6 +118,12 @@ impl FromStr for Color {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_color_default() {
+        let color = Color::default();
+        assert_eq!(color, Color::new(0.0, 0.0, 0.0, 1.0));
+    }
 
     #[test]
     fn test_color_from_rgb_str() {
