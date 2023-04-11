@@ -121,7 +121,11 @@ let color = Color::from_cmyk(0.0, 0.0, 1.0, 0.0).unwrap();
 
 #### Stringify a color
 
-Stringify a color to a string. You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv`, `hwb`, `cmyk`, `xyz`, `name` method to stringify a color to a string. For example:
+Stringify a color to a string.
+
+You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv`, `hwb`, `cmyk`, `xyz`, `name` method to stringify a color to a string.
+
+For example:
 
 ```rust
 use color_art::Color;
