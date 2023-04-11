@@ -40,19 +40,21 @@ color-art = "0.2"
 
 ### Color generator
 
+#### Create color from string
+
 You can use the `from_str` method to construct a color from a string. 
 
 Currently supported color formats:
 
-- RGB
-- RGBA
-- HEX
-- HSL
-- HSV
-- HWB
-- CMYK
-- XYZ
-- Named color from [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color)
+- `rgb`
+- `rgba`
+- `hex`
+- `hsl`
+- `hsv`
+- `hwb`
+- `cmyk`
+- `xyz`
+- `named color` from [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color)
 
 For example:
 
@@ -71,7 +73,7 @@ let color = Color::from_str("xyz(0.932231, 0.975339, 0.502949)").unwrap();
 let color = Color::from_str("yellow").unwrap();
 ```
 
-#### create color from color space
+#### Create color from color space
 
 You can use the `from_<color_space>` method to construct a color from a color space.
 
@@ -95,7 +97,7 @@ let color = Color::from_hsv(60.0, 1.0, 1.0).unwrap();
 let color = Color::from_cmyk(0.0, 0.0, 1.0, 0.0).unwrap();
 ```
 
-Other color generator methods:
+#### Other color generator methods
 
 - [random](./docs/color_generator.md#random) - Generate a random color.
 - [mix](./docs/color_generator.md#mix) - Mix two colors.
