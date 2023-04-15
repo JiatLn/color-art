@@ -6,3 +6,4 @@ pub(crate) mod hwb;
 pub(crate) mod rgb;
 pub(crate) mod rgba;
 pub(crate) mod xyz;
+pub(crate) mod yuv;

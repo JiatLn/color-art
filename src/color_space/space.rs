@@ -34,6 +34,8 @@ pub enum ColorSpace {
     CMYK,
     /// XYZ color space.
     XYZ,
+    /// YUV color Space.
+    YUV,
     /// Unknown color space.
     ///
     /// To be used when the color space is not known.
@@ -54,6 +56,7 @@ where
             "hwb" => ColorSpace::HWB,
             "cmyk" => ColorSpace::CMYK,
             "xyz" => ColorSpace::XYZ,
+            "yuv" => ColorSpace::YUV,
             _ => ColorSpace::Unknown,
         }
     }
@@ -90,6 +93,10 @@ impl Color {
             ColorSpace::XYZ => {
                 let (x, y, z) = xyz::parse_xyz_str(self.xyz())?;
                 Ok(vec![x, y, z])
+            }
+            ColorSpace::YUV => {
+                let (y, u, v) = yuv::parse_yuv_str(self.yuv())?;
+                Ok(vec![y, u, v])
             }
             ColorSpace::HEX | ColorSpace::Unknown => {
                 anyhow::bail!("not implemented yet")

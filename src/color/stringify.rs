@@ -1,6 +1,7 @@
 use crate::{
     conversion::{
         cmyk::rgb2cmyk, hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv, hwb::rgb2hwb, xyz::rgb2xyz,
+        yuv::rgb2yuv,
     },
     helper::round,
     Color,
@@ -137,6 +138,19 @@ impl Color {
     pub fn xyz(self) -> String {
         let (x, y, z) = rgb2xyz(self.rgb);
         format!("xyz({}, {}, {})", round(x, 6), round(y, 6), round(z, 6))
+    }
+    /// `yuv` string of the color
+    ///
+    /// # Examples
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255.0, 0.0, 0.0, 1.0);
+    /// assert_eq!(color.yuv(), "yuv(0.299, -0.1474, 0.6148)");
+    /// ```
+    pub fn yuv(self) -> String {
+        let (y, u, v) = rgb2yuv(self.rgb);
+        format!("yuv({}, {}, {})", round(y, 4), round(u, 4), round(v, 4))
     }
     /// `name` of the color
     ///

@@ -124,6 +124,22 @@ impl ColorSpace {
                     }
                 }
             }
+            ColorSpace::YUV => {
+                if vec.len() != 3 {
+                    anyhow::bail!("YUV color space requires 3 values")
+                }
+                if let [y, u, v] = vec[..] {
+                    if y < 0.0 || y > 1.0 {
+                        anyhow::bail!("Y must be between 0.0 and 1.0, got {}", y)
+                    }
+                    if u < -0.436 || u > 0.436 {
+                        anyhow::bail!("U must be between -0.436 and 0.436, got {}", u)
+                    }
+                    if v < -0.615 || v > 0.615 {
+                        anyhow::bail!("V must be between -0.615 and 0.615, got {}", v)
+                    }
+                }
+            }
             ColorSpace::Unknown => todo!(),
         }
         Ok(())
