@@ -14,4 +14,5 @@ fn test_color_stringify() {
     assert_eq!(color.cmyk(), "cmyk(0%, 0%, 100%, 0%)");
     assert_eq!(color.name(), "yellow");
     assert_eq!(color.xyz(), "xyz(0.932231, 0.975339, 0.502949)");
+    assert_eq!(color.yuv(), "yuv(0.886, -0.4368, 0.1)");
 }

@@ -54,6 +54,7 @@ Currently supported color formats:
 - `hwb`
 - `cmyk`
 - `xyz`
+- `yuv`
 - `named color` from [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color)
 
 For example:
@@ -70,6 +71,7 @@ let color = Color::from_str("hsv(60, 100%, 100%)").unwrap();
 let color = Color::from_str("hwb(60, 0%, 0%)").unwrap();
 let color = Color::from_str("cmyk(0%, 0%, 100%, 0%)").unwrap();
 let color = Color::from_str("xyz(0.932231, 0.975339, 0.502949)").unwrap();
+let color = Color::from_str("yuv(0.886, -0.4368, 0.1)").unwrap();
 let color = Color::from_str("yellow").unwrap();
 ```
 
@@ -123,7 +125,7 @@ let color = Color::from_cmyk(0.0, 0.0, 1.0, 0.0).unwrap();
 
 Stringify a color to a string.
 
-You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv`, `hwb`, `cmyk`, `xyz`, `name` method to stringify a color to a string.
+You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv`, `hwb`, `cmyk`, `xyz`, `yuv`, `name` method to stringify a color to a string.
 
 For example:
 
@@ -140,6 +142,7 @@ color.hsv(); // "hsv(60, 100%, 100%)"
 color.hwb(); // "hwb(60, 0%, 0%)"
 color.cmyk(); // "cmyk(0%, 0%, 100%, 0%)"
 color.xyz(); // "xyz(0.932231, 0.975339, 0.502949)"
+color.yuv(); // "yuv(0.886, -0.4368, 0.1)"
 color.name(); // "yellow"
 ```
 
