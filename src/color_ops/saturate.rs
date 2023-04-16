@@ -21,7 +21,7 @@ impl Color {
         if amount.abs() > 1.0 {
             anyhow::bail!("Amount must be between 0.0 and 1.0")
         }
-        let color = self.space(ColorSpace::HSL)?;
+        let color = self.vec_of(ColorSpace::HSL);
         let h = color[0];
         let s = color[1];
         let l = color[2];

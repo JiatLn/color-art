@@ -4,5 +4,6 @@ pub mod from_num;
 pub mod from_space;
 pub mod from_str;
 pub mod stringify;
+pub mod vec_of;
 
 pub use color::Color;

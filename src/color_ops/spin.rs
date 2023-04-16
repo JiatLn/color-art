@@ -23,7 +23,7 @@ impl Color {
     /// assert_eq!(color.hsl(), "hsl(340, 90%, 50%)");
     /// ```
     pub fn spin(&mut self, angle: f64) -> Result<Self> {
-        let color = self.space(ColorSpace::HSL)?;
+        let color = self.vec_of(ColorSpace::HSL);
         let h = color[0];
         let s = color[1];
         let l = color[2];

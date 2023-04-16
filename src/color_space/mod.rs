@@ -1,4 +1,4 @@
-pub mod space;
+pub mod color_space;
 pub mod valid;
 
-pub use space::ColorSpace;
+pub use color_space::ColorSpace;

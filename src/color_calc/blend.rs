@@ -105,8 +105,8 @@ pub enum BlendMode {
 /// assert_eq!(blended_color.hex(), "#8ef6fa");
 /// ```
 pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> Color {
-    let backdrop_vec = backdrop_color.space(ColorSpace::RGB).unwrap();
-    let source_vec = source_color.space(ColorSpace::RGB).unwrap();
+    let backdrop_vec = backdrop_color.vec_of(ColorSpace::RGB);
+    let source_vec = source_color.vec_of(ColorSpace::RGB);
 
     let zip_vec: _ = backdrop_vec
         .iter()
