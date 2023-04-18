@@ -78,6 +78,11 @@ impl FromStr for Color {
                 let (r, g, b) = conversion::yuv::yuv2rgb(yuv);
                 (r, g, b, 1.0)
             }
+            s if s.starts_with("ycbcr(") => {
+                let ycbcr = parser::ycbcr::parse_ycbcr_str(s)?;
+                let (r, g, b) = conversion::ycbcr::ycbcr2rgb(ycbcr);
+                (r, g, b, 1.0)
+            }
             _ => {
                 let found = crate::W3CX11.get(s);
                 match found {
@@ -288,5 +293,11 @@ mod tests {
 
         let color = Color::from_str("yuv(0.7233, -0.2747, -0.3212)").unwrap();
         assert_eq!(color.rgb(), "rgb(91, 255, 42)");
+    }
+
+    #[test]
+    fn test_color_from_ycbcr_str() {
+        let color = Color::from_str("YCbCr(225.93, 0.5755, 148.7269)").unwrap();
+        assert_eq!(color.rgb(), "rgb(255, 255, 0)");
     }
 }

@@ -33,6 +33,8 @@ pub enum ColorSpace {
     XYZ,
     /// YUV color Space.
     YUV,
+    /// YCbCr color Space.
+    YCbCr,
     /// Unknown color space.
     ///
     /// To be used when the color space is not known.
@@ -54,6 +56,7 @@ where
             "cmyk" => ColorSpace::CMYK,
             "xyz" => ColorSpace::XYZ,
             "yuv" => ColorSpace::YUV,
+            "YCbCr" => ColorSpace::YCbCr,
             _ => ColorSpace::Unknown,
         }
     }

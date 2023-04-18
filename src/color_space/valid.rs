@@ -140,6 +140,22 @@ impl ColorSpace {
                     }
                 }
             }
+            ColorSpace::YCbCr => {
+                if vec.len() != 3 {
+                    anyhow::bail!("YCbCr color space requires 3 values")
+                }
+                if let [y, cb, cr] = vec[..] {
+                    if y < 0.0 || y > 255.0 {
+                        anyhow::bail!("Y must be between 0.0 and 255.0, got {}", y)
+                    }
+                    if cb < 0.0 || cb > 255.0 {
+                        anyhow::bail!("Cb must be between 0.0 and 255.0, got {}", cb)
+                    }
+                    if cr < 0.0 || cr > 255.0 {
+                        anyhow::bail!("Cr must be between 0.0 and 255.0, got {}", cr)
+                    }
+                }
+            }
             ColorSpace::Unknown => todo!(),
         }
         Ok(())

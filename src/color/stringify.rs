@@ -1,7 +1,7 @@
 use crate::{
     conversion::{
         cmyk::rgb2cmyk, hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv, hwb::rgb2hwb, xyz::rgb2xyz,
-        yuv::rgb2yuv,
+        ycbcr::rgb2ycbcr, yuv::rgb2yuv,
     },
     helper::round,
     Color,
@@ -152,6 +152,19 @@ impl Color {
         let (y, u, v) = rgb2yuv(self.rgb);
         format!("yuv({}, {}, {})", round(y, 4), round(u, 4), round(v, 4))
     }
+    /// `YCbCr` string of the color
+    ///
+    /// # Examples
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255.0, 255.0, 0.0, 1.0);
+    /// assert_eq!(color.ycbcr(), "YCbCr(225.93, 0.5755, 148.7269)");
+    /// ```
+    pub fn ycbcr(self) -> String {
+        let (y, cb, cr) = rgb2ycbcr(self.rgb);
+        format!("YCbCr({}, {}, {})", round(y, 4), round(cb, 4), round(cr, 4))
+    }
     /// `name` of the color
     ///
     /// If the color is not in the [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color) color list, the hex string will be returned.
@@ -195,6 +208,7 @@ mod tests {
         assert_eq!(color.hsv(), "hsv(0, 0%, 100%)");
         assert_eq!(color.hwb(), "hwb(0, 100%, 0%)");
         assert_eq!(color.xyz(), "xyz(1, 1, 1)");
+        assert_eq!(color.ycbcr(), "YCbCr(255, 128, 128)");
 
         let color = Color::new(0.0, 0.0, 0.0, 0.5);
         assert_eq!(color.hex(), "#000000");
@@ -204,6 +218,7 @@ mod tests {
         assert_eq!(color.hsv(), "hsv(0, 0%, 0%)");
         assert_eq!(color.hwb(), "hwb(0, 0%, 100%)");
         assert_eq!(color.xyz(), "xyz(0.137931, 0.137931, 0.137931)");
+        assert_eq!(color.ycbcr(), "YCbCr(0, 128, 128)");
 
         let color = Color::new(0.0, 128.0, 128.0, 1.0);
         assert_eq!(color.hex(), "#008080");
@@ -213,5 +228,6 @@ mod tests {
         assert_eq!(color.hsv(), "hsv(180, 100%, 50%)");
         assert_eq!(color.hwb(), "hwb(180, 0%, 50%)");
         assert_eq!(color.xyz(), "xyz(0.496222, 0.553915, 0.596299)");
+        assert_eq!(color.ycbcr(), "YCbCr(89.728, 149.5854, 64.0239)");
     }
 }

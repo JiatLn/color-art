@@ -52,6 +52,10 @@ impl Color {
                 let (y, u, v) = conversion::yuv::rgb2yuv(color);
                 vec![y, u, v]
             }
+            ColorSpace::YCbCr => {
+                let (y, cb, cr) = conversion::ycbcr::rgb2ycbcr(color);
+                vec![y, cb, cr]
+            }
             ColorSpace::HEX | ColorSpace::Unknown => {
                 todo!("not implemented yet")
             }
