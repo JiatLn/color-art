@@ -88,6 +88,11 @@ impl Color {
     pub fn hsv_value(&self) -> f64 {
         self.vec_of(ColorSpace::HSV)[2]
     }
+    /// Calculates the [gray](http://en.wikipedia.org/wiki/Grayscale) value of a color.
+    pub fn gray(&self) -> f64 {
+        let (r, g, b) = self.rgb;
+        round(0.299 * r + 0.587 * g + 0.114 * b, 4)
+    }
 }
 
 #[cfg(test)]
@@ -108,6 +113,7 @@ mod tests {
 
         assert_eq!(color.luma(), 0.01);
         assert_eq!(color.luminance(), 0.07);
+        assert_eq!(color.gray(), 18.15);
 
         let color = Color::from_str("hsl(90, 100%, 50%)").unwrap();
 
@@ -117,16 +123,19 @@ mod tests {
 
         assert_eq!(color.luma(), 0.76);
         assert_eq!(color.luminance(), 0.82);
+        assert_eq!(color.gray(), 187.8075);
 
         let color = Color::from_str("hsv(90, 100%, 50%)").unwrap();
 
         assert_eq!(color.hsv_hue(), 90.0);
         assert_eq!(color.hsv_saturation(), 1.0);
         assert_eq!(color.hsv_value(), 0.5);
+        assert_eq!(color.gray(), 93.9038);
 
         let color = Color::from_str("rgb(100, 200, 30)").unwrap();
 
         assert_eq!(color.luma(), 0.44);
         assert_eq!(color.luminance(), 0.65);
+        assert_eq!(color.gray(), 150.72);
     }
 }

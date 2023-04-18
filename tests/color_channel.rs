@@ -20,4 +20,6 @@ fn test_color_channel() {
 
     assert_eq!(color.luma(), 0.59);
     assert_eq!(color.luminance(), 0.79);
+
+    assert_eq!(color.gray(), 198.71);
 }
