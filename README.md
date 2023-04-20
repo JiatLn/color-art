@@ -108,8 +108,8 @@ For example:
 ```rust
 use color_art::Color;
 
-let color = Color::from_rgb(255, 255, 0).unwrap();
-let color = Color::from_rgba(255, 255, 0, 0.5).unwrap();
+let color = Color::from_rgb(255.0, 255.0, 0.0).unwrap();
+let color = Color::from_rgba(255.0, 255.0, 0.0, 0.5).unwrap();
 let color = Color::from_hsl(60.0, 1.0, 0.5).unwrap();
 let color = Color::from_hsv(60.0, 1.0, 1.0).unwrap();
 let color = Color::from_cmyk(0.0, 0.0, 1.0, 0.0).unwrap();
