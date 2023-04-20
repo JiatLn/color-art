@@ -74,6 +74,21 @@ impl Color {
         let (r, g, b) = conversion::cmyk::cmyk2rgb((c, m, y, k));
         Ok(Color::new(r, g, b, 1.0))
     }
+    /// Create a color from a hex string.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use color_art::Color;
+    ///
+    /// let color = Color::from_hex("#ff3399").unwrap();
+    /// assert_eq!(color.hex(), "#ff3399");
+    /// ```
+    pub fn from_hex(hex_str: &str) -> Result<Color> {
+        ColorSpace::valid_hex(hex_str)?;
+        let (r, g, b) = conversion::hex::hex2rgb(hex_str);
+        Ok(Color::new(r, g, b, 1.0))
+    }
 }
 
 #[cfg(test)]

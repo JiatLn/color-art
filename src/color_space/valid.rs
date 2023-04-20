@@ -72,7 +72,9 @@ impl ColorSpace {
                     }
                 }
             }
-            ColorSpace::HEX => todo!(),
+            ColorSpace::HEX => todo!(
+                "HEX color space not implemented yet, please use `ColorSpace::valid_hex` instead"
+            ),
             ColorSpace::HWB => {
                 if vec.len() != 3 {
                     anyhow::bail!("HWB color space requires 3 values")
@@ -156,8 +158,50 @@ impl ColorSpace {
                     }
                 }
             }
-            ColorSpace::Unknown => todo!(),
+            ColorSpace::Unknown => todo!("Unknown color space validation"),
         }
         Ok(())
+    }
+    /// Validate a hex color string
+    pub fn valid_hex(hex: &str) -> Result<()> {
+        if !hex.chars().skip(1).all(|c| c.is_ascii_hexdigit()) {
+            anyhow::bail!("Hex color must be a valid hex string")
+        }
+        if hex.len() != 4 && hex.len() != 5 && hex.len() != 7 && hex.len() != 9 {
+            anyhow::bail!("Hex color must be 3, 4, 6, or 8 characters long")
+        }
+        Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_valid_hex() {
+        let hex = "#f39";
+        assert!(ColorSpace::valid_hex(hex).is_ok());
+
+        let hex = "#f39e";
+        assert!(ColorSpace::valid_hex(hex).is_ok());
+
+        let hex = "#ff3399";
+        assert!(ColorSpace::valid_hex(hex).is_ok());
+
+        let hex = "#ff3399ff";
+        assert!(ColorSpace::valid_hex(hex).is_ok());
+
+        let hex = "#ff333";
+        assert!(ColorSpace::valid_hex(hex).is_err());
+
+        let hex = "#zzz";
+        assert!(ColorSpace::valid_hex(hex).is_err());
+
+        let hex = "#ff3399f";
+        assert!(ColorSpace::valid_hex(hex).is_err());
+
+        let hex = "not a hex color";
+        assert!(ColorSpace::valid_hex(hex).is_err());
     }
 }
