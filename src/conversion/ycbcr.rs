@@ -1,24 +1,27 @@
 use crate::helper::round;
 
+static RGB2YCRCB_COEFFS: [f64; 5] = [0.299, 0.587, 0.114, 0.713, 0.564];
+static YCRCB2RGB_COEFFS: [f64; 4] = [1.403, -0.714, -0.344, 1.773];
+
 /// Convert `RGB` to `YCbCr`
 ///
-/// reference: <https://docs.opencv.org/4.7.0/de/d25/imgproc_color_conversions.html#color_convert_rgb_ycrcb>
+/// reference: [RGB2YCrCb](https://github.com/opencv/opencv_contrib/blob/master/modules/cudev/include/opencv2/cudev/functional/detail/color_cvt.hpp#L427)
 pub fn rgb2ycbcr(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (r, g, b) = color;
-    let y = 0.299 * r + 0.587 * g + 0.114 * b;
-    let cr = (r - y) * 0.713 + 128.0;
-    let cb = (b - y) * 0.564 + 128.0;
+    let y = RGB2YCRCB_COEFFS[0] * r + RGB2YCRCB_COEFFS[1] * g + RGB2YCRCB_COEFFS[2] * b;
+    let cr = (r - y) * RGB2YCRCB_COEFFS[3] + 128.0;
+    let cb = (b - y) * RGB2YCRCB_COEFFS[4] + 128.0;
     (round(y, 4), round(cb, 4), round(cr, 4))
 }
 
 /// Convert `YCbCr` to `RGB`
 ///
-/// reference: <https://docs.opencv.org/4.7.0/de/d25/imgproc_color_conversions.html#color_convert_rgb_ycrcb>
+/// reference: [YCrCb2RGB](https://github.com/opencv/opencv_contrib/blob/master/modules/cudev/include/opencv2/cudev/functional/detail/color_cvt.hpp#L481)
 pub fn ycbcr2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (y, cb, cr) = color;
-    let r = y + 1.403 * (cr - 128.0);
-    let g = y - 0.344 * (cb - 128.0) - 0.714 * (cr - 128.0);
-    let b = y + 1.773 * (cb - 128.0);
+    let r = y + YCRCB2RGB_COEFFS[0] * (cr - 128.0);
+    let g = y + YCRCB2RGB_COEFFS[2] * (cb - 128.0) + YCRCB2RGB_COEFFS[1] * (cr - 128.0);
+    let b = y + YCRCB2RGB_COEFFS[3] * (cb - 128.0);
     (round(r, 0), round(g, 0), round(b, 0))
 }
 

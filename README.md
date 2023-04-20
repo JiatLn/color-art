@@ -72,7 +72,7 @@ let color = Color::from_str("hsv(60, 100%, 100%)").unwrap();
 let color = Color::from_str("hwb(60, 0%, 0%)").unwrap();
 let color = Color::from_str("cmyk(0%, 0%, 100%, 0%)").unwrap();
 let color = Color::from_str("xyz(0.932231, 0.975339, 0.502949)").unwrap();
-let color = Color::from_str("yuv(0.886, -0.4368, 0.1)").unwrap();
+let color = Color::from_str("yuv(0.886, -0.4359, 0.1)").unwrap();
 let color = Color::from_str("YCbCr(225.93, 0.5755, 148.7269)").unwrap();
 let color = Color::from_str("yellow").unwrap();
 ```
@@ -144,7 +144,7 @@ color.hsv(); // "hsv(60, 100%, 100%)"
 color.hwb(); // "hwb(60, 0%, 0%)"
 color.cmyk(); // "cmyk(0%, 0%, 100%, 0%)"
 color.xyz(); // "xyz(0.932231, 0.975339, 0.502949)"
-color.yuv(); // "yuv(0.886, -0.4368, 0.1)"
+color.yuv(); // "yuv(0.886, -0.4359, 0.1)"
 color.ycbcr(); // "YCbCr(225.93, 0.5755, 148.7269)"
 color.name(); // "yellow"
 ```

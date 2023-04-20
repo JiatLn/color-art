@@ -146,7 +146,7 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::new(255.0, 0.0, 0.0, 1.0);
-    /// assert_eq!(color.yuv(), "yuv(0.299, -0.1474, 0.6148)");
+    /// assert_eq!(color.yuv(), "yuv(0.299, -0.1471, 0.6148)");
     /// ```
     pub fn yuv(self) -> String {
         let (y, u, v) = rgb2yuv(self.rgb);
