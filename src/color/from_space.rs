@@ -4,28 +4,53 @@ use anyhow::{Ok, Result};
 impl Color {
     /// Create a color from RGB values.
     ///
+    /// # Parameters
+    ///
+    /// - `r`: Red value (0-255)
+    /// - `g`: Green value (0-255)
+    /// - `b`: Blue value (0-255)
+    ///
     /// # Example
     ///
     /// ```
     /// use color_art::Color;
     ///
-    /// let color = Color::from_rgb(255.0, 51.0, 153.0).unwrap();
+    /// let color = Color::from_rgb(255, 51, 153).unwrap();
     /// assert_eq!(color.hex(), "#ff3399");
     /// ```
-    pub fn from_rgb(r: f64, g: f64, b: f64) -> Result<Color> {
+    pub fn from_rgb<T>(r: T, g: T, b: T) -> Result<Color>
+    where
+        T: Into<f64>,
+    {
+        let r = r.into();
+        let g = g.into();
+        let b = b.into();
         ColorSpace::RGB.valid(&vec![r, g, b])?;
         Ok(Color::new(r, g, b, 1.0))
     }
     /// Create a color from RGBA values.
     ///
+    /// # Parameters
+    ///
+    /// - `r`: Red value (0-255)
+    /// - `g`: Green value (0-255)
+    /// - `b`: Blue value (0-255)
+    /// - `a`: Alpha value (0-1)
+    ///
     /// # Example
     ///
     /// ```
     /// use color_art::Color;
-    /// let color = Color::from_rgba(255.0, 51.0, 153.0, 0.5).unwrap();
+    /// let color = Color::from_rgba(255, 51, 153, 0.5).unwrap();
     /// assert_eq!(color.rgba(), "rgba(255, 51, 153, 0.5)");
     /// ```
-    pub fn from_rgba(r: f64, g: f64, b: f64, a: f64) -> Result<Color> {
+    pub fn from_rgba<T>(r: T, g: T, b: T, a: f64) -> Result<Color>
+    where
+        T: Into<f64>,
+    {
+        let r = r.into();
+        let g = g.into();
+        let b = b.into();
         ColorSpace::RGBA.valid(&vec![r, g, b, a])?;
         Ok(Color::new(r, g, b, a))
     }
@@ -97,6 +122,9 @@ mod tests {
 
     #[test]
     fn test_color_from_rgb() {
+        let color = Color::from_rgb(255, 51, 153).unwrap();
+        assert_eq!(color.hex(), "#ff3399");
+
         let color = Color::from_rgb(255.0, 51.0, 153.0).unwrap();
         assert_eq!(color.hex(), "#ff3399");
     }

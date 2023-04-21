@@ -3,11 +3,11 @@ use color_art::Color;
 #[test]
 fn test_color_from_space() {
     // RGB
-    let color = Color::from_rgb(255.0, 255.0, 0.0).unwrap();
+    let color = Color::from_rgb(255, 255, 0).unwrap();
     assert_eq!(color.hex(), "#ffff00");
 
     // RGBA
-    let color = Color::from_rgba(255.0, 255.0, 0.0, 0.5).unwrap();
+    let color = Color::from_rgba(255, 255, 0, 0.5).unwrap();
     assert_eq!(color.hex(), "#ffff00");
 
     // HSL
