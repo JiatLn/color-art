@@ -4,7 +4,6 @@ use super::{
 };
 use crate::helper::round;
 
-#[allow(unused)]
 pub fn rgb2lab(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (x, y, z) = rgb2xyz(color);
 

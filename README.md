@@ -129,7 +129,7 @@ let color = Color::from_hex("#ffff00").unwrap();
 
 Stringify a color to a string.
 
-You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv`, `hwb`, `cmyk`, `xyz`, `yuv`, `YCbCr`, `name` method to stringify a color to a string.
+You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv`, `hwb`, `cmyk`, `xyz`, `yuv`, `YCbCr`, `lab`, `name` method to stringify a color to a string.
 
 For example:
 
@@ -149,6 +149,7 @@ color.xyz(); // "xyz(0.932231, 0.975339, 0.502949)"
 color.yuv(); // "yuv(0.886, -0.4359, 0.1)"
 color.ycbcr(); // "YCbCr(225.93, 0.5755, 148.7269)"
 color.name(); // "yellow"
+color.lab(); // "lab(97.14, -21.55, 94.48)"
 ```
 
 ### Color Channel

@@ -1,7 +1,7 @@
 use crate::{
     conversion::{
-        cmyk::rgb2cmyk, hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv, hwb::rgb2hwb, xyz::rgb2xyz,
-        ycbcr::rgb2ycbcr, yuv::rgb2yuv,
+        cmyk::rgb2cmyk, hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv, hwb::rgb2hwb, lab::rgb2lab,
+        xyz::rgb2xyz, ycbcr::rgb2ycbcr, yuv::rgb2yuv,
     },
     helper::round,
     Color,
@@ -152,6 +152,19 @@ impl Color {
         let (y, u, v) = rgb2yuv(self.rgb);
         format!("yuv({}, {}, {})", round(y, 4), round(u, 4), round(v, 4))
     }
+    /// `lab` string of the color
+    ///
+    /// # Examples
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255.0, 255.0, 0.0, 1.0);
+    /// assert_eq!(color.lab(), "lab(97.14, -21.55, 94.48)");
+    /// ```
+    pub fn lab(self) -> String {
+        let (l, a, b) = rgb2lab(self.rgb);
+        format!("lab({}, {}, {})", round(l, 2), round(a, 2), round(b, 2))
+    }
     /// `YCbCr` string of the color
     ///
     /// # Examples
@@ -209,6 +222,7 @@ mod tests {
         assert_eq!(color.hwb(), "hwb(0, 100%, 0%)");
         assert_eq!(color.xyz(), "xyz(1, 1, 1)");
         assert_eq!(color.ycbcr(), "YCbCr(255, 128, 128)");
+        assert_eq!(color.lab(), "lab(100, 0, 0)");
 
         let color = Color::new(0.0, 0.0, 0.0, 0.5);
         assert_eq!(color.hex(), "#000000");
@@ -219,6 +233,7 @@ mod tests {
         assert_eq!(color.hwb(), "hwb(0, 0%, 100%)");
         assert_eq!(color.xyz(), "xyz(0.137931, 0.137931, 0.137931)");
         assert_eq!(color.ycbcr(), "YCbCr(0, 128, 128)");
+        assert_eq!(color.lab(), "lab(0, 0, 0)");
 
         let color = Color::new(0.0, 128.0, 128.0, 1.0);
         assert_eq!(color.hex(), "#008080");
@@ -229,5 +244,6 @@ mod tests {
         assert_eq!(color.hwb(), "hwb(180, 0%, 50%)");
         assert_eq!(color.xyz(), "xyz(0.496222, 0.553915, 0.596299)");
         assert_eq!(color.ycbcr(), "YCbCr(89.728, 149.5854, 64.0239)");
+        assert_eq!(color.lab(), "lab(48.25, -28.85, -8.48)");
     }
 }
