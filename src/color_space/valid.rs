@@ -3,7 +3,7 @@ use anyhow::Result;
 
 impl ColorSpace {
     /// Check if a vector of values is valid for a given color space.
-    pub fn valid(&self, vec: &Vec<f64>) -> Result<()> {
+    pub(crate) fn valid(&self, vec: &Vec<f64>) -> Result<()> {
         match self {
             ColorSpace::RGB => {
                 if vec.len() != 3 {
@@ -163,7 +163,7 @@ impl ColorSpace {
         Ok(())
     }
     /// Validate a hex color string
-    pub fn valid_hex(hex: &str) -> Result<()> {
+    pub(crate) fn valid_hex(hex: &str) -> Result<()> {
         if !hex.chars().skip(1).all(|c| c.is_ascii_hexdigit()) {
             anyhow::bail!("Hex color must be a valid hex string")
         }
