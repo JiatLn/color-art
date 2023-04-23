@@ -1,6 +1,15 @@
 use super::utils::{rgb_xyz, xyz_lab, XN, YN, ZN};
 use crate::helper::*;
 
+static RGB2XYZ_COEFFS: [f64; 9] = [
+    0.4124564, 0.3575761, 0.1804375, 0.2126729, 0.7151522, 0.0721750, 0.0193339, 0.1191920,
+    0.9503041,
+];
+
+static XYZ2RGB_COEFFS: [f64; 9] = [
+    3.2406, -1.5372, -0.4986, -0.9689, 1.8758, 0.0415, 0.0557, -0.2040, 1.0570,
+];
+
 /// Convert RGB to XYZ.
 pub fn rgb2xyz(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (r, g, b) = normalize_color(color);
@@ -9,9 +18,9 @@ pub fn rgb2xyz(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let g = rgb_xyz(g);
     let b = rgb_xyz(b);
 
-    let x = (r * 0.4124564 + g * 0.3575761 + b * 0.1804375) / XN;
-    let y = (r * 0.2126729 + g * 0.7151522 + b * 0.0721750) / YN;
-    let z = (r * 0.0193339 + g * 0.1191920 + b * 0.9503041) / ZN;
+    let x = (r * RGB2XYZ_COEFFS[0] + g * RGB2XYZ_COEFFS[1] + b * RGB2XYZ_COEFFS[2]) / XN;
+    let y = (r * RGB2XYZ_COEFFS[3] + g * RGB2XYZ_COEFFS[4] + b * RGB2XYZ_COEFFS[5]) / YN;
+    let z = (r * RGB2XYZ_COEFFS[6] + g * RGB2XYZ_COEFFS[7] + b * RGB2XYZ_COEFFS[8]) / ZN;
 
     let x = xyz_lab(x);
     let y = xyz_lab(y);
@@ -23,9 +32,9 @@ pub fn rgb2xyz(color: (f64, f64, f64)) -> (f64, f64, f64) {
 /// Convert XYZ to RGB.
 pub fn xyz2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (x, y, z) = color;
-    let r = 3.2406 * x - 1.5372 * y - 0.4986 * z;
-    let g = -0.9689 * x + 1.8758 * y + 0.0415 * z;
-    let b = 0.0557 * x - 0.2040 * y + 1.0570 * z;
+    let r = XYZ2RGB_COEFFS[0] * x + XYZ2RGB_COEFFS[1] * y + XYZ2RGB_COEFFS[2] * z;
+    let g = XYZ2RGB_COEFFS[3] * x + XYZ2RGB_COEFFS[4] * y + XYZ2RGB_COEFFS[5] * z;
+    let b = XYZ2RGB_COEFFS[6] * x + XYZ2RGB_COEFFS[7] * y + XYZ2RGB_COEFFS[8] * z;
     (
         round(r * 255.0, 0),
         round(g * 255.0, 0),
