@@ -114,6 +114,24 @@ impl Color {
         let (r, g, b) = conversion::hex::hex2rgb(hex_str);
         Ok(Color::new(r, g, b, 1.0))
     }
+
+    /// Create a color from a color name.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::from_name("yellow").unwrap();
+    /// assert_eq!(color.hex(), "#ffff00");
+    /// ```
+    pub fn from_name(name: &str) -> Result<Color> {
+        let found = crate::W3CX11.get(name);
+        match found {
+            Some(hex) => Color::from_hex(hex),
+            None => anyhow::bail!("Invalid color name: {}", name),
+        }
+    }
 }
 
 #[cfg(test)]

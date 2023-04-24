@@ -25,4 +25,8 @@ fn test_color_from_space() {
     // HEX
     let color = Color::from_hex("#ffff00").unwrap();
     assert_eq!(color.hex(), "#ffff00");
+
+    // Name
+    let color = Color::from_name("yellow").unwrap();
+    assert_eq!(color.hex(), "#ffff00");
 }

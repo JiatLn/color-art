@@ -92,6 +92,18 @@ let color = Color::from_num(16776960).unwrap();
 let color = Color::from_num(0xffff00).unwrap();
 ```
 
+#### Create color from name
+
+You can use the `from_name` method to construct a color from a name.
+
+For example:
+
+```rust
+use color_art::Color;
+
+let color = Color::from_name("yellow").unwrap();
+```
+
 #### Create color from color space
 
 You can use the `from_<color_space>` method to construct a color from a color space.
