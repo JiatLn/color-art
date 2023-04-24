@@ -35,6 +35,10 @@ pub enum ColorSpace {
     YUV,
     /// YCbCr color Space.
     YCbCr,
+    /// Lab color space.
+    ///
+    /// Lab stands for lightness, a, and b.
+    Lab,
     /// Unknown color space.
     ///
     /// To be used when the color space is not known.
@@ -57,6 +61,7 @@ where
             "xyz" => ColorSpace::XYZ,
             "yuv" => ColorSpace::YUV,
             "YCbCr" => ColorSpace::YCbCr,
+            "lab" => ColorSpace::Lab,
             _ => ColorSpace::Unknown,
         }
     }

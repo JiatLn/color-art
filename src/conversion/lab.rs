@@ -16,7 +16,6 @@ pub fn rgb2lab(color: (f64, f64, f64)) -> (f64, f64, f64) {
     (round(l, 4), round(a, 4), round(b, 4))
 }
 
-#[allow(unused)]
 pub fn lab2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (l, a, b) = color;
 

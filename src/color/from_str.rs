@@ -83,6 +83,11 @@ impl FromStr for Color {
                 let (r, g, b) = conversion::ycbcr::ycbcr2rgb(ycbcr);
                 (r, g, b, 1.0)
             }
+            s if s.starts_with("lab(") => {
+                let lab = parser::lab::parse_lab_str(s)?;
+                let (r, g, b) = conversion::lab::lab2rgb(lab);
+                (r, g, b, 1.0)
+            }
             _ => {
                 let found = crate::W3CX11.get(s);
                 match found {

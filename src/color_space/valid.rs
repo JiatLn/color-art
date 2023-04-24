@@ -158,6 +158,22 @@ impl ColorSpace {
                     }
                 }
             }
+            ColorSpace::Lab => {
+                if vec.len() != 3 {
+                    anyhow::bail!("Lab color space requires 3 values")
+                }
+                if let [l, a, b] = vec[..] {
+                    if l < 0.0 || l > 100.0 {
+                        anyhow::bail!("L must be between 0.0 and 100.0, got {}", l)
+                    }
+                    if a < -128.0 || a > 127.0 {
+                        anyhow::bail!("A must be between -128.0 and 127.0, got {}", a)
+                    }
+                    if b < -128.0 || b > 127.0 {
+                        anyhow::bail!("B must be between -128.0 and 127.0, got {}", b)
+                    }
+                }
+            }
             ColorSpace::Unknown => todo!("Unknown color space validation"),
         }
         Ok(())
