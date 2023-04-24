@@ -56,6 +56,7 @@ Currently supported color formats:
 - `xyz`
 - `yuv`
 - `YCbCr`
+- `lab`
 - `named color` from [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color)
 
 For example:
@@ -74,6 +75,7 @@ let color = Color::from_str("cmyk(0%, 0%, 100%, 0%)").unwrap();
 let color = Color::from_str("xyz(0.932231, 0.975339, 0.502949)").unwrap();
 let color = Color::from_str("yuv(0.886, -0.4359, 0.1)").unwrap();
 let color = Color::from_str("YCbCr(225.93, 0.5755, 148.7269)").unwrap();
+let color = Color::from_str("lab(97.14, -21.55, 94.48)").unwrap();
 let color = Color::from_str("yellow").unwrap();
 ```
 
