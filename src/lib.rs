@@ -24,4 +24,5 @@ pub use color::Color;
 pub use color_calc::blend::*;
 pub use color_calc::distance::*;
 pub use color_space::ColorSpace;
+use data::alpha_hex_map::ALPHA_HEX_MAP;
 use data::w3cx11::W3CX11_HASHMAP as W3CX11;

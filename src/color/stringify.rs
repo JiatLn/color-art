@@ -1,7 +1,14 @@
 use crate::{
     conversion::{
-        cmyk::rgb2cmyk, hex::rgb2hex, hsl::rgb2hsl, hsv::rgb2hsv, hwb::rgb2hwb, lab::rgb2lab,
-        xyz::rgb2xyz, ycbcr::rgb2ycbcr, yuv::rgb2yuv,
+        cmyk::rgb2cmyk,
+        hex::{rgb2hex, rgba2hex},
+        hsl::rgb2hsl,
+        hsv::rgb2hsv,
+        hwb::rgb2hwb,
+        lab::rgb2lab,
+        xyz::rgb2xyz,
+        ycbcr::rgb2ycbcr,
+        yuv::rgb2yuv,
     },
     helper::round,
     Color,
@@ -17,8 +24,16 @@ impl Color {
     ///
     /// let color = Color::new(255.0, 255.0, 255.0, 1.0);
     /// assert_eq!(color.hex(), "#ffffff");
+    ///
+    /// let color = Color::new(255.0, 255.0, 255.0, 0.5);
+    /// assert_eq!(color.hex(), "#ffffff80");
     /// ```
     pub fn hex(self) -> String {
+        if self.alpha != 1.0 {
+            // TODO: better way to do this?
+            let color = (self.rgb.0, self.rgb.1, self.rgb.2, self.alpha);
+            return rgba2hex(color);
+        }
         rgb2hex(self.rgb)
     }
     /// `rgb` string of the color

@@ -1,9 +1,21 @@
+use crate::{helper::round, ALPHA_HEX_MAP};
+
 pub fn rgb2hex(color: (f64, f64, f64)) -> String {
     let (r, g, b) = color;
     let r = r.round() as u8;
     let g = g.round() as u8;
     let b = b.round() as u8;
     format!("#{:02x}{:02x}{:02x}", r, g, b)
+}
+
+pub fn rgba2hex(color: (f64, f64, f64, f64)) -> String {
+    let (r, g, b, a) = color;
+    let r = r.round() as u8;
+    let g = g.round() as u8;
+    let b = b.round() as u8;
+    let a = round(a, 2).to_string();
+    let a = ALPHA_HEX_MAP.get(a.as_str()).unwrap().to_lowercase();
+    format!("#{:02x}{:02x}{:02x}{}", r, g, b, a)
 }
 
 pub fn hex2rgb(hex: &str) -> (f64, f64, f64) {
@@ -53,5 +65,28 @@ mod tests {
         let rgb = (0.0, 128.0, 128.4);
         let hex = rgb2hex(rgb);
         assert_eq!(hex, "#008080");
+    }
+
+    #[test]
+    fn test_rgba2hex() {
+        let rgba = (255.0, 255.0, 255.0, 1.0);
+        let hex = rgba2hex(rgba);
+        assert_eq!(hex, "#ffffffff");
+
+        let rgba = (0.0, 0.0, 0.0, 0.5);
+        let hex = rgba2hex(rgba);
+        assert_eq!(hex, "#00000080");
+
+        let rgba = (0.0, 128.0, 128.0, 0.4);
+        let hex = rgba2hex(rgba);
+        assert_eq!(hex, "#00808066");
+
+        let rgba = (0.0, 128.0, 128.0, 0.23);
+        let hex = rgba2hex(rgba);
+        assert_eq!(hex, "#0080803b");
+
+        let rgba = (0.0, 128.0, 128.0, 0.222222);
+        let hex = rgba2hex(rgba);
+        assert_eq!(hex, "#00808038");
     }
 }
