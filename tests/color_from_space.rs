@@ -8,7 +8,7 @@ fn test_color_from_space() {
 
     // RGBA
     let color = Color::from_rgba(255, 255, 0, 0.5).unwrap();
-    assert_eq!(color.hex(), "#ffff00");
+    assert_eq!(color.hex(), "#ffff0080");
 
     // HSL
     let color = Color::from_hsl(60.0, 1.0, 0.5).unwrap();

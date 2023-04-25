@@ -240,7 +240,7 @@ mod tests {
         assert_eq!(color.lab(), "lab(100, 0, 0)");
 
         let color = Color::new(0.0, 0.0, 0.0, 0.5);
-        assert_eq!(color.hex(), "#000000");
+        assert_eq!(color.hex(), "#00000080");
         assert_eq!(color.rgb(), "rgb(0, 0, 0)");
         assert_eq!(color.rgba(), "rgba(0, 0, 0, 0.5)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 0%)");
