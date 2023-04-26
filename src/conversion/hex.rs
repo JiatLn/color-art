@@ -14,7 +14,9 @@ pub fn rgba2hex(color: (f64, f64, f64, f64)) -> String {
     let g = g.round() as u8;
     let b = b.round() as u8;
     let a = round(a, 2).to_string();
-    let a = ALPHA_HEX_MAP.get(a.as_str()).unwrap();
+    let a = ALPHA_HEX_MAP
+        .get(a.as_str())
+        .expect("alpha hex map error, please report this issue on github");
     format!("#{:02x}{:02x}{:02x}{}", r, g, b, a)
 }
 
