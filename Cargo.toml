@@ -1,9 +1,8 @@
 [package]
 name = "color-art"
-version = "0.2.9"
+version = "0.2.10"
 edition = "2021"
 description = "A rust crate for working with colors and color spaces."
-license = "MIT"
 license-file = "LICENSE"
 authors = ["JiatLn <lne128gene980@163.com>"]
 repository = "https://www.github.com/JiatLn/color-art"
