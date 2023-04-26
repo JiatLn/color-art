@@ -1,4 +1,4 @@
-use crate::{conversion, Color, ColorSpace};
+use crate::{conversion, data::hex_str_of, Color, ColorSpace};
 use anyhow::{Ok, Result};
 
 impl Color {
@@ -117,16 +117,24 @@ impl Color {
 
     /// Create a color from a color name.
     ///
-    /// # Example
+    /// Currently supported color names are:
+    ///
+    /// - English color names from [X11_color_names](https://en.wikipedia.org/wiki/X11_color_names)
+    /// - 中国传统色 (Chinese traditional colors)
+    ///
+    /// # Examples
     ///
     /// ```rust
     /// use color_art::Color;
     ///
     /// let color = Color::from_name("yellow").unwrap();
     /// assert_eq!(color.hex(), "#ffff00");
+    ///
+    /// let color = Color::from_name("水绿").unwrap();
+    /// assert_eq!(color.hex(), "#8cc269");
     /// ```
     pub fn from_name(name: &str) -> Result<Color> {
-        let found = crate::W3CX11.get(name);
+        let found = hex_str_of(name);
         match found {
             Some(hex) => Color::from_hex(hex),
             None => anyhow::bail!("Invalid color name: {}", name),
