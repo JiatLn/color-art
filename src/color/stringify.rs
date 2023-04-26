@@ -22,19 +22,20 @@ impl Color {
     /// ```rust
     /// use color_art::Color;
     ///
-    /// let color = Color::new(255.0, 255.0, 255.0, 1.0);
+    /// let color = Color::new(255, 255, 255, 1.0);
     /// assert_eq!(color.hex(), "#ffffff");
     ///
-    /// let color = Color::new(255.0, 255.0, 255.0, 0.5);
+    /// let color = Color::new(255, 255, 255, 0.5);
     /// assert_eq!(color.hex(), "#ffffff80");
     /// ```
     pub fn hex(self) -> String {
-        if self.alpha != 1.0 {
-            // TODO: better way to do this?
-            let color = (self.rgb.0, self.rgb.1, self.rgb.2, self.alpha);
-            return rgba2hex(color);
+        if self.alpha == 1.0 {
+            rgb2hex(self.rgb)
+        } else {
+            let (r, g, b) = self.rgb;
+            let color = (r, g, b, self.alpha);
+            rgba2hex(color)
         }
-        rgb2hex(self.rgb)
     }
     /// `rgb` string of the color
     ///
