@@ -7,7 +7,13 @@ pub struct Color {
 
 impl Color {
     /// Creates a new [`Color`].
-    pub fn new(r: f64, g: f64, b: f64, alpha: f64) -> Self {
+    pub fn new<T>(r: T, g: T, b: T, alpha: f64) -> Self
+    where
+        T: Into<f64>,
+    {
+        let r = r.into();
+        let g = g.into();
+        let b = b.into();
         Color {
             rgb: (r, g, b),
             alpha,
@@ -18,10 +24,7 @@ impl Color {
 impl Default for Color {
     /// default returns a black color.
     fn default() -> Self {
-        Color {
-            rgb: (0.0, 0.0, 0.0),
-            alpha: 1.0,
-        }
+        Color::new(0, 0, 0, 1.0)
     }
 }
 
@@ -32,6 +35,6 @@ mod tests {
     #[test]
     fn test_color_default() {
         let color = Color::default();
-        assert_eq!(color, Color::new(0.0, 0.0, 0.0, 1.0));
+        assert_eq!(color, Color::new(0, 0, 0, 1.0));
     }
 }
