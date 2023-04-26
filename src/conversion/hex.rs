@@ -14,7 +14,7 @@ pub fn rgba2hex(color: (f64, f64, f64, f64)) -> String {
     let g = g.round() as u8;
     let b = b.round() as u8;
     let a = round(a, 2).to_string();
-    let a = ALPHA_HEX_MAP.get(a.as_str()).unwrap().to_lowercase();
+    let a = ALPHA_HEX_MAP.get(a.as_str()).unwrap();
     format!("#{:02x}{:02x}{:02x}{}", r, g, b, a)
 }
 
@@ -88,5 +88,9 @@ mod tests {
         let rgba = (0.0, 128.0, 128.0, 0.222222);
         let hex = rgba2hex(rgba);
         assert_eq!(hex, "#00808038");
+
+        let rgba = (0.0, 128.0, 128.0, 0.0);
+        let hex = rgba2hex(rgba);
+        assert_eq!(hex, "#00808000")
     }
 }
