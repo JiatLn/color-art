@@ -3,7 +3,7 @@ use std::collections::HashMap;
 lazy_static! {
     /// X11 color names
     ///
-    /// reference: <http://www.w3.org/TR/css3-color/#svg-color>
+    /// reference: <https://www.w3.org/TR/css-color-3/#svg-color>
     pub static ref W3CX11_HASHMAP: HashMap<&'static str, &'static str> = {
         HashMap::from([
             ("aliceblue", "#f0f8ff"),

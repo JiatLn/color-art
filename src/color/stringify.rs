@@ -10,6 +10,7 @@ use crate::{
         ycbcr::rgb2ycbcr,
         yuv::rgb2yuv,
     },
+    data::name_of_hex,
     helper::round,
     Color,
 };
@@ -19,6 +20,7 @@ impl Color {
     /// `hex` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -40,6 +42,7 @@ impl Color {
     /// `rgb` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -56,6 +59,7 @@ impl Color {
     /// `rgba` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -72,6 +76,7 @@ impl Color {
     /// `hsl` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -90,6 +95,7 @@ impl Color {
     /// `hsv` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -108,6 +114,7 @@ impl Color {
     /// `hwb` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -126,6 +133,7 @@ impl Color {
     /// `cmyk` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -145,6 +153,7 @@ impl Color {
     /// `xyz` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -158,6 +167,7 @@ impl Color {
     /// `yuv` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -171,6 +181,7 @@ impl Color {
     /// `lab` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -184,6 +195,7 @@ impl Color {
     /// `YCbCr` string of the color
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
@@ -196,28 +208,29 @@ impl Color {
     }
     /// `name` of the color
     ///
-    /// If the color is not in the [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color) color list, the hex string will be returned.
+    /// The color name is based on the [CSS3 color name](https://www.w3.org/TR/css-color-3/#svg-color) or 中国传统色彩.
+    ///
+    /// If the color is not named, the hex string will be returned.
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
-    /// let color = Color::new(255.0, 255.0, 255.0, 1.0);
+    /// let color = Color::from_hex("#ffffff").unwrap();
     /// assert_eq!(color.name(), "white");
     ///
-    /// let color = Color::new(0.0, 42.0, 0.0, 1.0);
-    /// assert_eq!(color.name(), "#002a00");
+    /// let color = Color::from_hex("#f8df72").unwrap();
+    /// assert_eq!(color.name(), "茉莉黄");
+    ///
+    /// let color = Color::new(42, 42, 42, 1.0);
+    /// assert_eq!(color.name(), "#2a2a2a");
     /// ```
     pub fn name(self) -> String {
         let hex = self.hex();
 
-        let result = crate::W3CX11
-            .clone()
-            .into_iter()
-            .find(|(_k, v)| v.to_string() == hex);
-
-        match result {
-            Some((k, _v)) => String::from(k),
+        match name_of_hex(&hex) {
+            Some(name) => name.to_string(),
             None => hex,
         }
     }
@@ -239,6 +252,7 @@ mod tests {
         assert_eq!(color.xyz(), "xyz(1, 1, 1)");
         assert_eq!(color.ycbcr(), "YCbCr(255, 128, 128)");
         assert_eq!(color.lab(), "lab(100, 0, 0)");
+        assert_eq!(color.name(), "white");
 
         let color = Color::new(0.0, 0.0, 0.0, 0.5);
         assert_eq!(color.hex(), "#00000080");
@@ -250,6 +264,7 @@ mod tests {
         assert_eq!(color.xyz(), "xyz(0.137931, 0.137931, 0.137931)");
         assert_eq!(color.ycbcr(), "YCbCr(0, 128, 128)");
         assert_eq!(color.lab(), "lab(0, 0, 0)");
+        assert_eq!(color.name(), "#00000080");
 
         let color = Color::new(0.0, 128.0, 128.0, 1.0);
         assert_eq!(color.hex(), "#008080");
@@ -261,5 +276,6 @@ mod tests {
         assert_eq!(color.xyz(), "xyz(0.496222, 0.553915, 0.596299)");
         assert_eq!(color.ycbcr(), "YCbCr(89.728, 149.5854, 64.0239)");
         assert_eq!(color.lab(), "lab(48.25, -28.85, -8.48)");
+        assert_eq!(color.name(), "teal");
     }
 }

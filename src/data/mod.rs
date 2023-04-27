@@ -16,6 +16,29 @@ pub(crate) fn hex_str_of(color_name: &str) -> Option<&'static str> {
     }
 }
 
+pub(crate) fn name_of_hex(hex_str: &str) -> Option<&'static str> {
+    let result = crate::W3CX11
+        .clone()
+        .into_iter()
+        .find(|(_k, v)| v.to_string() == hex_str)
+        .map(|(k, _v)| k);
+
+    match result {
+        Some(name) => Some(name),
+        None => {
+            let result = crate::CHINESE_COLOR
+                .clone()
+                .into_iter()
+                .find(|(_k, v)| v.to_string() == hex_str)
+                .map(|(k, _v)| k);
+            match result {
+                Some(name) => Some(name),
+                None => None,
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
