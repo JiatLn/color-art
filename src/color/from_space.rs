@@ -1,4 +1,4 @@
-use crate::{conversion, data::hex_str_of, Color, ColorSpace};
+use crate::{conversion, data::hex_of_name, Color, ColorSpace};
 use anyhow::{Ok, Result};
 
 impl Color {
@@ -134,7 +134,7 @@ impl Color {
     /// assert_eq!(color.hex(), "#8cc269");
     /// ```
     pub fn from_name(name: &str) -> Result<Color> {
-        let found = hex_str_of(name);
+        let found = hex_of_name(name);
         match found {
             Some(hex) => Color::from_hex(hex),
             None => anyhow::bail!("Invalid color name: {}", name),

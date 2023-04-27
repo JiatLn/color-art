@@ -1,4 +1,4 @@
-use crate::{conversion, parser, Color};
+use crate::{conversion, data::hex_of_name, parser, Color};
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -13,27 +13,31 @@ impl FromStr for Color {
     ///
     /// let s = "rgb(255, 255, 255)";
     /// let color = Color::from_str(s).unwrap();
-    /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
+    /// assert_eq!(color, Color::new(255, 255, 255, 1.0));
     ///
     /// let s = "rgba(255, 255, 255, 0.5)";
     /// let color = Color::from_str(s).unwrap();
-    /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 0.5));
+    /// assert_eq!(color, Color::new(255, 255, 255, 0.5));
     ///
     /// let s = "#ffffff";
     /// let color = Color::from_str(s).unwrap();
-    /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
+    /// assert_eq!(color, Color::new(255, 255, 255, 1.0));
     ///
     /// let s = "hsl(0, 0%, 100%)";
     /// let color = Color::from_str(s).unwrap();
-    /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
+    /// assert_eq!(color, Color::new(255, 255, 255, 1.0));
     ///
     /// let s = "hsv(0, 0%, 100%)";
     /// let color = Color::from_str(s).unwrap();
-    /// assert_eq!(color, Color::new(255.0, 255.0, 255.0, 1.0));
+    /// assert_eq!(color, Color::new(255, 255, 255, 1.0));
     ///
     /// let s = "deeppink";
     /// let color = Color::from_str(s).unwrap();
-    /// assert_eq!(color, Color::new(255.0, 20.0, 147.0, 1.0));
+    /// assert_eq!(color, Color::new(255, 20, 147, 1.0));
+    ///
+    /// let s = "水绿";
+    /// let color = Color::from_str(s).unwrap();
+    /// assert_eq!(color, Color::new(140, 194, 105, 1.0));
     /// ```
     fn from_str(s: &str) -> Result<Self> {
         let color_str = s.trim().to_lowercase();
@@ -89,7 +93,7 @@ impl FromStr for Color {
                 (r, g, b, 1.0)
             }
             _ => {
-                let found = crate::W3CX11.get(s);
+                let found = hex_of_name(s);
                 match found {
                     Some(hex) => {
                         let (r, g, b) = conversion::hex::hex2rgb(hex);
