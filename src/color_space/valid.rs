@@ -56,6 +56,25 @@ impl ColorSpace {
                     }
                 }
             }
+            ColorSpace::HSLA => {
+                if vec.len() != 4 {
+                    anyhow::bail!("HSLA color space requires 4 values")
+                }
+                if let [h, s, l, a] = vec[..] {
+                    if h < 0.0 || h > 360.0 {
+                        anyhow::bail!("Hue must be between 0.0 and 360.0, got {}", h)
+                    }
+                    if s < 0.0 || s > 1.0 {
+                        anyhow::bail!("Saturation must be between 0.0 and 1.0, got {}", s)
+                    }
+                    if l < 0.0 || l > 1.0 {
+                        anyhow::bail!("Lightness must be between 0.0 and 1.0, got {}", l)
+                    }
+                    if a < 0.0 || a > 1.0 {
+                        anyhow::bail!("Alpha must be between 0.0 and 1.0, got {}", a)
+                    }
+                }
+            }
             ColorSpace::HSV => {
                 if vec.len() != 3 {
                     anyhow::bail!("HSV color space requires 3 values")

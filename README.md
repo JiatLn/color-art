@@ -50,6 +50,7 @@ Currently supported color formats:
 - `rgba`
 - `hex`
 - `hsl`
+- `hsla`
 - `hsv`
 - `hwb`
 - `cmyk`
@@ -69,6 +70,7 @@ let color = Color::from_str("rgb(255, 255, 0)").unwrap();
 let color = Color::from_str("rgba(255, 255, 0, 0.5)").unwrap();
 let color = Color::from_str("#ffff00").unwrap();
 let color = Color::from_str("hsl(60, 100%, 50%)").unwrap();
+let color = Color::from_str("hsla(60, 100%, 50%, 0.6)").unwrap();
 let color = Color::from_str("hsv(60, 100%, 100%)").unwrap();
 let color = Color::from_str("hwb(60, 0%, 0%)").unwrap();
 let color = Color::from_str("cmyk(0%, 0%, 100%, 0%)").unwrap();
@@ -143,7 +145,7 @@ let color = Color::from_hex("#ffff00").unwrap();
 
 Stringify a color to a string.
 
-You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsv`, `hwb`, `cmyk`, `xyz`, `yuv`, `YCbCr`, `lab`, `name` method to stringify a color to a string.
+You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsla`, `hsv`, `hwb`, `cmyk`, `xyz`, `yuv`, `YCbCr`, `lab`, `name` method to stringify a color to a string.
 
 For example:
 
@@ -156,6 +158,7 @@ color.hex(); // "#ffff00"
 color.rgb(); // "rgb(255, 255, 0)"
 color.rgba(); // "rgba(255, 255, 0, 1)"
 color.hsl(); // "hsl(60, 100%, 50%)"
+color.hsla(); // "hsl(60, 100%, 50%, 1)"
 color.hsv(); // "hsv(60, 100%, 100%)"
 color.hwb(); // "hwb(60, 0%, 0%)"
 color.cmyk(); // "cmyk(0%, 0%, 100%, 0%)"

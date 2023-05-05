@@ -92,6 +92,26 @@ impl Color {
             round(l * 100., 0),
         )
     }
+    /// `hsla` string of the color
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255, 255, 255, 0.3);
+    /// assert_eq!(color.hsla(), "hsla(0, 0%, 100%, 0.3)");
+    /// ```
+    pub fn hsla(self) -> String {
+        let (h, s, l) = rgb2hsl(self.rgb);
+        format!(
+            "hsla({}, {}%, {}%, {})",
+            round(h, 0),
+            round(s * 100., 0),
+            round(l * 100., 0),
+            self.alpha
+        )
+    }
     /// `hsv` string of the color
     ///
     /// # Examples
@@ -247,6 +267,7 @@ mod tests {
         assert_eq!(color.rgb(), "rgb(255, 255, 255)");
         assert_eq!(color.rgba(), "rgba(255, 255, 255, 1)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
+        assert_eq!(color.hsla(), "hsla(0, 0%, 100%, 1)");
         assert_eq!(color.hsv(), "hsv(0, 0%, 100%)");
         assert_eq!(color.hwb(), "hwb(0, 100%, 0%)");
         assert_eq!(color.xyz(), "xyz(1, 1, 1)");
@@ -259,6 +280,7 @@ mod tests {
         assert_eq!(color.rgb(), "rgb(0, 0, 0)");
         assert_eq!(color.rgba(), "rgba(0, 0, 0, 0.5)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 0%)");
+        assert_eq!(color.hsla(), "hsla(0, 0%, 0%, 0.5)");
         assert_eq!(color.hsv(), "hsv(0, 0%, 0%)");
         assert_eq!(color.hwb(), "hwb(0, 0%, 100%)");
         assert_eq!(color.xyz(), "xyz(0.137931, 0.137931, 0.137931)");
@@ -271,6 +293,7 @@ mod tests {
         assert_eq!(color.rgb(), "rgb(0, 128, 128)");
         assert_eq!(color.rgba(), "rgba(0, 128, 128, 1)");
         assert_eq!(color.hsl(), "hsl(180, 100%, 25%)");
+        assert_eq!(color.hsla(), "hsla(180, 100%, 25%, 1)");
         assert_eq!(color.hsv(), "hsv(180, 100%, 50%)");
         assert_eq!(color.hwb(), "hwb(180, 0%, 50%)");
         assert_eq!(color.xyz(), "xyz(0.496222, 0.553915, 0.596299)");

@@ -13,6 +13,10 @@ pub enum ColorSpace {
     ///
     /// HSL stands for hue, saturation, and lightness.
     HSL,
+    /// HSLA color space.
+    ///
+    /// HSLA stands for hue, saturation, lightness, and alpha.
+    HSLA,
     /// HSV color space.
     ///
     /// HSV stands for hue, saturation, and value.
@@ -54,6 +58,7 @@ where
             "rgb" => ColorSpace::RGB,
             "rgba" => ColorSpace::RGBA,
             "hsl" => ColorSpace::HSL,
+            "hsla" => ColorSpace::HSLA,
             "hsv" => ColorSpace::HSV,
             "hex" => ColorSpace::HEX,
             "hwb" => ColorSpace::HWB,

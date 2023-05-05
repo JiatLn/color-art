@@ -32,6 +32,10 @@ impl Color {
                 let (h, s, l) = conversion::hsl::rgb2hsl(color);
                 vec![h, s, l]
             }
+            ColorSpace::HSLA => {
+                let (h, s, l) = conversion::hsl::rgb2hsl(color);
+                vec![h, s, l, self.alpha]
+            }
             ColorSpace::HSV => {
                 let (h, s, v) = conversion::hsv::rgb2hsv(color);
                 vec![h, s, v]
