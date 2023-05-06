@@ -7,7 +7,7 @@ impl Color {
     /// # Arguments
     ///
     /// * `color` - The color to mix with.
-    /// * `weight` - The weight of the color to mix with. 0.0 is all the original color, 1.0 is all the new color.
+    /// * `weight` - The weight of the new color to mix with. 0.0 is all the original color, 1.0 is all the new color.
     ///
     /// # Examples
     ///
@@ -20,20 +20,19 @@ impl Color {
     /// color.mix_with(&another_color, 0.5).unwrap();
     /// assert_eq!(color.hex(), "#b6b1bb");
     /// ```
-    pub fn mix_with(&mut self, color: &Color, weight: f64) -> Result<Self> {
+    pub fn mix_with(&mut self, new_color: &Color, weight: f64) -> Result<Self> {
         if weight < 0.0 || weight > 1.0 {
             bail!("weight must be between 0.0 and 1.0");
         }
         let rgb1 = self.rgb;
-        let rgb2 = color.rgb;
-        let w1 = weight;
-        let w2 = 1.0 - weight;
+        let rgb2 = new_color.rgb;
+        let old_weight = 1.0 - weight;
         self.rgb = (
-            rgb1.0 * w1 + rgb2.0 * w2,
-            rgb1.1 * w1 + rgb2.1 * w2,
-            rgb1.2 * w1 + rgb2.2 * w2,
+            rgb1.0 * old_weight + rgb2.0 * weight,
+            rgb1.1 * old_weight + rgb2.1 * weight,
+            rgb1.2 * old_weight + rgb2.2 * weight,
         );
-        self.alpha = self.alpha * w1 + color.alpha * w2;
+        self.alpha = self.alpha * old_weight + new_color.alpha * weight;
         Ok(*self)
     }
     /// Mix color with white in variable proportion.
