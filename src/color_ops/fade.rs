@@ -38,7 +38,7 @@ impl Color {
         if amount.abs() > 1.0 {
             bail!("Amount must be between 0.0 and 1.0");
         }
-        let amount = (self.alpha() + amount).min(1.0).max(0.0);
+        let amount = (self.alpha + amount).min(1.0).max(0.0);
         self.fade(amount)
     }
     /// Increase the transparency (or decrease the opacity) of a color, making it less opaque.

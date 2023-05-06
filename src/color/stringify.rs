@@ -71,7 +71,7 @@ impl Color {
         let r = r.round() as u8;
         let g = g.round() as u8;
         let b = b.round() as u8;
-        format!("rgba({}, {}, {}, {})", r, g, b, self.alpha)
+        format!("rgba({}, {}, {}, {})", r, g, b, self.alpha())
     }
     /// `hsl` string of the color
     ///
@@ -109,7 +109,7 @@ impl Color {
             round(h, 0),
             round(s * 100., 0),
             round(l * 100., 0),
-            self.alpha
+            self.alpha()
         )
     }
     /// `hsv` string of the color

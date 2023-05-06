@@ -33,7 +33,7 @@ impl Color {
     }
     /// Extracts the alpha channel of a color in the RGBA color space.
     pub fn alpha(&self) -> f64 {
-        round(self.alpha, 1)
+        round(self.alpha, 2)
     }
     /// Extracts the hue channel of a color in the HSL color space.
     pub fn hue(&self) -> f64 {
