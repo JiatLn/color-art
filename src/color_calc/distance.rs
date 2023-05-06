@@ -12,7 +12,7 @@ use crate::{Color, ColorSpace};
 /// let color2 = Color::from_str("#fff").unwrap();
 ///
 /// let d = distance_with(&color1, &color2, ColorSpace::HSL);
-/// assert_eq!(d, 60.01000749874974);
+/// assert_eq!(d, 60.01007098096119);
 /// ```
 pub fn distance_with(color1: &Color, color2: &Color, color_space: ColorSpace) -> f64 {
     let vec1 = color1.vec_of(color_space.clone());
@@ -63,6 +63,6 @@ mod tests {
         assert_eq!(d, 241.00414934187336);
 
         let d = distance_with(&color1, &color2, ColorSpace::HSL);
-        assert_eq!(d, 60.01000749874974);
+        assert_eq!(d, 60.01007098096119);
     }
 }

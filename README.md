@@ -186,7 +186,7 @@ color.alpha(); // 1.0
 
 color.hue(); // 210.0
 color.saturation(); // 0.68
-color.lightness(); // 0.8
+color.lightness(); // 0.8039
 
 color.hsv_hue(); // 210.0
 color.hsv_saturation(); // 0.28

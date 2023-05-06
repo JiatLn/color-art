@@ -300,5 +300,18 @@ mod tests {
         assert_eq!(color.ycbcr(), "YCbCr(89.728, 149.5854, 64.0239)");
         assert_eq!(color.lab(), "lab(48.25, -28.85, -8.48)");
         assert_eq!(color.name(), "teal");
+
+        let color = Color::new(161, 110, 87, 1.0);
+        assert_eq!(color.hex(), "#a16e57");
+        assert_eq!(color.rgb(), "rgb(161, 110, 87)");
+        assert_eq!(color.rgba(), "rgba(161, 110, 87, 1)");
+        assert_eq!(color.hsl(), "hsl(19, 30%, 49%)");
+        assert_eq!(color.hsla(), "hsla(19, 30%, 49%, 1)");
+        assert_eq!(color.hsv(), "hsv(19, 46%, 63%)");
+        assert_eq!(color.hwb(), "hwb(19, 34%, 37%)");
+        assert_eq!(color.xyz(), "xyz(0.613946, 0.579082, 0.474123)");
+        assert_eq!(color.ycbcr(), "YCbCr(122.627, 107.9064, 155.3599)");
+        assert_eq!(color.lab(), "lab(51.17, 17.43, 20.99)");
+        assert_eq!(color.name(), "#a16e57");
     }
 }

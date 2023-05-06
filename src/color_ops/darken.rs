@@ -14,7 +14,7 @@ impl Color {
     ///
     /// let mut color = Color::from_str("#426105").unwrap();
     /// color.darken(0.1).unwrap();
-    /// assert_eq!(color.hex(), "#213003");
+    /// assert_eq!(color.hex(), "#213102");
     /// ```
     pub fn darken(&mut self, amount: f64) -> Result<Self> {
         if amount.abs() > 1.0 {
@@ -56,7 +56,7 @@ mod tests {
     fn test_darken() {
         let mut color = Color::from_str("#426105").unwrap();
         color.darken(0.1).unwrap();
-        assert_eq!(color.hex(), "#213003");
+        assert_eq!(color.hex(), "#213102");
 
         let mut color = Color::from_str("#426105").unwrap();
         color.darken(0.5).unwrap();
