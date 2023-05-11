@@ -26,7 +26,7 @@ A rust crate for working with colors and color spaces.
 
 ## Documentation
 
-See [Color Art](https://docs.rs/color-art).
+See [Color Art](https://color-art.netlify.app).
 
 
 ## Usage
@@ -119,6 +119,8 @@ Currently supported color spaces:
 - `cmyk`
 - `hex`
 
+More color spaces will be supported in the future.
+
 For example:
 
 ```rust
@@ -131,6 +133,8 @@ let color = Color::from_hsv(60.0, 1.0, 1.0).unwrap();
 let color = Color::from_cmyk(0.0, 0.0, 1.0, 0.0).unwrap();
 let color = Color::from_hex("#ffff00").unwrap();
 ```
+
+More examples can be found in [Construct from color spaces](https://color-art.netlify.app/construct-a-color/from-space).
 
 #### Other color generator methods
 
@@ -200,20 +204,20 @@ color.gray(); // 198.71
 
 ### Color Operation
 
-- [darken](./docs/color_operation.md#darken) - Darken a color.
-- [lighten](./docs/color_operation.md#lighten) - Lighten a color.
-- [saturate](./docs/color_operation.md#saturate) - Saturate a color.
-- [desaturate](./docs/color_operation.md#desaturate) - Desaturate a color.
-- [greyscale](./docs/color_operation.md#greyscale) - Greyscale a color.
-- [fade](./docs/color_operation.md#fade) - Fade a color.
-- [fade in](./docs/color_operation.md#fade_in) - Fade in a color.
-- [fade out](./docs/color_operation.md#fade_out) - Fade out a color.
-- [spin](./docs/color_operation.md#spin) - Spin a color.
-- [mix](./docs/color_operation.md#mix) - Mix with another color.
-- [tint](./docs/color_operation.md#tint) - Tint a color.
-- [shade](./docs/color_operation.md#shade) - Shade a color.
+- [darken](https://color-art.netlify.app/api/operation#darken) - Darken a color.
+- [lighten](https://color-art.netlify.app/api/operation#lighten) - Lighten a color.
+- [saturate](https://color-art.netlify.app/api/operation#saturate) - Saturate a color.
+- [desaturate](https://color-art.netlify.app/api/operation#desaturate) - Desaturate a color.
+- [greyscale](https://color-art.netlify.app/api/operation#greyscale) - Greyscale a color.
+- [fade](https://color-art.netlify.app/api/operation#fade) - Fade a color.
+- [fade in](https://color-art.netlify.app/api/operation#fade_in) - Fade in a color.
+- [fade out](https://color-art.netlify.app/api/operation#fade_out) - Fade out a color.
+- [spin](https://color-art.netlify.app/api/operation#spin) - Spin a color.
+- [mix](https://color-art.netlify.app/api/operation#mix) - Mix with another color.
+- [tint](https://color-art.netlify.app/api/operation#tint) - Tint a color.
+- [shade](https://color-art.netlify.app/api/operation#shade) - Shade a color.
 
-More details, please refer to [Color Operation](./docs/color_operation.md).
+More details, please refer to [Color Operation](https://color-art.netlify.app/api/operation).
 
 ---
 
