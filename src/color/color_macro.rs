@@ -15,16 +15,16 @@ macro_rules! color_args {
 macro_rules! color {
     ($color_space:ident, $($args:tt)*) => {
         {
-          match stringify!($color_space).into() {
-              $crate::ColorSpace::RGB => {
-                  let args = $crate::color_args!($($args)*);
-                  let r = args[0];
-                  let g = args[1];
-                  let b = args[2];
-                  $crate::Color::from_rgb(r, g, b).unwrap()
-              }
-              _ => todo!("Add more color spaces to color! macro"),
-          }
+            match stringify!($color_space).into() {
+                $crate::ColorSpace::RGB => {
+                    let args = $crate::color_args!($($args)*);
+                    let r = args[0];
+                    let g = args[1];
+                    let b = args[2];
+                    $crate::Color::from_rgb(r, g, b).unwrap()
+                }
+                _ => todo!("Add more color spaces to color! macro"),
+            }
         }
     };
 }
