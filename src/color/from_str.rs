@@ -67,6 +67,11 @@ impl FromStr for Color {
                 let (r, g, b) = conversion::hsv::hsv2rgb(hsv);
                 (r, g, b, 1.0)
             }
+            s if s.starts_with("hsi(") => {
+                let hsi = parser::hsi::parse_hsi_str(s)?;
+                let (r, g, b) = conversion::hsi::hsi2rgb(hsi);
+                (r, g, b, 1.0)
+            }
             s if s.starts_with("hwb(") => {
                 let hwb = parser::hwb::parse_hwb_str(s)?;
                 let (r, g, b) = conversion::hwb::hwb2rgb(hwb);
@@ -258,6 +263,14 @@ mod tests {
         let color = Color::from_str(s).unwrap();
         assert_eq!(color.hsv(), "hsv(180, 100%, 100%)");
         assert_eq!(color.rgb(), "rgb(0, 255, 255)");
+    }
+
+    #[test]
+    fn test_color_from_hsi_str() {
+        let s = "hsi(240°, 100%, 33.33%)";
+        let color = Color::from_str(s).unwrap();
+        assert_eq!(color.hsi(), "hsi(240, 100%, 33.33%)");
+        assert_eq!(color.rgb(), "rgb(0, 0, 255)");
     }
 
     #[test]

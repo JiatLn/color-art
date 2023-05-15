@@ -11,6 +11,7 @@ fn test_color_stringify() {
     assert_eq!(color.hsl(), "hsl(60, 100%, 50%)");
     assert_eq!(color.hsla(), "hsla(60, 100%, 50%, 1)");
     assert_eq!(color.hsv(), "hsv(60, 100%, 100%)");
+    assert_eq!(color.hsi(), "hsi(60, 100%, 66.67%)");
     assert_eq!(color.hwb(), "hwb(60, 0%, 0%)");
     assert_eq!(color.cmyk(), "cmyk(0%, 0%, 100%, 0%)");
     assert_eq!(color.name(), "yellow");

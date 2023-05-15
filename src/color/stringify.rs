@@ -2,6 +2,7 @@ use crate::{
     conversion::{
         cmyk::rgb2cmyk,
         hex::{rgb2hex, rgba2hex},
+        hsi::rgb2hsi,
         hsl::rgb2hsl,
         hsv::rgb2hsv,
         hwb::rgb2hwb,
@@ -129,6 +130,25 @@ impl Color {
             round(h, 0),
             round(s * 100., 0),
             round(v * 100., 0),
+        )
+    }
+    /// `hsi` string of the color
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255, 255, 255, 1.0);
+    /// assert_eq!(color.hsi(), "hsi(0, 0%, 100%)");
+    /// ```
+    pub fn hsi(self) -> String {
+        let (h, s, i) = rgb2hsi(self.rgb);
+        format!(
+            "hsi({}, {}%, {}%)",
+            round(h, 0),
+            round(s * 100., 2),
+            round(i * 100., 2),
         )
     }
     /// `hwb` string of the color
@@ -269,6 +289,7 @@ mod tests {
         assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
         assert_eq!(color.hsla(), "hsla(0, 0%, 100%, 1)");
         assert_eq!(color.hsv(), "hsv(0, 0%, 100%)");
+        assert_eq!(color.hsi(), "hsi(0, 0%, 100%)");
         assert_eq!(color.hwb(), "hwb(0, 100%, 0%)");
         assert_eq!(color.xyz(), "xyz(1, 1, 1)");
         assert_eq!(color.ycbcr(), "YCbCr(255, 128, 128)");
@@ -282,6 +303,7 @@ mod tests {
         assert_eq!(color.hsl(), "hsl(0, 0%, 0%)");
         assert_eq!(color.hsla(), "hsla(0, 0%, 0%, 0.5)");
         assert_eq!(color.hsv(), "hsv(0, 0%, 0%)");
+        assert_eq!(color.hsi(), "hsi(0, 0%, 0%)");
         assert_eq!(color.hwb(), "hwb(0, 0%, 100%)");
         assert_eq!(color.xyz(), "xyz(0.137931, 0.137931, 0.137931)");
         assert_eq!(color.ycbcr(), "YCbCr(0, 128, 128)");
@@ -295,6 +317,7 @@ mod tests {
         assert_eq!(color.hsl(), "hsl(180, 100%, 25%)");
         assert_eq!(color.hsla(), "hsla(180, 100%, 25%, 1)");
         assert_eq!(color.hsv(), "hsv(180, 100%, 50%)");
+        assert_eq!(color.hsi(), "hsi(180, 100%, 33.46%)");
         assert_eq!(color.hwb(), "hwb(180, 0%, 50%)");
         assert_eq!(color.xyz(), "xyz(0.496222, 0.553915, 0.596299)");
         assert_eq!(color.ycbcr(), "YCbCr(89.728, 149.5854, 64.0239)");
@@ -308,6 +331,7 @@ mod tests {
         assert_eq!(color.hsl(), "hsl(19, 30%, 49%)");
         assert_eq!(color.hsla(), "hsla(19, 30%, 49%, 1)");
         assert_eq!(color.hsv(), "hsv(19, 46%, 63%)");
+        assert_eq!(color.hsi(), "hsi(18, 27.09%, 46.8%)");
         assert_eq!(color.hwb(), "hwb(19, 34%, 37%)");
         assert_eq!(color.xyz(), "xyz(0.613946, 0.579082, 0.474123)");
         assert_eq!(color.ycbcr(), "YCbCr(122.627, 107.9064, 155.3599)");

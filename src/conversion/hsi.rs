@@ -22,7 +22,6 @@ pub(crate) fn rgb2hsi(color: (f64, f64, f64)) -> (f64, f64, f64) {
     (round(h, 4), round(s, 4), round(i, 4))
 }
 
-#[allow(dead_code)]
 pub(crate) fn hsi2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (h, s, i) = color;
 
