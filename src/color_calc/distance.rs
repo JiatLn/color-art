@@ -5,11 +5,10 @@ use crate::{ Color, ColorSpace };
 /// # Examples
 ///
 /// ```
-/// use color_art::{distance_with, Color, ColorSpace};
-/// use std::str::FromStr;
+/// use color_art::{distance_with, color, ColorSpace};
 ///
-/// let color1 = Color::from_str("#fefe0e").unwrap();
-/// let color2 = Color::from_str("#fff").unwrap();
+/// let color1 = color!(#fefe0e);
+/// let color2 = color!(#fff);
 ///
 /// let d = distance_with(&color1, &color2, ColorSpace::HSL);
 /// assert_eq!(d, 60.01007098096119);
@@ -34,11 +33,10 @@ pub fn distance_with(color1: &Color, color2: &Color, color_space: ColorSpace) ->
 /// # Examples
 ///
 /// ```
-/// use color_art::{distance, Color};
-/// use std::str::FromStr;
+/// use color_art::{distance, color};
 ///
-/// let color1 = Color::from_str("#fefe0e").unwrap();
-/// let color2 = Color::from_str("#fff").unwrap();
+/// let color1 = color!(#fefe0e);
+/// let color2 = color!(#fff);
 ///
 /// let d = distance(&color1, &color2);
 /// assert_eq!(d, 241.00414934187336);
@@ -49,14 +47,12 @@ pub fn distance(color1: &Color, color2: &Color) -> f64 {
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
-
-    use super::*;
+    use crate::*;
 
     #[test]
     fn test_distance() {
-        let color1 = Color::from_str("#fefe0e").unwrap();
-        let color2 = Color::from_str("#fff").unwrap();
+        let color1 = color!(#fefe0e);
+        let color2 = color!(#fff);
 
         let d = distance(&color1, &color2);
         assert_eq!(d, 241.00414934187336);

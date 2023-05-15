@@ -1,9 +1,8 @@
-use color_art::Color;
-use std::str::FromStr;
+use color_art::color;
 
 #[test]
 fn test_color_channel() {
-    let color = Color::from_str("#abcdef").unwrap();
+    let color = color!(#abcdef);
 
     assert_eq!(color.red(), 171);
     assert_eq!(color.green(), 205);

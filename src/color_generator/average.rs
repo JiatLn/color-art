@@ -44,8 +44,7 @@ impl Color {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-
-    use super::*;
+    use crate::*;
 
     #[test]
     fn test_average_colors() {
@@ -57,15 +56,11 @@ mod tests {
         let averaged_color = Color::average(&colors);
         assert_eq!(averaged_color.rgba(), "rgba(128, 0, 0, 0.75)");
 
-        let colors = vec![Color::from_str("#ff6600").unwrap(), Color::from_str("#0000ff").unwrap()];
+        let colors = vec![color!(#ff6600), color!(#0000ff)];
         let averaged_color = Color::average(&colors);
         assert_eq!(averaged_color.hex(), "#803380");
 
-        let colors = vec![
-            Color::from_str("#ffff00").unwrap(),
-            Color::from_str("#ff0000").unwrap(),
-            Color::from_str("#0000ff").unwrap()
-        ];
+        let colors = vec![color!(#ffff00), color!(#ff0000), color!(#0000ff)];
         let averaged_color = Color::average(&colors);
         assert_eq!(averaged_color.hex(), "#aa5555");
     }

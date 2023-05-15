@@ -36,13 +36,12 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use std::str::FromStr;
+    use crate::*;
 
     #[test]
     fn test_mix() {
-        let color1 = Color::from_str("#003366").unwrap();
-        let color2 = Color::from_str("#d2e1dd").unwrap();
+        let color1 = color!(#003366);
+        let color2 = color!(#d2e1dd);
 
         let color3 = Color::mix(&color1, &color2, 0.5).unwrap();
         assert_eq!(color3.hex(), "#698aa2");
@@ -62,8 +61,8 @@ mod tests {
 
     #[test]
     fn test_mix_error() {
-        let color1 = Color::from_str("#003366").unwrap();
-        let color2 = Color::from_str("#d2e1dd").unwrap();
+        let color1 = color!(#003366);
+        let color2 = color!(#d2e1dd);
         let result = Color::mix(&color1, &color2, 1.1);
         assert!(result.is_err());
     }

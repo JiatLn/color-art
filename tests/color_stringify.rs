@@ -1,9 +1,9 @@
-use color_art::Color;
+use color_art::{ Color, color };
 use std::str::FromStr;
 
 #[test]
 fn test_color_stringify() {
-    let color = Color::from_str("#ffff00").unwrap();
+    let color = color!(#ffff00);
 
     assert_eq!(color.hex(), "#ffff00");
     assert_eq!(color.rgb(), "rgb(255, 255, 0)");

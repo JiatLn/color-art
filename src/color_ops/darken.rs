@@ -9,10 +9,9 @@ impl Color {
     ///
     /// # Example
     /// ```
-    /// use color_art::Color;
-    /// use std::str::FromStr;
+    /// use color_art::color;
     ///
-    /// let mut color = Color::from_str("#426105").unwrap();
+    /// let mut color = color!(#426105);
     /// color.darken(0.1).unwrap();
     /// assert_eq!(color.hex(), "#213102");
     /// ```
@@ -35,10 +34,9 @@ impl Color {
     ///
     /// # Example
     /// ```
-    /// use color_art::Color;
-    /// use std::str::FromStr;
+    /// use color_art::color;
     ///
-    /// let mut color = Color::from_str("#80e619").unwrap();
+    /// let mut color = color!(#80e619);
     /// color.lighten(0.2).unwrap();
     /// assert_eq!(color.hex(), "#b3f075");
     /// ```
@@ -49,20 +47,19 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use std::str::FromStr;
+    use crate::*;
 
     #[test]
     fn test_darken() {
-        let mut color = Color::from_str("#426105").unwrap();
+        let mut color = color!(#426105);
         color.darken(0.1).unwrap();
         assert_eq!(color.hex(), "#213102");
 
-        let mut color = Color::from_str("#426105").unwrap();
+        let mut color = color!(#426105);
         color.darken(0.5).unwrap();
         assert_eq!(color.hex(), "#000000");
 
-        let mut color = Color::from_str("#80e619").unwrap();
+        let mut color = color!(#80e619);
         color.darken(0.2).unwrap();
         assert_eq!(color.hex(), "#4d8a0f");
     }

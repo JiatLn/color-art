@@ -94,12 +94,10 @@ pub enum BlendMode {
 /// # Example
 ///
 /// ```
-/// use color_art::{Color, BlendMode, blend};
-/// use std::str::FromStr;
+/// use color_art::{color, BlendMode, blend};
 ///
-///
-/// let color1 = Color::from_str("#4cbbfc").unwrap();
-/// let color2 = Color::from_str("#eeee22").unwrap();
+/// let color1 = color!(#4cbbfc);
+/// let color2 = color!(#eeee22);
 ///
 /// let blended_color = blend(&color1, &color2, BlendMode::Overlay);
 /// assert_eq!(blended_color.hex(), "#8ef6fa");
@@ -137,13 +135,12 @@ pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> C
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use std::str::FromStr;
+    use crate::*;
 
     #[test]
     fn test_blend() {
-        let color1 = Color::from_str("#4cbbfc").unwrap();
-        let color2 = Color::from_str("#eeee22").unwrap();
+        let color1 = color!(#4cbbfc);
+        let color2 = color!(#eeee22);
 
         let color = blend(&color1, &color2, BlendMode::Multiply);
         assert_eq!(color.hex(), "#47af22");

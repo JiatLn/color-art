@@ -12,11 +12,10 @@ impl Color {
     /// # Examples
     ///
     /// ```
-    /// use color_art::Color;
-    /// use std::str::FromStr;
+    /// use color_art::color;
     ///
-    /// let mut color = Color::from_str("#998099").unwrap();
-    /// let another_color = Color::from_str("#d2e1dd").unwrap();
+    /// let mut color = color!(#998099);
+    /// let another_color = color!(#d2e1dd);
     /// color.mix_with(&another_color, 0.5).unwrap();
     /// assert_eq!(color.hex(), "#b6b1bb");
     /// ```
@@ -44,10 +43,9 @@ impl Color {
     /// # Examples
     ///
     /// ```
-    /// use color_art::Color;
-    /// use std::str::FromStr;
+    /// use color_art::color;
     ///
-    /// let mut color = Color::from_str("#ff00ff").unwrap();
+    /// let mut color = color!(#ff00ff);
     /// color.tint(0.5).unwrap();
     /// assert_eq!(color.hex(), "#ff80ff");
     /// ```
@@ -64,10 +62,9 @@ impl Color {
     /// # Examples
     ///
     /// ```
-    /// use color_art::Color;
-    /// use std::str::FromStr;
+    /// use color_art::color;
     ///
-    /// let mut color = Color::from_str("#ff00ff").unwrap();
+    /// let mut color = color!(#ff00ff);
     /// color.shade(0.5).unwrap();
     /// assert_eq!(color.hex(), "#800080");
     /// ```
@@ -79,18 +76,18 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use crate::*;
     use std::str::FromStr;
 
     #[test]
     fn test_mix() {
-        let mut color1 = Color::from_str("#003366").unwrap();
-        let color2 = Color::from_str("#d2e1dd").unwrap();
+        let mut color1 = color!(#003366);
+        let color2 = color!(#d2e1dd);
         color1.mix_with(&color2, 0.5).unwrap();
         assert_eq!(color1.hex(), "#698aa2");
 
-        let mut color3 = Color::from_str("#ff0000").unwrap();
-        let color4 = Color::from_str("#0000ff").unwrap();
+        let mut color3 = color!(#ff0000);
+        let color4 = color!(#0000ff);
         color3.mix_with(&color4, 0.5).unwrap();
         assert_eq!(color3.hex(), "#800080");
     }
