@@ -1,5 +1,5 @@
-use crate::{conversion, data::hex_of_name, Color, ColorSpace};
-use anyhow::{Ok, Result};
+use crate::{ conversion, data::hex_of_name, Color, ColorSpace };
+use anyhow::{ Ok, Result };
 
 impl Color {
     /// Create a color from RGB values.
@@ -18,10 +18,7 @@ impl Color {
     /// let color = Color::from_rgb(255, 51, 153).unwrap();
     /// assert_eq!(color.hex(), "#ff3399");
     /// ```
-    pub fn from_rgb<T>(r: T, g: T, b: T) -> Result<Self>
-    where
-        T: Into<f64>,
-    {
+    pub fn from_rgb<T>(r: T, g: T, b: T) -> Result<Self> where T: Into<f64> {
         let r = r.into();
         let g = g.into();
         let b = b.into();
@@ -44,10 +41,7 @@ impl Color {
     /// let color = Color::from_rgba(255, 51, 153, 0.5).unwrap();
     /// assert_eq!(color.rgba(), "rgba(255, 51, 153, 0.5)");
     /// ```
-    pub fn from_rgba<T>(r: T, g: T, b: T, a: f64) -> Result<Self>
-    where
-        T: Into<f64>,
-    {
+    pub fn from_rgba<T>(r: T, g: T, b: T, a: f64) -> Result<Self> where T: Into<f64> {
         let r = r.into();
         let g = g.into();
         let b = b.into();

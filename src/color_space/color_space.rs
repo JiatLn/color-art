@@ -59,10 +59,7 @@ pub enum ColorSpace {
     Unknown,
 }
 
-impl<T> From<T> for ColorSpace
-where
-    T: ToString,
-{
+impl<T> From<T> for ColorSpace where T: ToString {
     fn from(s: T) -> Self {
         match s.to_string().to_lowercase().as_str() {
             "rgb" => ColorSpace::RGB,

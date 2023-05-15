@@ -1,7 +1,7 @@
 use crate::{
     conversion::{
         cmyk::rgb2cmyk,
-        hex::{rgb2hex, rgba2hex},
+        hex::{ rgb2hex, rgba2hex },
         hsi::rgb2hsi,
         hsl::rgb2hsl,
         hsv::rgb2hsv,
@@ -86,12 +86,7 @@ impl Color {
     /// ```
     pub fn hsl(self) -> String {
         let (h, s, l) = rgb2hsl(self.rgb);
-        format!(
-            "hsl({}, {}%, {}%)",
-            round(h, 0),
-            round(s * 100., 0),
-            round(l * 100., 0),
-        )
+        format!("hsl({}, {}%, {}%)", round(h, 0), round(s * 100.0, 0), round(l * 100.0, 0))
     }
     /// `hsla` string of the color
     ///
@@ -108,8 +103,8 @@ impl Color {
         format!(
             "hsla({}, {}%, {}%, {})",
             round(h, 0),
-            round(s * 100., 0),
-            round(l * 100., 0),
+            round(s * 100.0, 0),
+            round(l * 100.0, 0),
             self.alpha()
         )
     }
@@ -125,12 +120,7 @@ impl Color {
     /// ```
     pub fn hsv(self) -> String {
         let (h, s, v) = rgb2hsv(self.rgb);
-        format!(
-            "hsv({}, {}%, {}%)",
-            round(h, 0),
-            round(s * 100., 0),
-            round(v * 100., 0),
-        )
+        format!("hsv({}, {}%, {}%)", round(h, 0), round(s * 100.0, 0), round(v * 100.0, 0))
     }
     /// `hsi` string of the color
     ///
@@ -144,12 +134,7 @@ impl Color {
     /// ```
     pub fn hsi(self) -> String {
         let (h, s, i) = rgb2hsi(self.rgb);
-        format!(
-            "hsi({}, {}%, {}%)",
-            round(h, 0),
-            round(s * 100., 2),
-            round(i * 100., 2),
-        )
+        format!("hsi({}, {}%, {}%)", round(h, 0), round(s * 100.0, 2), round(i * 100.0, 2))
     }
     /// `hwb` string of the color
     ///
@@ -163,12 +148,7 @@ impl Color {
     /// ```
     pub fn hwb(self) -> String {
         let (h, w, b) = rgb2hwb(self.rgb);
-        format!(
-            "hwb({}, {}%, {}%)",
-            round(h, 0),
-            round(w * 100., 0),
-            round(b * 100., 0),
-        )
+        format!("hwb({}, {}%, {}%)", round(h, 0), round(w * 100.0, 0), round(b * 100.0, 0))
     }
     /// `cmyk` string of the color
     ///
@@ -184,10 +164,10 @@ impl Color {
         let (c, m, y, k) = rgb2cmyk(self.rgb);
         format!(
             "cmyk({}%, {}%, {}%, {}%)",
-            round(c * 100., 0),
-            round(m * 100., 0),
-            round(y * 100., 0),
-            round(k * 100., 0),
+            round(c * 100.0, 0),
+            round(m * 100.0, 0),
+            round(y * 100.0, 0),
+            round(k * 100.0, 0)
         )
     }
     /// `xyz` string of the color

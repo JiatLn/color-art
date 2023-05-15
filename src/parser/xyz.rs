@@ -1,4 +1,4 @@
-use crate::{helper::vec2tuple, ColorSpace};
+use crate::{ helper::vec2tuple, ColorSpace };
 use anyhow::Result;
 use std::str::FromStr;
 

@@ -30,8 +30,8 @@ pub fn hwb2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let mut rgb_vec = vec![rgb.0, rgb.1, rgb.2];
     for i in 0..3 {
         rgb_vec[i] *= 1.0 - whiteness - blackness;
-        rgb_vec[i] += whiteness * 255.;
-        rgb_vec[i] = round(rgb_vec[i], 0)
+        rgb_vec[i] += whiteness * 255.0;
+        rgb_vec[i] = round(rgb_vec[i], 0);
     }
     vec2tuple(rgb_vec)
 }

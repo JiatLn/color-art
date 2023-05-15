@@ -1,4 +1,4 @@
-use crate::{conversion, data::hex_of_name, parser, Color};
+use crate::{ conversion, data::hex_of_name, parser, Color };
 use anyhow::Result;
 use std::str::FromStr;
 

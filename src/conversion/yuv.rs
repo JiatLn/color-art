@@ -1,7 +1,7 @@
-use crate::helper::{normalize_color, round};
+use crate::helper::{ normalize_color, round };
 
 static RGB2YUV_COEFFS: [f64; 5] = [0.299, 0.587, 0.114, 0.492, 0.877];
-static YUV2RGB_COEFFS: [f64; 4] = [2.032, -0.395, -0.581, 1.140];
+static YUV2RGB_COEFFS: [f64; 4] = [2.032, -0.395, -0.581, 1.14];
 
 /// Convert `RGB` to `YUV`
 ///
@@ -22,11 +22,7 @@ pub fn yuv2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let r = y + YUV2RGB_COEFFS[3] * v;
     let g = y + YUV2RGB_COEFFS[1] * u + YUV2RGB_COEFFS[2] * v;
     let b = y + YUV2RGB_COEFFS[0] * u;
-    (
-        round(r * 255.0, 0),
-        round(g * 255.0, 0),
-        round(b * 255.0, 0),
-    )
+    (round(r * 255.0, 0), round(g * 255.0, 0), round(b * 255.0, 0))
 }
 
 #[cfg(test)]

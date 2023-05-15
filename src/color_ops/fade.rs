@@ -1,4 +1,4 @@
-use anyhow::{bail, Ok, Result};
+use anyhow::{ bail, Ok, Result };
 
 use crate::Color;
 

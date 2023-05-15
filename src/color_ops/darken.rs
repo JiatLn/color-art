@@ -1,5 +1,5 @@
-use crate::{conversion, Color, ColorSpace};
-use anyhow::{Ok, Result};
+use crate::{ conversion, Color, ColorSpace };
+use anyhow::{ Ok, Result };
 
 impl Color {
     /// Decrease the lightness of a color in the HSL color space by an absolute amount.
@@ -18,7 +18,7 @@ impl Color {
     /// ```
     pub fn darken(&mut self, amount: f64) -> Result<Self> {
         if amount.abs() > 1.0 {
-            anyhow::bail!("Amount must be between 0.0 and 1.0")
+            anyhow::bail!("Amount must be between 0.0 and 1.0");
         }
         let color = self.vec_of(ColorSpace::HSL);
         let h = color[0];

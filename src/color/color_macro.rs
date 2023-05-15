@@ -2,7 +2,10 @@
 macro_rules! color_args {
     () => { vec![] };
     ($arg:expr) => { vec![$arg] };
-    ($arg:expr, $($rest:tt)*) => {
+    (
+        $arg:expr,
+        $($rest:tt)*
+    ) => {
         {
             let mut t = vec![$arg];
             t.append(&mut $crate::color_args!($($rest)*));
@@ -19,7 +22,10 @@ macro_rules! color {
             $crate::Color::from_hex(&hex).unwrap()
         }
     };
-    ($color_space:ident, $($args:tt)*) => {
+    (
+        $color_space:ident,
+        $($args:tt)*
+    ) => {
         {
             let args = $crate::color_args!($($args)*);
             match stringify!($color_space).into() {

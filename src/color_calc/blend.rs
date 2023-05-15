@@ -1,4 +1,4 @@
-use crate::{utils::blend_fn::*, Color, ColorSpace};
+use crate::{ utils::blend_fn::*, Color, ColorSpace };
 
 /// ### blend mode enum
 ///
@@ -111,7 +111,7 @@ pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> C
     let zip_vec: _ = backdrop_vec
         .iter()
         .zip(source_vec.iter())
-        .map(|(a, b)| (a / 255., b / 255.));
+        .map(|(a, b)| (a / 255.0, b / 255.0));
 
     let v: Vec<_> = match mode {
         BlendMode::Normal => zip_vec.map(|(a, b)| normal(a, b)).collect(),
@@ -128,9 +128,9 @@ pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> C
         BlendMode::Exclusion => zip_vec.map(|(a, b)| exclusion(a, b)).collect(),
     };
 
-    let r = v[0] * 255.;
-    let g = v[1] * 255.;
-    let b = v[2] * 255.;
+    let r = v[0] * 255.0;
+    let g = v[1] * 255.0;
+    let b = v[2] * 255.0;
 
     Color::new(r, g, b, 1.0)
 }

@@ -1,4 +1,4 @@
-use crate::{helper::vec2tuple, ColorSpace};
+use crate::{ helper::vec2tuple, ColorSpace };
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -18,7 +18,7 @@ pub fn parse_hwb_str(hwb_str: impl ToString) -> Result<(f64, f64, f64)> {
         .map(|s| {
             if s.contains('%') {
                 let val = f64::from_str(s.replace("%", "").as_str()).unwrap();
-                val / 100.
+                val / 100.0
             } else {
                 f64::from_str(s).unwrap()
             }
@@ -38,13 +38,13 @@ mod tests {
     fn test_parse_hwb_str() {
         let hwb_str = "hwb(262, 23%, 48%)";
         let (h, w, b) = parse_hwb_str(hwb_str).unwrap();
-        assert_eq!(h, 262.);
+        assert_eq!(h, 262.0);
         assert_eq!(w, 0.23);
         assert_eq!(b, 0.48);
 
         let hwb_str = "hwb(262, 0.23, 0.48)";
         let (h, w, b) = parse_hwb_str(hwb_str).unwrap();
-        assert_eq!(h, 262.);
+        assert_eq!(h, 262.0);
         assert_eq!(w, 0.23);
         assert_eq!(b, 0.48);
     }

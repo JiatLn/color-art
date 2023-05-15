@@ -5,7 +5,7 @@ pub fn hsl2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (h, s, l) = color;
 
     let c = (1.0 - (2.0 * l - 1.0).abs()) * s;
-    let x = c * (1.0 - ((h / 60.0) % 2.0 - 1.0).abs());
+    let x = c * (1.0 - (((h / 60.0) % 2.0) - 1.0).abs());
     let m = l - c / 2.0;
 
     let (r, g, b) = match h {
@@ -37,13 +37,13 @@ pub fn rgb2hsl(color: (f64, f64, f64)) -> (f64, f64, f64) {
     if delta != 0.0 {
         h = match max {
             x if x == r => 60.0 * (((g - b) / delta) % 6.0),
-            x if x == g => 60.0 * (((b - r) / delta) + 2.0),
-            x if x == b => 60.0 * (((r - g) / delta) + 4.0),
+            x if x == g => 60.0 * ((b - r) / delta + 2.0),
+            x if x == b => 60.0 * ((r - g) / delta + 4.0),
             _ => panic!(),
         };
 
-        if h < 0. {
-            h = h + 360.
+        if h < 0.0 {
+            h = h + 360.0;
         }
 
         s = delta / (1.0 - (2.0 * l - 1.0).abs());

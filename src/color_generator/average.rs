@@ -34,7 +34,7 @@ impl Color {
                 [acc[0] + r, acc[1] + g, acc[2] + b, acc[3] + a]
             })
             .iter()
-            .map(|v| v / colors.len() as f64)
+            .map(|v| v / (colors.len() as f64))
             .collect::<Vec<f64>>();
 
         Color::new(vec[0], vec[1], vec[2], vec[3])
@@ -51,23 +51,20 @@ mod tests {
     fn test_average_colors() {
         let colors = vec![
             Color::from_str("red").unwrap(),
-            Color::from_str("rgba(0, 0, 0, 0.5)").unwrap(),
+            Color::from_str("rgba(0, 0, 0, 0.5)").unwrap()
         ];
 
         let averaged_color = Color::average(&colors);
         assert_eq!(averaged_color.rgba(), "rgba(128, 0, 0, 0.75)");
 
-        let colors = vec![
-            Color::from_str("#ff6600").unwrap(),
-            Color::from_str("#0000ff").unwrap(),
-        ];
+        let colors = vec![Color::from_str("#ff6600").unwrap(), Color::from_str("#0000ff").unwrap()];
         let averaged_color = Color::average(&colors);
         assert_eq!(averaged_color.hex(), "#803380");
 
         let colors = vec![
             Color::from_str("#ffff00").unwrap(),
             Color::from_str("#ff0000").unwrap(),
-            Color::from_str("#0000ff").unwrap(),
+            Color::from_str("#0000ff").unwrap()
         ];
         let averaged_color = Color::average(&colors);
         assert_eq!(averaged_color.hex(), "#aa5555");

@@ -16,7 +16,7 @@ pub fn parse_hsla_str(hsla_str: impl ToString) -> Result<(f64, f64, f64, f64)> {
 
     let mut hsla_vec = hsla_str.split(",").map(|s| {
         if s.contains('%') {
-            f64::from_str(s.replace("%", "").as_str()).unwrap() / 100.
+            f64::from_str(s.replace("%", "").as_str()).unwrap() / 100.0
         } else {
             f64::from_str(s).unwrap()
         }
@@ -34,7 +34,6 @@ pub fn parse_hsla_str(hsla_str: impl ToString) -> Result<(f64, f64, f64, f64)> {
 
 #[cfg(test)]
 mod tests {
-
     use super::*;
 
     #[test]

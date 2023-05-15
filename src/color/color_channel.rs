@@ -1,4 +1,4 @@
-use crate::{helper::*, Color, ColorSpace};
+use crate::{ helper::*, Color, ColorSpace };
 
 /// Color channel extraction methods.
 ///
@@ -51,23 +51,11 @@ impl Color {
     pub fn luma(&self) -> f64 {
         let (r, g, b) = normalize_color(self.rgb);
 
-        let r = if r <= 0.03928 {
-            r / 12.92
-        } else {
-            ((r + 0.055) / 1.055).powf(2.4)
-        };
+        let r = if r <= 0.03928 { r / 12.92 } else { ((r + 0.055) / 1.055).powf(2.4) };
 
-        let g = if g <= 0.03928 {
-            g / 12.92
-        } else {
-            ((g + 0.055) / 1.055).powf(2.4)
-        };
+        let g = if g <= 0.03928 { g / 12.92 } else { ((g + 0.055) / 1.055).powf(2.4) };
 
-        let b = if b <= 0.03928 {
-            b / 12.92
-        } else {
-            ((b + 0.055) / 1.055).powf(2.4)
-        };
+        let b = if b <= 0.03928 { b / 12.92 } else { ((b + 0.055) / 1.055).powf(2.4) };
 
         round(0.2126 * r + 0.7152 * g + 0.0722 * b * self.alpha, 2)
     }
@@ -97,7 +85,6 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-
     use std::str::FromStr;
 
     use super::*;

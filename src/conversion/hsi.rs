@@ -1,15 +1,11 @@
-use crate::helper::{normalize_color, round};
+use crate::helper::{ normalize_color, round };
 
 pub(crate) fn rgb2hsi(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (r, g, b) = normalize_color(color);
 
-    let theta = 0.5 * ((r - g) + (r - b)) / ((r - g).powi(2) + (r - b) * (g - b)).sqrt();
+    let theta = (0.5 * (r - g + (r - b))) / ((r - g).powi(2) + (r - b) * (g - b)).sqrt();
 
-    let theta = if theta.is_nan() {
-        0.0
-    } else {
-        theta.acos().to_degrees()
-    };
+    let theta = if theta.is_nan() { 0.0 } else { theta.acos().to_degrees() };
 
     let h = if b <= g { theta } else { 360.0 - theta };
 
@@ -33,7 +29,7 @@ pub(crate) fn hsi2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
             let h = h.to_radians();
 
             let b = i * (1.0 - s);
-            let r = i * (1.0 + s * h.cos() / (std::f64::consts::FRAC_PI_3 - h).cos());
+            let r = i * (1.0 + (s * h.cos()) / (std::f64::consts::FRAC_PI_3 - h).cos());
             let g = 3.0 * i - (r + b);
 
             (r, g, b)
@@ -42,7 +38,7 @@ pub(crate) fn hsi2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
             let h = (h - 120.0).to_radians();
 
             let r = i * (1.0 - s);
-            let g = i * (1.0 + s * h.cos() / (std::f64::consts::FRAC_PI_3 - h).cos());
+            let g = i * (1.0 + (s * h.cos()) / (std::f64::consts::FRAC_PI_3 - h).cos());
             let b = 3.0 * i - (r + g);
 
             (r, g, b)
@@ -51,7 +47,7 @@ pub(crate) fn hsi2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
             let h = (h - 240.0).to_radians();
 
             let g = i * (1.0 - s);
-            let b = i * (1.0 + s * h.cos() / (std::f64::consts::FRAC_PI_3 - h).cos());
+            let b = i * (1.0 + (s * h.cos()) / (std::f64::consts::FRAC_PI_3 - h).cos());
             let r = 3.0 * i - (g + b);
             dbg!(r, g, b);
             (r, g, b)
@@ -59,11 +55,7 @@ pub(crate) fn hsi2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
         _ => panic!("Hue must be between 0 and 360"),
     };
 
-    (
-        round(r * 255.0, 0),
-        round(g * 255.0, 0),
-        round(b * 255.0, 0),
-    )
+    (round(r * 255.0, 0), round(g * 255.0, 0), round(b * 255.0, 0))
 }
 
 #[cfg(test)]

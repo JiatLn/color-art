@@ -1,7 +1,4 @@
-use super::{
-    utils::{lab_xyz, xyz_rgb, XN, YN, ZN},
-    xyz::rgb2xyz,
-};
+use super::{ utils::{ lab_xyz, xyz_rgb, XN, YN, ZN }, xyz::rgb2xyz };
 use crate::helper::round;
 
 pub fn rgb2lab(color: (f64, f64, f64)) -> (f64, f64, f64) {
@@ -29,7 +26,7 @@ pub fn lab2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
 
     let r = 3.2406 * x - 1.5372 * y - 0.4986 * z;
     let g = -0.9689 * x + 1.8758 * y + 0.0415 * z;
-    let b = 0.0557 * x - 0.2040 * y + 1.0570 * z;
+    let b = 0.0557 * x - 0.204 * y + 1.057 * z;
 
     let r = 255.0 * xyz_rgb(r);
     let g = 255.0 * xyz_rgb(g);

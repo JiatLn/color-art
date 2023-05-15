@@ -1,4 +1,4 @@
-use color_art::{distance, distance_with, Color, ColorSpace};
+use color_art::{ distance, distance_with, Color, ColorSpace };
 use std::str::FromStr;
 
 #[test]

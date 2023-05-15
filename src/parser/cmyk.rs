@@ -20,7 +20,7 @@ pub fn parse_cmyk_str(cmyk_str: impl ToString) -> Result<(f64, f64, f64, f64)> {
         .map(|s| {
             if s.contains('%') {
                 let val = f64::from_str(s.replace("%", "").as_str()).unwrap();
-                val / 100.
+                val / 100.0
             } else {
                 f64::from_str(s).unwrap()
             }

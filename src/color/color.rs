@@ -7,10 +7,7 @@ pub struct Color {
 
 impl Color {
     /// Creates a new [`Color`].
-    pub fn new<T>(r: T, g: T, b: T, alpha: f64) -> Self
-    where
-        T: Into<f64>,
-    {
+    pub fn new<T>(r: T, g: T, b: T, alpha: f64) -> Self where T: Into<f64> {
         let r = r.into();
         let g = g.into();
         let b = b.into();

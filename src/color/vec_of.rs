@@ -1,4 +1,4 @@
-use crate::{conversion, Color, ColorSpace};
+use crate::{ conversion, Color, ColorSpace };
 
 impl Color {
     /// Get the color space vector of the color instance.
@@ -68,9 +68,7 @@ impl Color {
                 let (l, a, b) = conversion::lab::rgb2lab(color);
                 vec![l, a, b]
             }
-            ColorSpace::HEX | ColorSpace::Unknown => {
-                todo!("not implemented yet")
-            }
+            ColorSpace::HEX | ColorSpace::Unknown => todo!("not implemented yet"),
         }
     }
 }

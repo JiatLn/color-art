@@ -1,4 +1,4 @@
-use crate::{conversion, Color, ColorSpace};
+use crate::{ conversion, Color, ColorSpace };
 use anyhow::Result;
 
 impl Color {

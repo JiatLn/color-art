@@ -4,9 +4,13 @@ pub fn parse_hex_str(s: impl ToString) -> Result<String> {
     let s = s.to_string();
     let len = s.len();
     // #rgb #rrggbb #rrggbbaa #rgba
-    if !s.starts_with('#')
-        || (len != 9 && len != 7 && len != 5 && len != 4)
-        || !s.chars().skip(1).all(|c| c.is_ascii_hexdigit())
+    if
+        !s.starts_with('#') ||
+        (len != 9 && len != 7 && len != 5 && len != 4) ||
+        !s
+            .chars()
+            .skip(1)
+            .all(|c| c.is_ascii_hexdigit())
     {
         anyhow::bail!("Invalid hex string: {}", s);
     }
@@ -15,7 +19,6 @@ pub fn parse_hex_str(s: impl ToString) -> Result<String> {
 
 #[cfg(test)]
 mod tests {
-
     use super::*;
 
     #[test]

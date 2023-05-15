@@ -1,4 +1,4 @@
-use crate::{helper::vec2tuple, ColorSpace};
+use crate::{ helper::vec2tuple, ColorSpace };
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -18,7 +18,7 @@ pub fn parse_hsi_str(hsi_str: impl ToString) -> Result<(f64, f64, f64)> {
         .split(",")
         .map(|s| {
             if s.contains('%') {
-                f64::from_str(s.replace("%", "").as_str()).unwrap() / 100.
+                f64::from_str(s.replace("%", "").as_str()).unwrap() / 100.0
             } else {
                 f64::from_str(s).unwrap()
             }
