@@ -18,10 +18,10 @@ impl Color {
     ///
     /// let color1 = Color::from_str("#998099").unwrap();
     /// let color2 = Color::from_str("midnightblue").unwrap();
-    /// let color3 = Color::mix(color1, color2, 0.5).unwrap();
+    /// let color3 = Color::mix(&color1, &color2, 0.5).unwrap();
     /// assert_eq!(color3.hex(), "#594d85");
     /// ```
-    pub fn mix(color1: Color, color2: Color, weight: f64) -> Result<Color> {
+    pub fn mix(color1: &Color, color2: &Color, weight: f64) -> Result<Self> {
         if !(0.0..=1.0).contains(&weight) {
             bail!("weight must be between 0.0 and 1.0");
         }
@@ -44,19 +44,19 @@ mod tests {
         let color1 = Color::from_str("#003366").unwrap();
         let color2 = Color::from_str("#d2e1dd").unwrap();
 
-        let color3 = Color::mix(color1, color2, 0.5).unwrap();
+        let color3 = Color::mix(&color1, &color2, 0.5).unwrap();
         assert_eq!(color3.hex(), "#698aa2");
 
-        let color4 = Color::mix(color1, color2, 0.25).unwrap();
+        let color4 = Color::mix(&color1, &color2, 0.25).unwrap();
         assert_eq!(color4.hex(), "#9eb6bf");
 
-        let color5 = Color::mix(color1, color2, 0.75).unwrap();
+        let color5 = Color::mix(&color1, &color2, 0.75).unwrap();
         assert_eq!(color5.hex(), "#355f84");
 
-        let color6 = Color::mix(color1, color2, 0.0).unwrap();
+        let color6 = Color::mix(&color1, &color2, 0.0).unwrap();
         assert_eq!(color6.hex(), "#d2e1dd");
 
-        let color7 = Color::mix(color1, color2, 1.0).unwrap();
+        let color7 = Color::mix(&color1, &color2, 1.0).unwrap();
         assert_eq!(color7.hex(), "#003366");
     }
 
@@ -64,7 +64,7 @@ mod tests {
     fn test_mix_error() {
         let color1 = Color::from_str("#003366").unwrap();
         let color2 = Color::from_str("#d2e1dd").unwrap();
-        let result = Color::mix(color1, color2, 1.1);
+        let result = Color::mix(&color1, &color2, 1.1);
         assert!(result.is_err());
     }
 }

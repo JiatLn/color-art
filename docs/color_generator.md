@@ -21,7 +21,7 @@ use std::str::FromStr;
 
 let color1 = Color::from_str("#998099").unwrap();
 let color2 = Color::from_str("midnightblue").unwrap();
-let color3 = Color::mix(color1, color2, 0.5).unwrap();
+let color3 = Color::mix(&color1, &color2, 0.5).unwrap();
 color3.hex(); // "#594d85"
 ```
 
