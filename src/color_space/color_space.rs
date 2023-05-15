@@ -1,5 +1,5 @@
 /// Color space enum.
-#[derive(Clone)]
+#[derive(Clone, Copy, PartialEq, Debug)]
 pub enum ColorSpace {
     /// RGB color space.
     ///
@@ -54,7 +54,7 @@ where
     T: ToString,
 {
     fn from(s: T) -> Self {
-        match s.to_string().as_str() {
+        match s.to_string().to_lowercase().as_str() {
             "rgb" => ColorSpace::RGB,
             "rgba" => ColorSpace::RGBA,
             "hsl" => ColorSpace::HSL,
@@ -65,9 +65,28 @@ where
             "cmyk" => ColorSpace::CMYK,
             "xyz" => ColorSpace::XYZ,
             "yuv" => ColorSpace::YUV,
-            "YCbCr" => ColorSpace::YCbCr,
+            "ycbcr" => ColorSpace::YCbCr,
             "lab" => ColorSpace::Lab,
             _ => ColorSpace::Unknown,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_color_space_from_str() {
+        assert_eq!(ColorSpace::from("rgb"), ColorSpace::RGB);
+        assert_eq!(ColorSpace::from("rgba"), ColorSpace::RGBA);
+        assert_eq!(ColorSpace::from("hsl"), ColorSpace::HSL);
+        assert_eq!(ColorSpace::from("YCbCr"), ColorSpace::YCbCr);
+
+        let rgb: ColorSpace = "rgb".into();
+        assert_eq!(rgb, ColorSpace::RGB);
+
+        let rgba: ColorSpace = "rgba".into();
+        assert_eq!(rgba, ColorSpace::RGBA);
     }
 }
