@@ -9,6 +9,10 @@ pub enum ColorSpace {
     ///
     /// RGBA stands for red, green, blue, and alpha.
     RGBA,
+    /// HSI color space.
+    ///
+    /// HSI stands for hue, saturation, and intensity.
+    HSI,
     /// HSL color space.
     ///
     /// HSL stands for hue, saturation, and lightness.
@@ -34,10 +38,16 @@ pub enum ColorSpace {
     /// CMYK means Cyan Magenta Yellow Black
     CMYK,
     /// XYZ color space.
+    ///
+    /// XYZ stands for X, Y, and Z.
     XYZ,
     /// YUV color Space.
+    ///
+    /// YUV stands for luminance (Y), and the chrominance components U and V.
     YUV,
     /// YCbCr color Space.
+    ///
+    /// YCbCr stands for luminance (Y), and the chrominance components Cb and Cr.
     YCbCr,
     /// Lab color space.
     ///
@@ -57,6 +67,7 @@ where
         match s.to_string().to_lowercase().as_str() {
             "rgb" => ColorSpace::RGB,
             "rgba" => ColorSpace::RGBA,
+            "hsi" => ColorSpace::HSI,
             "hsl" => ColorSpace::HSL,
             "hsla" => ColorSpace::HSLA,
             "hsv" => ColorSpace::HSV,

@@ -3,7 +3,7 @@ use anyhow::Result;
 
 impl ColorSpace {
     /// Check if a vector of values is valid for a given color space.
-    pub(crate) fn valid(&self, vec: &Vec<f64>) -> Result<()> {
+    pub(crate) fn valid(&self, vec: &[f64]) -> Result<()> {
         match self {
             ColorSpace::RGB => {
                 if vec.len() != 3 {
@@ -37,6 +37,22 @@ impl ColorSpace {
                     }
                     if a < 0.0 || a > 1.0 {
                         anyhow::bail!("Alpha must be between 0.0 and 1.0, got {}", a)
+                    }
+                }
+            }
+            ColorSpace::HSI => {
+                if vec.len() != 3 {
+                    anyhow::bail!("HSI color space requires 3 values")
+                }
+                if let [h, s, i] = vec[..] {
+                    if h < 0.0 || h > 360.0 {
+                        anyhow::bail!("Hue must be between 0.0 and 360.0, got {}", h)
+                    }
+                    if s < 0.0 || s > 1.0 {
+                        anyhow::bail!("Saturation must be between 0.0 and 1.0, got {}", s)
+                    }
+                    if i < 0.0 || i > 1.0 {
+                        anyhow::bail!("Intensity must be between 0.0 and 1.0, got {}", i)
                     }
                 }
             }
