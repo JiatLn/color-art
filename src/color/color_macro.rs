@@ -13,6 +13,12 @@ macro_rules! color_args {
 
 #[macro_export]
 macro_rules! color {
+    (#$hex:expr) => {
+        {
+            let hex = format!("#{}", stringify!($hex));
+            $crate::Color::from_hex(&hex).unwrap()
+        }
+    };
     ($color_space:ident, $($args:tt)*) => {
         {
             let args = $crate::color_args!($($args)*);
@@ -64,5 +70,11 @@ mod tests {
 
         let color = color!(hsv, 60.0, 1.0, 1.0);
         assert_eq!(color.hsv(), "hsv(60, 100%, 100%)");
+
+        let color = color!(#f00);
+        assert_eq!(color.hex(), "#ff0000");
+
+        let color = color!(#abcdef);
+        assert_eq!(color.hex(), "#abcdef");
     }
 }
