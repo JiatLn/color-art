@@ -44,23 +44,28 @@ color-art = "0.2"
 
 You can use the `from_str` method to construct a color from a string. 
 
-Currently supported color formats:
+<details>
+<summary>Currently supported color formats</summary>
 
-- `rgb`
-- `rgba`
-- `hex`
-- `hsl`
-- `hsla`
-- `hsv`
-- `hwb`
-- `cmyk`
-- `xyz`
-- `yuv`
-- `YCbCr`
-- `lab`
-- `named color` from [*w3cx11*](http://www.w3.org/TR/css3-color/#svg-color)
+<ul>
+  <li><code>rgb</code> / <code>rgba</code></li>
+  <li><code>hex</code></li>
+  <li><code>hsl</code> / <code>hsla</code></li>
+  <li><code>hsv</code></li>
+  <li><code>hsi</code></li>
+  <li><code>hwb</code></li>
+  <li><code>cmyk</code></li>
+  <li><code>xyz</code></li>
+  <li><code>yuv</code></li>
+  <li><code>YCbCr</code></li>
+  <li><code>lab</code></li>
+  <li><code>named color</code></li>
+</ul>
 
-For example:
+</details>
+
+<details>
+<summary>For example</summary>
 
 ```rust
 use color_art::Color;
@@ -72,6 +77,7 @@ let color = Color::from_str("#ffff00").unwrap();
 let color = Color::from_str("hsl(60, 100%, 50%)").unwrap();
 let color = Color::from_str("hsla(60, 100%, 50%, 0.6)").unwrap();
 let color = Color::from_str("hsv(60, 100%, 100%)").unwrap();
+let color = Color::from_str("hsi(60, 100%, 66.67%)").unwrap();
 let color = Color::from_str("hwb(60, 0%, 0%)").unwrap();
 let color = Color::from_str("cmyk(0%, 0%, 100%, 0%)").unwrap();
 let color = Color::from_str("xyz(0.932231, 0.975339, 0.502949)").unwrap();
@@ -80,6 +86,8 @@ let color = Color::from_str("YCbCr(225.93, 0.5755, 148.7269)").unwrap();
 let color = Color::from_str("lab(97.14, -21.55, 94.48)").unwrap();
 let color = Color::from_str("yellow").unwrap();
 ```
+
+</details>
 
 #### Create color from number
 
@@ -149,7 +157,7 @@ More examples can be found in [Construct from color spaces](https://color-art.ne
 
 Stringify a color to a string.
 
-You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsla`, `hsv`, `hwb`, `cmyk`, `xyz`, `yuv`, `YCbCr`, `lab`, `name` method to stringify a color to a string.
+You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsla`, `hsv`, `hsi`, `hwb`, `cmyk`, `xyz`, `yuv`, `YCbCr`, `lab`, `name` method to stringify a color to a string.
 
 For example:
 
@@ -164,6 +172,7 @@ color.rgba(); // "rgba(255, 255, 0, 1)"
 color.hsl(); // "hsl(60, 100%, 50%)"
 color.hsla(); // "hsl(60, 100%, 50%, 1)"
 color.hsv(); // "hsv(60, 100%, 100%)"
+color.hsi(); // "hsi(60, 100%, 66.67%)"
 color.hwb(); // "hwb(60, 0%, 0%)"
 color.cmyk(); // "cmyk(0%, 0%, 100%, 0%)"
 color.xyz(); // "xyz(0.932231, 0.975339, 0.502949)"
