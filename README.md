@@ -46,7 +46,7 @@ You can use the `from_str` method to construct a color from a string.
 
 <details>
 <summary>Currently supported color formats</summary>
-
+<br>
 <ul>
   <li><code>rgb</code> / <code>rgba</code></li>
   <li><code>hex</code></li>
@@ -61,11 +61,11 @@ You can use the `from_str` method to construct a color from a string.
   <li><code>lab</code></li>
   <li><code>named color</code></li>
 </ul>
-
 </details>
 
 <details>
 <summary>For example</summary>
+<br>
 
 ```rust
 use color_art::Color;
@@ -159,8 +159,10 @@ Stringify a color to a string.
 
 You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsla`, `hsv`, `hsi`, `hwb`, `cmyk`, `xyz`, `yuv`, `YCbCr`, `lab`, `name` method to stringify a color to a string.
 
-For example:
-
+<details>
+<summary>For example</summary>
+<br>
+  
 ```rust
 use color_art::Color;
 use std::str::FromStr;
@@ -182,10 +184,16 @@ color.name(); // "yellow"
 color.lab(); // "lab(97.14, -21.55, 94.48)"
 ```
 
+</details>
+
 ### Color Channel
 
 You can use the `red`, `green`, `blue`, `alpha`, `hue`, `saturation`, `lightness`, `hsv_hue`, `hsv_saturation`, `hsv_value`, `luma`, `luminance`, `gray` method to extract the color channel.
 
+<details>
+<summary>For example</summary>
+<br>
+  
 ```rust
 use color_art::Color;
 use std::str::FromStr;
@@ -211,6 +219,8 @@ color.luminance(); // 0.79
 color.gray(); // 198.71
 ```
 
+</details>
+  
 ### Color Operation
 
 - [darken](https://color-art.netlify.app/api/operation#darken) - Darken a color.
