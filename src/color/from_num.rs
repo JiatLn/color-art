@@ -3,7 +3,7 @@ use anyhow::{anyhow, Result};
 use crate::Color;
 
 impl Color {
-    /// Returns the numeric representation of the hexadecimal RGB color.
+    /// Returns the numeric representation of the hexadecimal color.
     ///
     /// # Example
     ///
@@ -13,7 +13,7 @@ impl Color {
     /// let color = Color::from_num(0xff3399).unwrap();
     /// assert_eq!(color.hex(), "#ff3399");
     /// ```
-    pub fn from_num(num: u32) -> Result<Color> {
+    pub fn from_num(num: u32) -> Result<Self> {
         if num > 0xffffff {
             return Err(anyhow!(
                 "Invalid color number, must be between 0 and 16777215"

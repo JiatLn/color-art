@@ -220,21 +220,8 @@ color.gray(); // 198.71
 ```
 
 </details>
-  
-### Color Operation
 
-- [darken](https://color-art.netlify.app/api/operation#darken) - Darken a color.
-- [lighten](https://color-art.netlify.app/api/operation#lighten) - Lighten a color.
-- [saturate](https://color-art.netlify.app/api/operation#saturate) - Saturate a color.
-- [desaturate](https://color-art.netlify.app/api/operation#desaturate) - Desaturate a color.
-- [greyscale](https://color-art.netlify.app/api/operation#greyscale) - Greyscale a color.
-- [fade](https://color-art.netlify.app/api/operation#fade) - Fade a color.
-- [fade in](https://color-art.netlify.app/api/operation#fade_in) - Fade in a color.
-- [fade out](https://color-art.netlify.app/api/operation#fade_out) - Fade out a color.
-- [spin](https://color-art.netlify.app/api/operation#spin) - Spin a color.
-- [mix](https://color-art.netlify.app/api/operation#mix) - Mix with another color.
-- [tint](https://color-art.netlify.app/api/operation#tint) - Tint a color.
-- [shade](https://color-art.netlify.app/api/operation#shade) - Shade a color.
+### Color Operation
 
 More details, please refer to [Color Operation](https://color-art.netlify.app/api/operation).
 
