@@ -47,6 +47,14 @@ impl Color {
     pub fn lightness(&self) -> f64 {
         self.vec_of(ColorSpace::HSL)[2]
     }
+    /// Returns the HWB whiteness of color as a number between 0.0 and 1.0.
+    pub fn whiteness(&self) -> f64 {
+        self.vec_of(ColorSpace::HWB)[1]
+    }
+    /// Returns the HWB blackness of color as a number between 0.0 and 1.0.
+    pub fn blackness(&self) -> f64 {
+        self.vec_of(ColorSpace::HWB)[2]
+    }
     /// Calculates the [luma](http://en.wikipedia.org/wiki/Luma_%28video%29) (perceptual brightness) of a color.
     pub fn luma(&self) -> f64 {
         let (r, g, b) = normalize_color(self.rgb);
@@ -85,7 +93,7 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
+    use std::{ str::FromStr, assert_eq };
     use crate::*;
 
     #[test]
@@ -97,6 +105,9 @@ mod tests {
         assert_eq!(color.blue(), 30);
         assert_eq!(color.alpha(), 0.8);
 
+        assert_eq!(color.whiteness(), 0.0392);
+        assert_eq!(color.blackness(), 0.8824);
+
         assert_eq!(color.luma(), 0.01);
         assert_eq!(color.luminance(), 0.07);
         assert_eq!(color.gray(), 18.15);
@@ -106,6 +117,9 @@ mod tests {
         assert_eq!(color.hue(), 90.0);
         assert_eq!(color.saturation(), 1.0);
         assert_eq!(color.lightness(), 0.5);
+
+        assert_eq!(color.whiteness(), 0.0);
+        assert_eq!(color.blackness(), 0.0);
 
         assert_eq!(color.luma(), 0.76);
         assert_eq!(color.luminance(), 0.82);

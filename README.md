@@ -187,7 +187,7 @@ color.lab(); // "lab(97.14, -21.55, 94.48)"
 
 ### Color Channel
 
-You can use the `red`, `green`, `blue`, `alpha`, `hue`, `saturation`, `lightness`, `hsv_hue`, `hsv_saturation`, `hsv_value`, `luma`, `luminance`, `gray` method to extract the color channel.
+You can use the `red`, `green`, `blue`, `alpha`, `hue`, `saturation`, `lightness`, `whiteness`, `blackness`, `hsv_hue`, `hsv_saturation`, `hsv_value`, `luma`, `luminance`, `gray` method to extract the color channel.
 
 <details>
 <summary>For example</summary>
@@ -206,6 +206,9 @@ color.alpha(); // 1.0
 color.hue(); // 210.0
 color.saturation(); // 0.68
 color.lightness(); // 0.8039
+
+color.whiteness(); // 0.6706
+color.blackness(); // 0.0627
 
 color.hsv_hue(); // 210.0
 color.hsv_saturation(); // 0.2845
