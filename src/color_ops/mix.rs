@@ -77,7 +77,6 @@ impl Color {
 #[cfg(test)]
 mod tests {
     use crate::*;
-    use std::str::FromStr;
 
     #[test]
     fn test_mix() {
@@ -94,22 +93,22 @@ mod tests {
 
     #[test]
     fn test_tint() {
-        let mut color = Color::from_str("rgba(0, 0, 255, 0.5)").unwrap();
+        let mut color = color!(rgba(0, 0, 255, 0.5));
         color.tint(0.5).unwrap();
         assert_eq!(color.rgba(), "rgba(128, 128, 255, 0.75)");
 
-        let mut color = Color::from_str("red").unwrap();
+        let mut color = color!(rgb(255, 0, 0));
         color.tint(0.5).unwrap();
         assert_eq!(color.hex(), "#ff8080");
     }
 
     #[test]
     fn test_shade() {
-        let mut color = Color::from_str("rgba(0, 0, 255, 0.5)").unwrap();
+        let mut color = color!(rgba(0, 0, 255, 0.5));
         color.shade(0.5).unwrap();
         assert_eq!(color.rgba(), "rgba(0, 0, 128, 0.75)");
 
-        let mut color = Color::from_str("red").unwrap();
+        let mut color = color!(rgb(255, 0, 0));
         color.shade(0.5).unwrap();
         assert_eq!(color.hex(), "#800000");
     }

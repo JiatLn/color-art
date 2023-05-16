@@ -48,10 +48,7 @@ mod tests {
 
     #[test]
     fn test_average_colors() {
-        let colors = vec![
-            Color::from_str("red").unwrap(),
-            Color::from_str("rgba(0, 0, 0, 0.5)").unwrap()
-        ];
+        let colors = vec![Color::from_str("red").unwrap(), color!(rgba(0, 0, 0, 0.5))];
 
         let averaged_color = Color::average(&colors);
         assert_eq!(averaged_color.rgba(), "rgba(128, 0, 0, 0.75)");

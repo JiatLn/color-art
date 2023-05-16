@@ -10,10 +10,9 @@ impl Color {
     /// # Examples
     ///
     /// ```rust
-    /// use color_art::Color;
-    /// use std::str::FromStr;
+    /// use color_art::color;
     ///
-    /// let mut color = Color::from_str("rgba(0, 255, 0, 0.8)").unwrap();
+    /// let mut color = color!(rgba(0, 255, 0, 0.8));
     /// assert_eq!(color.alpha(), 0.8);
     /// color.fade(0.5).unwrap();
     /// assert_eq!(color.alpha(), 0.5);
@@ -30,10 +29,9 @@ impl Color {
     /// # Examples
     ///
     /// ```rust
-    /// use color_art::Color;
-    /// use std::str::FromStr;
+    /// use color_art::color;
     ///
-    /// let mut color = Color::from_str("rgba(0, 255, 0, 0.8)").unwrap();
+    /// let mut color = color!(rgba(0, 255, 0, 0.8));
     /// assert_eq!(color.alpha(), 0.8);
     /// color.fade_in(0.1).unwrap();
     /// assert_eq!(color.alpha(), 0.9);
@@ -50,10 +48,9 @@ impl Color {
     /// # Examples
     ///
     /// ```rust
-    /// use color_art::Color;
-    /// use std::str::FromStr;
+    /// use color_art::color;
     ///
-    /// let mut color = Color::from_str("rgba(0, 255, 0, 0.8)").unwrap();
+    /// let mut color = color!(rgba(0, 255, 0, 0.8));
     /// assert_eq!(color.alpha(), 0.8);
     /// color.fade_out(0.2).unwrap();
     /// assert_eq!(color.alpha(), 0.6);
@@ -65,24 +62,25 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use std::str::FromStr;
+    use crate::*;
 
     #[test]
     fn test_fade() {
-        let mut color = Color::from_str("rgb(255, 0, 0)").unwrap();
+        let mut color = color!(rgba(255, 0, 0, 1.0));
         color.fade(0.5).unwrap();
         assert_eq!(color.rgba(), "rgba(255, 0, 0, 0.5)");
     }
+
     #[test]
     fn test_fade_in() {
-        let mut color = Color::from_str("rgba(255, 0, 0, 0.5)").unwrap();
+        let mut color = color!(rgba(255, 0, 0, 0.5));
         color.fade_in(0.2).unwrap();
         assert_eq!(color.rgba(), "rgba(255, 0, 0, 0.7)");
     }
+
     #[test]
     fn test_fade_out() {
-        let mut color = Color::from_str("rgba(255, 0, 0, 0.5)").unwrap();
+        let mut color = color!(rgba(255, 0, 0, 0.5));
         color.fade_out(0.2).unwrap();
         assert_eq!(color.rgba(), "rgba(255, 0, 0, 0.3)");
     }

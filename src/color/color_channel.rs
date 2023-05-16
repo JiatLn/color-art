@@ -4,10 +4,10 @@ use crate::{ helper::*, Color, ColorSpace };
 ///
 /// # Examples
 /// ```
-/// use color_art::Color;
+/// use color_art::{Color, color};
 /// use std::str::FromStr;
 ///
-/// let color = Color::from_str("rgba(10, 20, 30, 0.8)").unwrap();
+/// let color = color!(rgba(10, 20, 30, 0.8));
 /// assert_eq!(color.red(), 10);
 /// assert_eq!(color.green(), 20);
 /// assert_eq!(color.blue(), 30);
@@ -86,12 +86,11 @@ impl Color {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-
-    use super::*;
+    use crate::*;
 
     #[test]
     fn test_color_channel() {
-        let color = Color::from_str("rgba(10, 20, 30, 0.8)").unwrap();
+        let color = color!(rgba(10, 20, 30, 0.8));
 
         assert_eq!(color.red(), 10);
         assert_eq!(color.green(), 20);
@@ -119,7 +118,7 @@ mod tests {
         assert_eq!(color.hsv_value(), 0.5);
         assert_eq!(color.gray(), 93.9038);
 
-        let color = Color::from_str("rgb(100, 200, 30)").unwrap();
+        let color = color!(rgb(100, 200, 30));
 
         assert_eq!(color.luma(), 0.44);
         assert_eq!(color.luminance(), 0.65);

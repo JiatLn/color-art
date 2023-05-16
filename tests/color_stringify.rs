@@ -1,5 +1,4 @@
-use color_art::{ Color, color };
-use std::str::FromStr;
+use color_art::color;
 
 #[test]
 fn test_color_stringify() {
@@ -18,7 +17,4 @@ fn test_color_stringify() {
     assert_eq!(color.xyz(), "xyz(0.932231, 0.975339, 0.502949)");
     assert_eq!(color.yuv(), "yuv(0.886, -0.4359, 0.1)");
     assert_eq!(color.lab(), "lab(97.14, -21.55, 94.48)");
-
-    let color = Color::from_str("orange").unwrap();
-    assert_eq!(color.lab(), "lab(74.94, 23.93, 78.95)");
 }

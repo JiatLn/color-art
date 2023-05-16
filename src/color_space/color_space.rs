@@ -94,7 +94,13 @@ mod tests {
         let rgb: ColorSpace = "rgb".into();
         assert_eq!(rgb, ColorSpace::RGB);
 
+        let rgb: ColorSpace = "RGB".into();
+        assert_eq!(rgb, ColorSpace::RGB);
+
         let rgba: ColorSpace = "rgba".into();
+        assert_eq!(rgba, ColorSpace::RGBA);
+
+        let rgba: ColorSpace = "RGBA".into();
         assert_eq!(rgba, ColorSpace::RGBA);
     }
 }

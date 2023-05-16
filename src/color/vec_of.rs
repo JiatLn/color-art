@@ -8,9 +8,9 @@ impl Color {
     /// # Examples
     ///
     /// ```
-    /// use color_art::{Color, ColorSpace};
+    /// use color_art::{color, ColorSpace};
     ///
-    /// let color = Color::from_rgb(255.0, 51.0, 153.0).unwrap();
+    /// let color = color!(rgb(255, 51, 153));
     /// let vec = color.vec_of(ColorSpace::RGB);
     /// assert_eq!(vec, vec![255.0, 51.0, 153.0]);
     ///

@@ -12,12 +12,11 @@ impl Color {
     ///
     /// # Examples
     ///
-    /// ```
-    /// use color_art::Color;
-    /// use std::str::FromStr;
+    /// ```rust
+    /// use color_art::{Color, color};
     ///
-    /// let color1 = Color::from_str("#998099").unwrap();
-    /// let color2 = Color::from_str("midnightblue").unwrap();
+    /// let color1 = color!(#998099);
+    /// let color2 = color!(#191970);
     /// let color3 = Color::mix(&color1, &color2, 0.5).unwrap();
     /// assert_eq!(color3.hex(), "#594d85");
     /// ```
