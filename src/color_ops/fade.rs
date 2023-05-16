@@ -1,5 +1,3 @@
-use anyhow::{ bail, Ok, Result };
-
 use crate::Color;
 
 impl Color {
@@ -12,17 +10,15 @@ impl Color {
     /// ```rust
     /// use color_art::color;
     ///
-    /// let mut color = color!(rgba(0, 255, 0, 0.8));
+    /// let color = color!(rgba(0, 255, 0, 0.8));
     /// assert_eq!(color.alpha(), 0.8);
-    /// color.fade(0.5).unwrap();
+    /// let color = color.fade(0.5);
     /// assert_eq!(color.alpha(), 0.5);
     /// ```
-    pub fn fade(&mut self, amount: f64) -> Result<Self> {
-        if amount < 0.0 || amount > 1.0 {
-            bail!("Amount must be between 0.0 and 1.0");
-        }
-        self.alpha = amount;
-        Ok(*self)
+    pub fn fade(&self, amount: f64) -> Self {
+        let alpha = amount.min(1.0).max(0.0);
+        let (r, g, b) = self.rgb;
+        Color::new(r, g, b, alpha)
     }
     /// Decrease the transparency (or increase the opacity) of a color, making it more opaque.
     ///
@@ -31,15 +27,12 @@ impl Color {
     /// ```rust
     /// use color_art::color;
     ///
-    /// let mut color = color!(rgba(0, 255, 0, 0.8));
+    /// let color = color!(rgba(0, 255, 0, 0.8));
     /// assert_eq!(color.alpha(), 0.8);
-    /// color.fade_in(0.1).unwrap();
+    /// let color = color.fade_in(0.1);
     /// assert_eq!(color.alpha(), 0.9);
     /// ```
-    pub fn fade_in(&mut self, amount: f64) -> Result<Self> {
-        if amount.abs() > 1.0 {
-            bail!("Amount must be between 0.0 and 1.0");
-        }
+    pub fn fade_in(&self, amount: f64) -> Self {
         let amount = (self.alpha + amount).min(1.0).max(0.0);
         self.fade(amount)
     }
@@ -50,12 +43,12 @@ impl Color {
     /// ```rust
     /// use color_art::color;
     ///
-    /// let mut color = color!(rgba(0, 255, 0, 0.8));
+    /// let color = color!(rgba(0, 255, 0, 0.8));
     /// assert_eq!(color.alpha(), 0.8);
-    /// color.fade_out(0.2).unwrap();
+    /// let color = color.fade_out(0.2);
     /// assert_eq!(color.alpha(), 0.6);
     /// ```
-    pub fn fade_out(&mut self, amount: f64) -> Result<Self> {
+    pub fn fade_out(&self, amount: f64) -> Self {
         self.fade_in(-amount)
     }
 }
@@ -66,22 +59,22 @@ mod tests {
 
     #[test]
     fn test_fade() {
-        let mut color = color!(rgba(255, 0, 0, 1.0));
-        color.fade(0.5).unwrap();
+        let color = color!(rgba(255, 0, 0, 1.0));
+        let color = color.fade(0.5);
         assert_eq!(color.rgba(), "rgba(255, 0, 0, 0.5)");
     }
 
     #[test]
     fn test_fade_in() {
-        let mut color = color!(rgba(255, 0, 0, 0.5));
-        color.fade_in(0.2).unwrap();
+        let color = color!(rgba(255, 0, 0, 0.5));
+        let color = color.fade_in(0.2);
         assert_eq!(color.rgba(), "rgba(255, 0, 0, 0.7)");
     }
 
     #[test]
     fn test_fade_out() {
-        let mut color = color!(rgba(255, 0, 0, 0.5));
-        color.fade_out(0.2).unwrap();
+        let color = color!(rgba(255, 0, 0, 0.5));
+        let color = color.fade_out(0.2);
         assert_eq!(color.rgba(), "rgba(255, 0, 0, 0.3)");
     }
 }

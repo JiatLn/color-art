@@ -1,5 +1,4 @@
 use crate::Color;
-use anyhow::{ bail, Ok, Result };
 
 impl Color {
     /// Mix two colors with a weight.
@@ -14,25 +13,24 @@ impl Color {
     /// ```rust
     /// use color_art::color;
     ///
-    /// let mut color = color!(#998099);
-    /// let another_color = color!(#d2e1dd);
-    /// color.mix_with(&another_color, 0.5).unwrap();
-    /// assert_eq!(color.hex(), "#b6b1bb");
+    /// let color1 = color!(#998099);
+    /// let color2 = color!(#d2e1dd);
+    /// let color3 = color1.mix_with(&color2, 0.5);
+    /// assert_eq!(color3.hex(), "#b6b1bb");
     /// ```
-    pub fn mix_with(&mut self, new_color: &Color, weight: f64) -> Result<Self> {
-        if weight < 0.0 || weight > 1.0 {
-            bail!("weight must be between 0.0 and 1.0");
-        }
+    pub fn mix_with(&self, new_color: &Color, weight: f64) -> Self {
+        let weight = weight.min(1.0).max(0.0);
+        let old_weight = 1.0 - weight;
+
         let rgb1 = self.rgb;
         let rgb2 = new_color.rgb;
-        let old_weight = 1.0 - weight;
-        self.rgb = (
-            rgb1.0 * old_weight + rgb2.0 * weight,
-            rgb1.1 * old_weight + rgb2.1 * weight,
-            rgb1.2 * old_weight + rgb2.2 * weight,
-        );
-        self.alpha = self.alpha * old_weight + new_color.alpha * weight;
-        Ok(*self)
+
+        let r = rgb1.0 * old_weight + rgb2.0 * weight;
+        let g = rgb1.1 * old_weight + rgb2.1 * weight;
+        let b = rgb1.2 * old_weight + rgb2.2 * weight;
+        let alpha = self.alpha * old_weight + new_color.alpha * weight;
+
+        Color::new(r, g, b, alpha)
     }
     /// Mix color with white in variable proportion.
     ///
@@ -45,11 +43,11 @@ impl Color {
     /// ```rust
     /// use color_art::color;
     ///
-    /// let mut color = color!(#ff00ff);
-    /// color.tint(0.5).unwrap();
+    /// let color = color!(#ff00ff);
+    /// let color = color.tint(0.5);
     /// assert_eq!(color.hex(), "#ff80ff");
     /// ```
-    pub fn tint(&mut self, amount: f64) -> Result<Self> {
+    pub fn tint(&self, amount: f64) -> Self {
         let white = Color::new(255.0, 255.0, 255.0, 1.0);
         self.mix_with(&white, 1.0 - amount)
     }
@@ -64,11 +62,11 @@ impl Color {
     /// ```rust
     /// use color_art::color;
     ///
-    /// let mut color = color!(#ff00ff);
-    /// color.shade(0.5).unwrap();
+    /// let color = color!(#ff00ff);
+    /// let color = color.shade(0.5);
     /// assert_eq!(color.hex(), "#800080");
     /// ```
-    pub fn shade(&mut self, amount: f64) -> Result<Self> {
+    pub fn shade(&self, amount: f64) -> Self {
         let black = Color::default();
         self.mix_with(&black, 1.0 - amount)
     }
@@ -80,36 +78,36 @@ mod tests {
 
     #[test]
     fn test_mix() {
-        let mut color1 = color!(#003366);
+        let color1 = color!(#003366);
         let color2 = color!(#d2e1dd);
-        color1.mix_with(&color2, 0.5).unwrap();
-        assert_eq!(color1.hex(), "#698aa2");
+        let color3 = color1.mix_with(&color2, 0.5);
+        assert_eq!(color3.hex(), "#698aa2");
 
-        let mut color3 = color!(#ff0000);
-        let color4 = color!(#0000ff);
-        color3.mix_with(&color4, 0.5).unwrap();
+        let color1 = color!(#ff0000);
+        let color2 = color!(#0000ff);
+        let color3 = color1.mix_with(&color2, 0.5);
         assert_eq!(color3.hex(), "#800080");
     }
 
     #[test]
     fn test_tint() {
-        let mut color = color!(rgba(0, 0, 255, 0.5));
-        color.tint(0.5).unwrap();
+        let color = color!(rgba(0, 0, 255, 0.5));
+        let color = color.tint(0.5);
         assert_eq!(color.rgba(), "rgba(128, 128, 255, 0.75)");
 
-        let mut color = color!(rgb(255, 0, 0));
-        color.tint(0.5).unwrap();
+        let color = color!(rgb(255, 0, 0));
+        let color = color.tint(0.5);
         assert_eq!(color.hex(), "#ff8080");
     }
 
     #[test]
     fn test_shade() {
-        let mut color = color!(rgba(0, 0, 255, 0.5));
-        color.shade(0.5).unwrap();
+        let color = color!(rgba(0, 0, 255, 0.5));
+        let color = color.shade(0.5);
         assert_eq!(color.rgba(), "rgba(0, 0, 128, 0.75)");
 
-        let mut color = color!(rgb(255, 0, 0));
-        color.shade(0.5).unwrap();
+        let color = color!(rgb(255, 0, 0));
+        let color = color.shade(0.5);
         assert_eq!(color.hex(), "#800000");
     }
 }
