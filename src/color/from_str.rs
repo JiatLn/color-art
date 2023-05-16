@@ -7,6 +7,7 @@ impl FromStr for Color {
     /// Creates a new [`Color`] from a string.
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     /// use std::str::FromStr;

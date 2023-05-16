@@ -8,13 +8,15 @@ impl Color {
     /// Can be applied to colors whether they already have an opacity value or not.
     ///
     /// # Examples
-    /// ```
+    ///
+    /// ```rust
     /// use color_art::Color;
     /// use std::str::FromStr;
     ///
     /// let mut color = Color::from_str("rgba(0, 255, 0, 0.8)").unwrap();
     /// assert_eq!(color.alpha(), 0.8);
-    /// assert_eq!(color.fade(0.5).unwrap().alpha(), 0.5);
+    /// color.fade(0.5).unwrap();
+    /// assert_eq!(color.alpha(), 0.5);
     /// ```
     pub fn fade(&mut self, amount: f64) -> Result<Self> {
         if amount < 0.0 || amount > 1.0 {
@@ -26,13 +28,15 @@ impl Color {
     /// Decrease the transparency (or increase the opacity) of a color, making it more opaque.
     ///
     /// # Examples
-    /// ```
+    ///
+    /// ```rust
     /// use color_art::Color;
     /// use std::str::FromStr;
     ///
     /// let mut color = Color::from_str("rgba(0, 255, 0, 0.8)").unwrap();
     /// assert_eq!(color.alpha(), 0.8);
-    /// assert_eq!(color.fade_in(0.1).unwrap().alpha(), 0.9);
+    /// color.fade_in(0.1).unwrap();
+    /// assert_eq!(color.alpha(), 0.9);
     /// ```
     pub fn fade_in(&mut self, amount: f64) -> Result<Self> {
         if amount.abs() > 1.0 {
@@ -44,13 +48,15 @@ impl Color {
     /// Increase the transparency (or decrease the opacity) of a color, making it less opaque.
     ///
     /// # Examples
-    /// ```
+    ///
+    /// ```rust
     /// use color_art::Color;
     /// use std::str::FromStr;
     ///
     /// let mut color = Color::from_str("rgba(0, 255, 0, 0.8)").unwrap();
     /// assert_eq!(color.alpha(), 0.8);
-    /// assert_eq!(color.fade_out(0.2).unwrap().alpha(), 0.6);
+    /// color.fade_out(0.2).unwrap();
+    /// assert_eq!(color.alpha(), 0.6);
     /// ```
     pub fn fade_out(&mut self, amount: f64) -> Result<Self> {
         self.fade_in(-amount)

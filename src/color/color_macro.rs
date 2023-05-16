@@ -55,8 +55,6 @@ macro_rules! color {
 
 #[cfg(test)]
 mod tests {
-    use std::assert_eq;
-
     #[test]
     fn test_color_args_macro() {
         let args = color_args!(255, 128, 0);

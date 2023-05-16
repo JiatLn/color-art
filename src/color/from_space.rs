@@ -10,7 +10,7 @@ impl Color {
     /// - `g`: Green value (0-255)
     /// - `b`: Blue value (0-255)
     ///
-    /// # Example
+    /// # Examples
     ///
     /// ```
     /// use color_art::Color;
@@ -34,7 +34,7 @@ impl Color {
     /// - `b`: Blue value (0-255)
     /// - `a`: Alpha value (0-1)
     ///
-    /// # Example
+    /// # Examples
     ///
     /// ```
     /// use color_art::Color;
@@ -50,7 +50,7 @@ impl Color {
     }
     /// Create a color from HSL values.
     ///
-    /// # Example
+    /// # Examples
     ///
     /// ```rust
     /// use color_art::Color;
@@ -65,7 +65,7 @@ impl Color {
     }
     /// Create a color from HSV values.
     ///
-    /// # Example
+    /// # Examples
     ///
     /// ```
     /// use color_art::Color;
@@ -80,7 +80,7 @@ impl Color {
     }
     /// Create a color from CMYK values.
     ///
-    /// # Example
+    /// # Examples
     ///
     /// ```
     /// use color_art::Color;
@@ -95,7 +95,7 @@ impl Color {
     }
     /// Create a color from a hex string.
     ///
-    /// # Example
+    /// # Examples
     ///
     /// ```
     /// use color_art::Color;

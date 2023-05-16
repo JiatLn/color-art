@@ -235,12 +235,12 @@ impl Color {
     /// # Examples
     ///
     /// ```rust
-    /// use color_art::Color;
+    /// use color_art::{Color, color};
     ///
-    /// let color = Color::from_hex("#ffffff").unwrap();
+    /// let color = color!(#ffffff);
     /// assert_eq!(color.name(), "white");
     ///
-    /// let color = Color::from_hex("#f8df72").unwrap();
+    /// let color = color!(#f8df72);
     /// assert_eq!(color.name(), "茉莉黄");
     ///
     /// let color = Color::new(42, 42, 42, 1.0);

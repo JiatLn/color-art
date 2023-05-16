@@ -11,7 +11,7 @@ impl Color {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```rust
     /// use color_art::color;
     ///
     /// let mut color = color!(#998099);
@@ -42,7 +42,7 @@ impl Color {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```rust
     /// use color_art::color;
     ///
     /// let mut color = color!(#ff00ff);
@@ -61,7 +61,7 @@ impl Color {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```rust
     /// use color_art::color;
     ///
     /// let mut color = color!(#ff00ff);
@@ -94,7 +94,7 @@ mod tests {
 
     #[test]
     fn test_tint() {
-        let mut color = Color::from_str("rgba(0,0,255,0.5)").unwrap();
+        let mut color = Color::from_str("rgba(0, 0, 255, 0.5)").unwrap();
         color.tint(0.5).unwrap();
         assert_eq!(color.rgba(), "rgba(128, 128, 255, 0.75)");
 
@@ -105,7 +105,7 @@ mod tests {
 
     #[test]
     fn test_shade() {
-        let mut color = Color::from_str("rgba(0,0,255,0.5)").unwrap();
+        let mut color = Color::from_str("rgba(0, 0, 255, 0.5)").unwrap();
         color.shade(0.5).unwrap();
         assert_eq!(color.rgba(), "rgba(0, 0, 128, 0.75)");
 

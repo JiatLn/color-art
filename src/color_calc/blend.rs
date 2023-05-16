@@ -136,34 +136,35 @@ pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> C
 #[cfg(test)]
 mod tests {
     use crate::*;
+    use BlendMode::*;
 
     #[test]
     fn test_blend() {
-        let color1 = color!(#4cbbfc);
-        let color2 = color!(#eeee22);
+        let c1 = color!(#4cbbfc);
+        let c2 = color!(#eeee22);
 
-        let color = blend(&color1, &color2, BlendMode::Multiply);
+        let color = blend(&c1, &c2, Multiply);
         assert_eq!(color.hex(), "#47af22");
 
-        let color = blend(&color1, &color2, BlendMode::Darken);
+        let color = blend(&c1, &c2, Darken);
         assert_eq!(color.hex(), "#4cbb22");
 
-        let color = blend(&color1, &color2, BlendMode::Lighten);
+        let color = blend(&c1, &c2, Lighten);
         assert_eq!(color.hex(), "#eeeefc");
 
-        let color = blend(&color1, &color2, BlendMode::Screen);
+        let color = blend(&c1, &c2, Screen);
         assert_eq!(color.hex(), "#f3fafc");
 
-        let color = blend(&color1, &color2, BlendMode::ColorBurn);
+        let color = blend(&c1, &c2, ColorBurn);
         assert_eq!(color.hex(), "#3fb6e9");
 
-        let color = blend(&color1, &color2, BlendMode::Overlay);
+        let color = blend(&c1, &c2, Overlay);
         assert_eq!(color.hex(), "#8ef6fa");
 
-        let color = blend(&color1, &color2, BlendMode::ColorDodge);
+        let color = blend(&c1, &c2, ColorDodge);
         assert_eq!(color.hex(), "#ffffff");
 
-        let color = blend(&color1, &color2, BlendMode::HardLight);
+        let color = blend(&c1, &c2, HardLight);
         assert_eq!(color.hex(), "#e7f643");
     }
 }

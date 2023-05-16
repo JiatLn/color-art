@@ -7,7 +7,8 @@ impl Color {
     /// # Arguments
     /// `amount` - The amount to decrease the lightness by. Must be between 0.0 and 1.0.
     ///
-    /// # Example
+    /// # Examples
+    ///
     /// ```
     /// use color_art::color;
     ///
@@ -32,7 +33,8 @@ impl Color {
     /// # Arguments
     /// `amount` - The amount to increase the lightness by. Must be between 0.0 and 1.0.
     ///
-    /// # Example
+    /// # Examples
+    ///
     /// ```
     /// use color_art::color;
     ///

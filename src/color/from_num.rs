@@ -5,7 +5,7 @@ use crate::Color;
 impl Color {
     /// Returns the numeric representation of the hexadecimal color.
     ///
-    /// # Example
+    /// # Examples
     ///
     /// ```
     /// use color_art::Color;

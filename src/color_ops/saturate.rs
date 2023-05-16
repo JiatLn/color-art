@@ -8,12 +8,13 @@ impl Color {
     /// # Arguments
     /// `amount` - The amount to increase the saturation by. Must be between 0.0 and 1.0.
     ///
-    /// # Example
+    /// # Examples
+    ///
     /// ```
-    /// use color_art::Color;
+    /// use color_art::color;
     /// use std::str::FromStr;
     ///
-    /// let mut color = Color::from_str("#80e619").unwrap();
+    /// let mut color = color!(#80e619);
     /// color.saturate(0.2).unwrap();
     /// assert_eq!(color.hex(), "#80ff00");
     /// ```
@@ -34,12 +35,13 @@ impl Color {
     /// # Arguments
     /// `amount` - The amount to decrease the saturation by. Must be between 0.0 and 1.0.
     ///
-    /// # Example
+    /// # Examples
+    ///
     /// ```
-    /// use color_art::Color;
+    /// use color_art::color;
     /// use std::str::FromStr;
     ///
-    /// let mut color = Color::from_str("#80e619").unwrap();
+    /// let mut color = color!(#80e619);
     /// color.desaturate(0.2).unwrap();
     /// assert_eq!(color.hex(), "#80cc33");
     /// ```
@@ -50,12 +52,13 @@ impl Color {
     ///
     /// Remove all saturation from a color in the HSL color space.
     ///
-    /// # Example
+    /// # Examples
+    ///
     /// ```
-    /// use color_art::Color;
+    /// use color_art::color;
     /// use std::str::FromStr;
     ///
-    /// let mut color = Color::from_str("#80e619").unwrap();
+    /// let mut color = color!(#80e619);
     /// color.greyscale().unwrap();
     /// assert_eq!(color.hex(), "#808080");
     /// ```

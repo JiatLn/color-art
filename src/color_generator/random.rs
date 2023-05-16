@@ -7,6 +7,7 @@ impl Color {
     /// Generate a random color.
     ///
     /// # Examples
+    ///
     /// ```rust
     /// use color_art::Color;
     ///
