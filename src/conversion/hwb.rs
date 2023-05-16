@@ -1,5 +1,5 @@
 use crate::conversion::hsl;
-use crate::helper::*;
+use crate::utils::*;
 
 /// Convert RGB to HWB.
 ///

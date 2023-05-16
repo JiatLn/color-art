@@ -1,4 +1,4 @@
-use crate::helper::{ normalize_color, round };
+use crate::utils::*;
 
 static RGB2YUV_COEFFS: [f64; 5] = [0.299, 0.587, 0.114, 0.492, 0.877];
 static YUV2RGB_COEFFS: [f64; 4] = [2.032, -0.395, -0.581, 1.14];

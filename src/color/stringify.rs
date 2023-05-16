@@ -12,7 +12,7 @@ use crate::{
         yuv::rgb2yuv,
     },
     data::name_of_hex,
-    helper::{ round, simplify_hex },
+    utils::{ hex::simplify_hex, round },
     Color,
 };
 

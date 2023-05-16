@@ -1,4 +1,4 @@
-use crate::helper::{ normalize_color, round };
+use crate::utils::*;
 
 pub(crate) fn rgb2hsi(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (r, g, b) = normalize_color(color);

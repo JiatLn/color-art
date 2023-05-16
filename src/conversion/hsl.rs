@@ -1,4 +1,4 @@
-use crate::helper::*;
+use crate::utils::*;
 
 /// [HSL to RGB color conversion](https://www.rapidtables.com/convert/color/hsl-to-rgb.html)
 pub fn hsl2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {

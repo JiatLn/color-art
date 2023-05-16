@@ -1,4 +1,4 @@
-use crate::helper::*;
+use crate::utils::*;
 
 /// [RGB to CMYK color conversion](https://www.rapidtables.com/convert/color/rgb-to-cmyk.html)
 pub fn rgb2cmyk(color: (f64, f64, f64)) -> (f64, f64, f64, f64) {

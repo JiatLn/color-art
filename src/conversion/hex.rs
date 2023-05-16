@@ -1,4 +1,4 @@
-use crate::{ helper::round, ALPHA_HEX_MAP };
+use crate::{ ALPHA_HEX_MAP, utils::* };
 
 pub fn rgb2hex(color: (f64, f64, f64)) -> String {
     let (r, g, b) = color;

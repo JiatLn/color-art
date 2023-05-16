@@ -1,5 +1,5 @@
 use super::utils::{ rgb_xyz, xyz_lab, XN, YN, ZN };
-use crate::helper::*;
+use crate::utils::*;
 
 static RGB2XYZ_COEFFS: [f64; 9] = [
     0.4124564, 0.3575761, 0.1804375, 0.2126729, 0.7151522, 0.072175, 0.0193339, 0.119192, 0.9503041,

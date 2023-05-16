@@ -1,5 +1,5 @@
 use super::{ utils::{ lab_xyz, xyz_rgb, XN, YN, ZN }, xyz::rgb2xyz };
-use crate::helper::round;
+use crate::utils::*;
 
 pub fn rgb2lab(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (x, y, z) = rgb2xyz(color);

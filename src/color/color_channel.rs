@@ -1,4 +1,5 @@
-use crate::{ helper::*, Color, ColorSpace };
+use crate::{ Color, ColorSpace };
+use crate::utils::*;
 
 /// Color channel extraction methods.
 ///
