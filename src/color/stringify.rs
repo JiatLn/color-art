@@ -32,13 +32,13 @@ impl Color {
     /// assert_eq!(color.hex(), "#ffffff80");
     /// ```
     pub fn hex(self) -> String {
-        if self.alpha == 1.0 {
-            simplify_hex(rgb2hex(self.rgb))
+        let hex = if self.alpha == 1.0 {
+            rgb2hex(self.rgb)
         } else {
             let (r, g, b) = self.rgb;
-            let color = (r, g, b, self.alpha);
-            rgba2hex(color)
-        }
+            rgba2hex((r, g, b, self.alpha))
+        };
+        simplify_hex(hex)
     }
     /// `rgb` string of the color
     ///
@@ -279,19 +279,19 @@ mod tests {
         assert_eq!(color.lab(), "lab(100, 0, 0)");
         assert_eq!(color.name(), "white");
 
-        let color = Color::new(0.0, 0.0, 0.0, 0.5);
-        assert_eq!(color.hex(), "#00000080");
+        let color = Color::new(0.0, 0.0, 0.0, 0.2);
+        assert_eq!(color.hex(), "#0003");
         assert_eq!(color.rgb(), "rgb(0, 0, 0)");
-        assert_eq!(color.rgba(), "rgba(0, 0, 0, 0.5)");
+        assert_eq!(color.rgba(), "rgba(0, 0, 0, 0.2)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 0%)");
-        assert_eq!(color.hsla(), "hsla(0, 0%, 0%, 0.5)");
+        assert_eq!(color.hsla(), "hsla(0, 0%, 0%, 0.2)");
         assert_eq!(color.hsv(), "hsv(0, 0%, 0%)");
         assert_eq!(color.hsi(), "hsi(0, 0%, 0%)");
         assert_eq!(color.hwb(), "hwb(0, 0%, 100%)");
         assert_eq!(color.xyz(), "xyz(0.137931, 0.137931, 0.137931)");
         assert_eq!(color.ycbcr(), "YCbCr(0, 128, 128)");
         assert_eq!(color.lab(), "lab(0, 0, 0)");
-        assert_eq!(color.name(), "#00000080");
+        assert_eq!(color.name(), "#0003");
 
         let color = Color::new(0.0, 128.0, 128.0, 1.0);
         assert_eq!(color.hex(), "#008080");
