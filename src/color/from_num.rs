@@ -11,7 +11,7 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::from_num(0xff3399).unwrap();
-    /// assert_eq!(color.hex(), "#ff3399");
+    /// assert_eq!(color.hex(), "#f39");
     /// ```
     pub fn from_num(num: u32) -> Result<Self> {
         if num > 0xffffff {
@@ -27,7 +27,7 @@ impl Color {
 #[test]
 fn test_color_from_num() {
     let color = Color::from_num(0xff3399).unwrap();
-    assert_eq!(color.hex(), "#ff3399");
+    assert_eq!(color.hex(), "#f39");
 
     let color = Color::from_num(777).unwrap();
     assert_eq!(color.hex(), "#000309");

@@ -167,7 +167,7 @@ You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsla`, `hsv`, `hsi`, `hwb`, `cmyk`
 use color_art::color;
 
 let color = color!(#ffff00);
-color.hex(); // "#ffff00"
+color.hex(); // "#ff0"
 color.rgb(); // "rgb(255, 255, 0)"
 color.rgba(); // "rgba(255, 255, 0, 1)"
 color.hsl(); // "hsl(60, 100%, 50%)"

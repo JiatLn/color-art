@@ -55,7 +55,7 @@ mod tests {
         assert_eq!(color6.hex(), "#d2e1dd");
 
         let color7 = Color::mix(&color1, &color2, 1.0).unwrap();
-        assert_eq!(color7.hex(), "#003366");
+        assert_eq!(color7.hex(), "#036");
     }
 
     #[test]

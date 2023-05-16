@@ -59,7 +59,7 @@ mod tests {
 
         let colors = vec![color!(#ffff00), color!(#ff0000), color!(#0000ff)];
         let averaged_color = Color::average(&colors);
-        assert_eq!(averaged_color.hex(), "#aa5555");
+        assert_eq!(averaged_color.hex(), "#a55");
     }
 
     #[test]

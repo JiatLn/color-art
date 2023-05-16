@@ -88,7 +88,7 @@ mod tests {
         assert_eq!(color.hsv(), "hsv(60, 100%, 100%)");
 
         let color = color!(#f00);
-        assert_eq!(color.hex(), "#ff0000");
+        assert_eq!(color.hex(), "#f00");
 
         let color = color!(#abcdef);
         assert_eq!(color.hex(), "#abcdef");

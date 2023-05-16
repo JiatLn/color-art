@@ -12,7 +12,7 @@ use crate::{
         yuv::rgb2yuv,
     },
     data::name_of_hex,
-    helper::round,
+    helper::{ round, simplify_hex },
     Color,
 };
 
@@ -26,14 +26,14 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::new(255, 255, 255, 1.0);
-    /// assert_eq!(color.hex(), "#ffffff");
+    /// assert_eq!(color.hex(), "#fff");
     ///
     /// let color = Color::new(255, 255, 255, 0.5);
     /// assert_eq!(color.hex(), "#ffffff80");
     /// ```
     pub fn hex(self) -> String {
         if self.alpha == 1.0 {
-            rgb2hex(self.rgb)
+            simplify_hex(rgb2hex(self.rgb))
         } else {
             let (r, g, b) = self.rgb;
             let color = (r, g, b, self.alpha);
@@ -247,11 +247,14 @@ impl Color {
     /// assert_eq!(color.name(), "#2a2a2a");
     /// ```
     pub fn name(self) -> String {
-        let hex = self.hex();
-
-        match name_of_hex(&hex) {
-            Some(name) => name.to_string(),
-            None => hex,
+        if self.alpha == 1.0 {
+            let hex = rgb2hex(self.rgb);
+            match name_of_hex(&hex) {
+                Some(name) => name.to_string(),
+                None => hex,
+            }
+        } else {
+            self.hex()
         }
     }
 }
@@ -263,7 +266,7 @@ mod tests {
     #[test]
     fn test_stringify_color() {
         let color = Color::new(255.0, 255.0, 255.0, 1.0);
-        assert_eq!(color.hex(), "#ffffff");
+        assert_eq!(color.hex(), "#fff");
         assert_eq!(color.rgb(), "rgb(255, 255, 255)");
         assert_eq!(color.rgba(), "rgba(255, 255, 255, 1)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");

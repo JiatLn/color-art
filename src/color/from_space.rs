@@ -16,7 +16,7 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::from_rgb(255, 51, 153).unwrap();
-    /// assert_eq!(color.hex(), "#ff3399");
+    /// assert_eq!(color.hex(), "#f39");
     /// ```
     pub fn from_rgb<T>(r: T, g: T, b: T) -> Result<Self> where T: Into<f64> {
         let r = r.into();
@@ -56,7 +56,7 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::from_hsl(330.0, 1.0, 0.6).unwrap();
-    /// assert_eq!(color.hex(), "#ff3399");
+    /// assert_eq!(color.hex(), "#f39");
     /// ```
     pub fn from_hsl(h: f64, s: f64, l: f64) -> Result<Self> {
         ColorSpace::HSL.valid(&vec![h, s, l])?;
@@ -86,7 +86,7 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::from_cmyk(0.0, 0.8, 0.4, 0.0).unwrap();
-    /// assert_eq!(color.hex(), "#ff3399");
+    /// assert_eq!(color.hex(), "#f39");
     /// ```
     pub fn from_cmyk(c: f64, m: f64, y: f64, k: f64) -> Result<Self> {
         ColorSpace::CMYK.valid(&vec![c, m, y, k])?;
@@ -101,7 +101,7 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::from_hex("#ff3399").unwrap();
-    /// assert_eq!(color.hex(), "#ff3399");
+    /// assert_eq!(color.hex(), "#f39");
     /// ```
     pub fn from_hex(hex_str: &str) -> Result<Self> {
         ColorSpace::valid_hex(hex_str)?;
@@ -122,7 +122,7 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::from_name("yellow").unwrap();
-    /// assert_eq!(color.hex(), "#ffff00");
+    /// assert_eq!(color.hex(), "#ff0");
     ///
     /// let color = Color::from_name("水绿").unwrap();
     /// assert_eq!(color.hex(), "#8cc269");
@@ -143,10 +143,10 @@ mod tests {
     #[test]
     fn test_color_from_rgb() {
         let color = Color::from_rgb(255, 51, 153).unwrap();
-        assert_eq!(color.hex(), "#ff3399");
+        assert_eq!(color.hex(), "#f39");
 
         let color = Color::from_rgb(255.0, 51.0, 153.0).unwrap();
-        assert_eq!(color.hex(), "#ff3399");
+        assert_eq!(color.hex(), "#f39");
     }
 
     #[test]
@@ -158,7 +158,7 @@ mod tests {
     #[test]
     fn test_color_from_hsl() {
         let color = Color::from_hsl(330.0, 1.0, 0.6).unwrap();
-        assert_eq!(color.hex(), "#ff3399");
+        assert_eq!(color.hex(), "#f39");
     }
 
     #[test]
@@ -170,10 +170,10 @@ mod tests {
     #[test]
     fn test_color_from_cmyk() {
         let color = Color::from_cmyk(0.0, 0.8, 0.4, 0.0).unwrap();
-        assert_eq!(color.hex(), "#ff3399");
+        assert_eq!(color.hex(), "#f39");
 
         let color = Color::from_cmyk(0.2, 0.8, 0.0, 0.0).unwrap();
-        assert_eq!(color.hex(), "#cc33ff");
+        assert_eq!(color.hex(), "#c3f");
 
         let color = Color::from_cmyk(2.0, 0.0, 0.0, 1.0);
         assert!(color.is_err());

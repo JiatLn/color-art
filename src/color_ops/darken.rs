@@ -59,7 +59,7 @@ mod tests {
 
         let mut color = color!(#426105);
         color.darken(0.5).unwrap();
-        assert_eq!(color.hex(), "#000000");
+        assert_eq!(color.hex(), "#000");
 
         let mut color = color!(#80e619);
         color.darken(0.2).unwrap();

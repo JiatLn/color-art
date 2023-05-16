@@ -162,7 +162,7 @@ mod tests {
         assert_eq!(color.hex(), "#8ef6fa");
 
         let color = blend(&c1, &c2, ColorDodge);
-        assert_eq!(color.hex(), "#ffffff");
+        assert_eq!(color.hex(), "#fff");
 
         let color = blend(&c1, &c2, HardLight);
         assert_eq!(color.hex(), "#e7f643");

@@ -292,22 +292,22 @@ mod tests {
     #[test]
     fn test_color_from_cmyk_str() {
         let color = Color::from_str("cmyk(0, 100%, 100%, 0)").unwrap();
-        assert_eq!(color.hex(), "#ff0000");
+        assert_eq!(color.hex(), "#f00");
 
         let color = Color::from_str("cmyk(100%, 0, 100%, 0)").unwrap();
-        assert_eq!(color.hex(), "#00ff00");
+        assert_eq!(color.hex(), "#0f0");
 
         let color = Color::from_str("cmyk(100%, 100%, 0, 0)").unwrap();
-        assert_eq!(color.hex(), "#0000ff");
+        assert_eq!(color.hex(), "#00f");
 
         let color = Color::from_str("cmyk(0, 0, 0, 100%)").unwrap();
-        assert_eq!(color.hex(), "#000000");
+        assert_eq!(color.hex(), "#000");
 
         let color = Color::from_str("cmyk(0, 0, 0, 0)").unwrap();
-        assert_eq!(color.hex(), "#ffffff");
+        assert_eq!(color.hex(), "#fff");
 
         let color = Color::from_str("cmyk(20%, 80%, 0, 0)").unwrap();
-        assert_eq!(color.hex(), "#cc33ff");
+        assert_eq!(color.hex(), "#c3f");
 
         let color = Color::from_str("cmyk(35%, 0, 60%, 0)").unwrap();
         assert_eq!(color.hex(), "#a6ff66");
