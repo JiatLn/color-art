@@ -164,10 +164,9 @@ You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsla`, `hsv`, `hsi`, `hwb`, `cmyk`
 <br>
   
 ```rust
-use color_art::Color;
-use std::str::FromStr;
+use color_art::color;
 
-let color = Color::from_str("#ffff00").unwrap();
+let color = color!(#ffff00);
 color.hex(); // "#ffff00"
 color.rgb(); // "rgb(255, 255, 0)"
 color.rgba(); // "rgba(255, 255, 0, 1)"
@@ -195,10 +194,9 @@ You can use the `red`, `green`, `blue`, `alpha`, `hue`, `saturation`, `lightness
 <br>
   
 ```rust
-use color_art::Color;
-use std::str::FromStr;
+use color_art::color;
 
-let color = Color::from_str("#abcdef").unwrap();
+let color = color!(#abcdef);
 
 color.red(); // 171
 color.green(); // 205
