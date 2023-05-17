@@ -157,74 +157,21 @@ More examples can be found in [Construct from color spaces](https://color-art.ne
 
 Stringify a color to a string.
 
-You can use the `hex`, `rgb`, `rgba`, `hsl`, `hsla`, `hsv`, `hsi`, `hwb`, `cmyk`, `xyz`, `yuv`, `YCbCr`, `lab`, `name` method to stringify a color to a string.
-
-<details>
-<summary>For example</summary>
-<br>
-  
-```rust
-use color_art::color;
-
-let color = color!(#ffff00);
-color.hex(); // "#ff0"
-color.rgb(); // "rgb(255, 255, 0)"
-color.rgba(); // "rgba(255, 255, 0, 1)"
-color.hsl(); // "hsl(60, 100%, 50%)"
-color.hsla(); // "hsl(60, 100%, 50%, 1)"
-color.hsv(); // "hsv(60, 100%, 100%)"
-color.hsi(); // "hsi(60, 100%, 66.67%)"
-color.hwb(); // "hwb(60, 0%, 0%)"
-color.cmyk(); // "cmyk(0%, 0%, 100%, 0%)"
-color.xyz(); // "xyz(0.932231, 0.975339, 0.502949)"
-color.yuv(); // "yuv(0.886, -0.4359, 0.1)"
-color.ycbcr(); // "YCbCr(225.93, 0.5755, 148.7269)"
-color.name(); // "yellow"
-color.lab(); // "lab(97.14, -21.55, 94.48)"
-```
+> Refer to [Construct from string](https://color-art.netlify.app/construct-a-color/from-string.html).
 
 </details>
 
-### Color Channel
+### Color Channels
 
-You can use the `red`, `green`, `blue`, `alpha`, `hue`, `saturation`, `lightness`, `whiteness`, `blackness`, `hsv_hue`, `hsv_saturation`, `hsv_value`, `luma`, `luminance`, `gray` method to extract the color channel.
+Extract the color channels.
 
-<details>
-<summary>For example</summary>
-<br>
-  
-```rust
-use color_art::color;
+> Refer to [Color Channels](https://color-art.netlify.app/api/channels.html).
 
-let color = color!(#abcdef);
+### Color Operations
 
-color.red(); // 171
-color.green(); // 205
-color.blue(); // 239
-color.alpha(); // 1.0
+Color operation functions.
 
-color.hue(); // 210.0
-color.saturation(); // 0.68
-color.lightness(); // 0.8039
-
-color.whiteness(); // 0.6706
-color.blackness(); // 0.0627
-
-color.hsv_hue(); // 210.0
-color.hsv_saturation(); // 0.2845
-color.hsv_value(); // 0.9373
-
-color.luma(); // 0.59
-color.luminance(); // 0.79
-
-color.gray(); // 198.71
-```
-
-</details>
-
-### Color Operation
-
-More details, please refer to [Color Operation](https://color-art.netlify.app/api/operation).
+> Refer to [Color Operations](https://color-art.netlify.app/api/operations.html).
 
 ---
 
