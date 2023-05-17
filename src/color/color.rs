@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 /// Color is a struct that represents a color.
 #[derive(PartialEq, Debug, Clone, Copy)]
 pub struct Color {
@@ -25,6 +27,12 @@ impl Default for Color {
     }
 }
 
+impl Display for Color {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.hex())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -33,5 +41,11 @@ mod tests {
     fn test_color_default() {
         let color = Color::default();
         assert_eq!(color, Color::new(0, 0, 0, 1.0));
+    }
+
+    #[test]
+    fn test_color_display() {
+        let color = Color::new(255, 255, 0, 1.0);
+        println!("color is \"{}\"", color);
     }
 }
