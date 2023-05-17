@@ -85,13 +85,13 @@ pub enum BlendMode {
 ///
 /// The blend mode formulas taken from [blending](https://www.w3.org/TR/compositing-1/#blending).
 ///
-/// # Arguments
+/// # Parameters
 ///
 /// * `backdrop_color` - The color of the backdrop.
 /// * `source_color` - The color of the source.
 /// * `mode` - The blend mode to use. See [BlendMode](enum.BlendMode.html) for more information.
 ///
-/// # Example
+/// # Examples
 ///
 /// ```
 /// use color_art::{color, BlendMode, blend};
