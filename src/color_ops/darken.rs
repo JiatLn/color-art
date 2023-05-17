@@ -47,7 +47,7 @@ mod tests {
     use crate::*;
 
     #[test]
-    fn test_darken() {
+    fn test_color_darken() {
         let color = color!(#426105);
         let color = color.darken(0.1);
         assert_eq!(color.hex(), "#213102");
@@ -59,5 +59,20 @@ mod tests {
         let color = color!(#80e619);
         let color = color.darken(0.2);
         assert_eq!(color.hex(), "#4d8a0f");
+    }
+
+    #[test]
+    fn test_color_lighten() {
+        let color = color!(#426105);
+        let color = color.lighten(0.1);
+        assert_eq!(color.hex(), "#639207");
+
+        let color = color!(#426105);
+        let color = color.lighten(0.5);
+        assert_eq!(color.hex(), "#c9f86d");
+
+        let color = color!(#80e619);
+        let color = color.lighten(0.2);
+        assert_eq!(color.hex(), "#b3f075");
     }
 }
