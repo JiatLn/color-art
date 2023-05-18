@@ -8,6 +8,9 @@ fn test_color_marcos() {
     let color = color!(#1890ff);
     assert_eq!(color.hex(), "#1890ff");
 
+    let color = color!(#1890ff33);
+    assert_eq!(color.hex(), "#1890ff33");
+
     let color = color!(rgb(255, 255, 0));
     assert_eq!(color.rgb(), "rgb(255, 255, 0)");
 

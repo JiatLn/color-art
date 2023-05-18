@@ -22,8 +22,8 @@ pub fn rgba2hex(color: (f64, f64, f64, f64)) -> String {
 
 pub fn hex2rgb(hex: &str) -> (f64, f64, f64) {
     let mut hex = String::from(hex);
-    let len = hex.len();
-    if len == 4 {
+    // #rgb -> #rrggbb
+    if hex.len() == 4 {
         let mut hex_new = String::from("#");
         for c in hex[1..].chars() {
             hex_new.push(c);
@@ -37,6 +37,26 @@ pub fn hex2rgb(hex: &str) -> (f64, f64, f64) {
     let b = u8::from_str_radix(&hex[5..7], 16).unwrap();
 
     (r as f64, g as f64, b as f64)
+}
+
+pub fn hex2rgba(hex: &str) -> (f64, f64, f64, f64) {
+    let mut hex = String::from(hex);
+    // #rgba -> #rrggbbaa
+    if hex.len() == 5 {
+        let mut hex_new = String::from("#");
+        for c in hex[1..].chars() {
+            hex_new.push(c);
+            hex_new.push(c);
+        }
+        hex = hex_new;
+    }
+
+    let r = u8::from_str_radix(&hex[1..3], 16).unwrap();
+    let g = u8::from_str_radix(&hex[3..5], 16).unwrap();
+    let b = u8::from_str_radix(&hex[5..7], 16).unwrap();
+    let a = u8::from_str_radix(&hex[7..9], 16).unwrap();
+
+    (r as f64, g as f64, b as f64, (a as f64) / 255.0)
 }
 
 #[cfg(test)]

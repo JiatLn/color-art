@@ -102,13 +102,22 @@ impl Color {
     ///
     /// let color = Color::from_hex("#ff3399").unwrap();
     /// assert_eq!(color.hex(), "#f39");
+    ///
+    /// let color = Color::from_hex("#ff339933").unwrap();
+    /// assert_eq!(color.hex(), "#f393");
     /// ```
     pub fn from_hex(hex_str: &str) -> Result<Self> {
         ColorSpace::valid_hex(hex_str)?;
-        let (r, g, b) = conversion::hex::hex2rgb(hex_str);
-        Ok(Color::new(r, g, b, 1.0))
+        let (r, g, b, a) = match hex_str.len() {
+            4 | 7 => {
+                let (r, g, b) = conversion::hex::hex2rgb(hex_str);
+                (r, g, b, 1.0)
+            }
+            5 | 9 => conversion::hex::hex2rgba(hex_str),
+            _ => anyhow::bail!("Got a error hex string!"),
+        };
+        Ok(Color::new(r, g, b, a))
     }
-
     /// Create a color from a color name.
     ///
     /// Currently supported color names are:
