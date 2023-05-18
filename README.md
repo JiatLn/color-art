@@ -35,7 +35,7 @@ See [Color Art](https://color-art.netlify.app).
 
 ```toml
 [dependencies]
-color-art = "0.2"
+color-art = "0.3"
 ```
 
 ### Color generator
