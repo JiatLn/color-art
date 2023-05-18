@@ -1,4 +1,5 @@
 #[macro_export]
+#[doc(hidden)]
 macro_rules! color_args {
     () => { vec![] };
     ($arg:expr) => { vec![$arg] };
