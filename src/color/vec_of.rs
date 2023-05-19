@@ -83,4 +83,11 @@ mod tests {
         let vec = color.vec_of(ColorSpace::HSL);
         assert_eq!(vec, vec![89.85365853658537, 0.803921568627451, 0.5]);
     }
+
+    #[test]
+    fn test_vec_of_lab() {
+        let color = Color::from_name("orange").unwrap();
+        let vec = color.vec_of(ColorSpace::Lab);
+        assert_eq!(vec, vec![74.93565017306031, 23.933170767745093, 78.94977540341804]);
+    }
 }

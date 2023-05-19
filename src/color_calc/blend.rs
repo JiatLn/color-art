@@ -68,6 +68,12 @@ pub enum BlendMode {
 
 /// Blends two colors using RGB channel-wise blend functions.
 ///
+/// # Parameters
+///
+/// * `backdrop_color` - The backdrop color.
+/// * `source_color` - The source color.
+/// * `mode` - The blend mode to use. See [BlendMode](enum.BlendMode.html) for more information.
+///
 /// Supports the following blend modes:
 ///
 /// * Normal
@@ -84,12 +90,6 @@ pub enum BlendMode {
 /// * Exclusion
 ///
 /// The blend mode formulas taken from [blending](https://www.w3.org/TR/compositing-1/#blending).
-///
-/// # Parameters
-///
-/// * `backdrop_color` - The color of the backdrop.
-/// * `source_color` - The color of the source.
-/// * `mode` - The blend mode to use. See [BlendMode](enum.BlendMode.html) for more information.
 ///
 /// # Examples
 ///

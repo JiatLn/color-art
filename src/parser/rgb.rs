@@ -34,7 +34,10 @@ mod tests {
         let s = "rgb(0, 0, 0)";
         let (r, g, b) = parse_rgb_str(s).unwrap();
         assert_eq!((r, g, b), (0.0, 0.0, 0.0));
+    }
 
+    #[test]
+    fn test_parser_rgb_error() {
         let s = "rgb255, 0, 0)";
         let s = parse_rgb_str(s);
         assert!(s.is_err());
