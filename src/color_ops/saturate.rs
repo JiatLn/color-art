@@ -35,7 +35,7 @@ impl Color {
     ///
     /// let color = color!(#80e619);
     /// let color = color.desaturate(0.2);
-    /// assert_eq!(color.hex(), "#80cc33");
+    /// assert_eq!(color.hex(), "#80cd32");
     /// ```
     pub fn desaturate(&self, amount: f64) -> Self {
         self.saturate(-amount)

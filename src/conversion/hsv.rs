@@ -50,7 +50,7 @@ pub fn rgb2hsv(color: (f64, f64, f64)) -> (f64, f64, f64) {
         s = delta / max;
     }
 
-    (round(h, 4), round(s, 4), round(v, 4))
+    (h, s, v)
 }
 
 #[cfg(test)]

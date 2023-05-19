@@ -12,9 +12,9 @@ pub fn rgb2hwb(color: (f64, f64, f64)) -> (f64, f64, f64) {
 
     let hsl = hsl::rgb2hsl(color);
 
-    let hue = round(hsl.0, 0);
-    let whiteness = round(min, 4);
-    let blackness = round(1.0 - max, 4);
+    let hue = hsl.0;
+    let whiteness = min;
+    let blackness = 1.0 - max;
 
     (hue, whiteness, blackness)
 }
@@ -43,12 +43,18 @@ mod tests {
     #[test]
     fn test_rgb2hwb() {
         assert_eq!(rgb2hwb((0.0, 255.0, 102.0)), (144.0, 0.0, 0.0));
-        assert_eq!(rgb2hwb((86.0, 59.0, 133.0)), (262.0, 0.2314, 0.4784));
+        assert_eq!(
+            rgb2hwb((86.0, 59.0, 133.0)),
+            (261.8918918918919, 0.23137254901960785, 0.4784313725490196)
+        );
     }
 
     #[test]
     fn test_hwb2rgb() {
         assert_eq!(hwb2rgb((144.0, 0.0, 0.0)), (0.0, 255.0, 102.0));
-        assert_eq!(hwb2rgb((262.0, 0.2314, 0.4784)), (86.0, 59.0, 133.0));
+        assert_eq!(
+            hwb2rgb((261.8918918918919, 0.23137254901960785, 0.4784313725490196)),
+            (86.0, 59.0, 133.0)
+        );
     }
 }

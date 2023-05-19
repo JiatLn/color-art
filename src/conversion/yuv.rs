@@ -11,7 +11,7 @@ pub fn rgb2yuv(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let y = RGB2YUV_COEFFS[0] * r + RGB2YUV_COEFFS[1] * g + RGB2YUV_COEFFS[2] * b;
     let u = RGB2YUV_COEFFS[3] * (b - y);
     let v = RGB2YUV_COEFFS[4] * (r - y);
-    (round(y, 4), round(u, 4), round(v, 4))
+    (y, u, v)
 }
 
 /// Convert `YUV` to `RGB`
@@ -31,13 +31,19 @@ mod tests {
 
     #[test]
     fn test_rgb2yuv() {
-        assert_eq!(rgb2yuv((255.0, 255.0, 0.0)), (0.886, -0.4359, 0.1));
-        assert_eq!(rgb2yuv((255.0, 0.0, 0.0)), (0.299, -0.1471, 0.6148));
+        assert_eq!(
+            rgb2yuv((255.0, 255.0, 0.0)),
+            (0.8859999999999999, -0.43591199999999997, 0.0999780000000001)
+        );
+        assert_eq!(rgb2yuv((255.0, 0.0, 0.0)), (0.299, -0.147108, 0.614777));
     }
 
     #[test]
     fn test_yuv2rgb() {
-        assert_eq!(yuv2rgb((0.886, -0.4359, 0.1)), (255.0, 255.0, 0.0));
-        assert_eq!(yuv2rgb((0.299, -0.1471, 0.6148)), (255.0, 0.0, 0.0));
+        assert_eq!(
+            yuv2rgb((0.8859999999999999, -0.43591199999999997, 0.0999780000000001)),
+            (255.0, 255.0, 0.0)
+        );
+        assert_eq!(yuv2rgb((0.299, -0.147108, 0.614777)), (255.0, 0.0, 0.0));
     }
 }

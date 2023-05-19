@@ -49,5 +49,5 @@ pub fn rgb2hsl(color: (f64, f64, f64)) -> (f64, f64, f64) {
         s = delta / (1.0 - (2.0 * l - 1.0).abs());
     }
 
-    (round(h, 4), round(s, 4), round(l, 4))
+    (h, s, l)
 }

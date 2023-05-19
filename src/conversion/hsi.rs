@@ -15,7 +15,7 @@ pub(crate) fn rgb2hsi(color: (f64, f64, f64)) -> (f64, f64, f64) {
 
     let s = if i == 0.0 { 0.0 } else { 1.0 - min / i };
 
-    (round(h, 4), round(s, 4), round(i, 4))
+    (h, s, i)
 }
 
 pub(crate) fn hsi2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
@@ -49,7 +49,7 @@ pub(crate) fn hsi2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
             let g = i * (1.0 - s);
             let b = i * (1.0 + (s * h.cos()) / (std::f64::consts::FRAC_PI_3 - h).cos());
             let r = 3.0 * i - (g + b);
-            dbg!(r, g, b);
+
             (r, g, b)
         }
         _ => panic!("Hue must be between 0 and 360"),
@@ -74,31 +74,31 @@ mod tests {
 
         let color = (255.0, 0.0, 0.0);
         let hsi = rgb2hsi(color);
-        assert_eq!(hsi, (0.0, 1.0, 0.3333));
+        assert_eq!(hsi, (0.0, 1.0, 0.3333333333333333));
 
         let color = (0.0, 255.0, 0.0);
         let hsi = rgb2hsi(color);
-        assert_eq!(hsi, (120.0, 1.0, 0.3333));
+        assert_eq!(hsi, (120.00000000000001, 1.0, 0.3333333333333333));
 
         let color = (0.0, 0.0, 255.0);
         let hsi = rgb2hsi(color);
-        assert_eq!(hsi, (240.0, 1.0, 0.3333));
+        assert_eq!(hsi, (240.0, 1.0, 0.3333333333333333));
 
         let color = (255.0, 255.0, 0.0);
         let hsi = rgb2hsi(color);
-        assert_eq!(hsi, (60.0, 1.0, 0.6667));
+        assert_eq!(hsi, (60.00000000000001, 1.0, 0.6666666666666666));
 
         let color = (0.0, 255.0, 255.0);
         let hsi = rgb2hsi(color);
-        assert_eq!(hsi, (180.0, 1.0, 0.6667));
+        assert_eq!(hsi, (180.0, 1.0, 0.6666666666666666));
 
         let color = (255.0, 0.0, 255.0);
         let hsi = rgb2hsi(color);
-        assert_eq!(hsi, (300.0, 1.0, 0.6667));
+        assert_eq!(hsi, (300.0, 1.0, 0.6666666666666666));
 
         let color = (255.0, 128.0, 128.0);
         let hsi = rgb2hsi(color);
-        assert_eq!(hsi, (0.0, 0.2485, 0.668));
+        assert_eq!(hsi, (0.0, 0.24853228962817997, 0.6679738562091503));
     }
 
     #[test]

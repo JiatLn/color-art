@@ -72,3 +72,15 @@ impl Color {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::*;
+
+    #[test]
+    fn test_vec_of_hsl() {
+        let color = color!(#80e619);
+        let vec = color.vec_of(ColorSpace::HSL);
+        assert_eq!(vec, vec![89.85365853658537, 0.803921568627451, 0.5]);
+    }
+}

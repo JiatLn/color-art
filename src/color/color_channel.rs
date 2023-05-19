@@ -38,23 +38,23 @@ impl Color {
     }
     /// Extracts the hue channel of color as a number between 0.0 and 360.0.
     pub fn hue(&self) -> f64 {
-        self.vec_of(ColorSpace::HSL)[0]
+        round(self.vec_of(ColorSpace::HSL)[0], 4)
     }
     /// Extracts the HSL saturation of color as a number between 0.0 and 1.0.
     pub fn saturation(&self) -> f64 {
-        self.vec_of(ColorSpace::HSL)[1]
+        round(self.vec_of(ColorSpace::HSL)[1], 4)
     }
     /// Extracts the HSL lightness of color as a number between 0.0 and 1.0.
     pub fn lightness(&self) -> f64 {
-        self.vec_of(ColorSpace::HSL)[2]
+        round(self.vec_of(ColorSpace::HSL)[2], 4)
     }
     /// Extracts the HWB whiteness of color as a number between 0.0 and 1.0.
     pub fn whiteness(&self) -> f64 {
-        self.vec_of(ColorSpace::HWB)[1]
+        round(self.vec_of(ColorSpace::HWB)[1], 4)
     }
     /// Extracts the HWB blackness of color as a number between 0.0 and 1.0.
     pub fn blackness(&self) -> f64 {
-        self.vec_of(ColorSpace::HWB)[2]
+        round(self.vec_of(ColorSpace::HWB)[2], 4)
     }
     /// Calculates the [luma](http://en.wikipedia.org/wiki/Luma_%28video%29) (perceptual brightness) of color.
     pub fn luma(&self) -> f64 {
@@ -75,15 +75,15 @@ impl Color {
     }
     /// Extracts the hue channel of color in the HSV color space.
     pub fn hsv_hue(&self) -> f64 {
-        self.vec_of(ColorSpace::HSV)[0]
+        round(self.vec_of(ColorSpace::HSV)[0], 4)
     }
     /// Extracts the saturation channel of color in the HSV color space.
     pub fn hsv_saturation(&self) -> f64 {
-        self.vec_of(ColorSpace::HSV)[1]
+        round(self.vec_of(ColorSpace::HSV)[1], 4)
     }
     /// Extracts the value channel of color in the HSV color space.
     pub fn hsv_value(&self) -> f64 {
-        self.vec_of(ColorSpace::HSV)[2]
+        round(self.vec_of(ColorSpace::HSV)[2], 4)
     }
     /// Calculates the [gray](http://en.wikipedia.org/wiki/Grayscale) value of color.
     pub fn gray(&self) -> f64 {

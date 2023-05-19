@@ -9,5 +9,5 @@ fn test_color_calc() {
     assert_eq!(d, 265.00377355803823);
 
     let d = distance_with(&color1, &color2, ColorSpace::HSL);
-    assert_eq!(d, 0.6005717609078869);
+    assert_eq!(d, 0.6005697492120621);
 }
