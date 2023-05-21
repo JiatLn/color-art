@@ -24,9 +24,16 @@ pub fn lab2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let x = XN * lab_xyz(x);
     let z = ZN * lab_xyz(z);
 
-    let r = 3.2406 * x - 1.5372 * y - 0.4986 * z;
-    let g = -0.9689 * x + 1.8758 * y + 0.0415 * z;
-    let b = 0.0557 * x - 0.204 * y + 1.057 * z;
+    let mat = vec![
+        vec![3.2406, -1.5372, -0.4986],
+        vec![-0.9689, 1.8758, 0.0415],
+        vec![0.0557, -0.204, 1.057]
+    ];
+    let rgb = multiply_matrices(mat, vec![vec![x], vec![y], vec![z]]);
+
+    let r = rgb[0][0];
+    let g = rgb[1][0];
+    let b = rgb[2][0];
 
     let r = 255.0 * xyz_rgb(r);
     let g = 255.0 * xyz_rgb(g);

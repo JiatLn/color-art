@@ -1,12 +1,16 @@
 use super::utils::{ rgb_xyz, xyz_lab, XN, YN, ZN };
 use crate::utils::*;
 
-static RGB2XYZ_COEFFS: [f64; 9] = [
-    0.4124564, 0.3575761, 0.1804375, 0.2126729, 0.7151522, 0.072175, 0.0193339, 0.119192, 0.9503041,
+static RGB2XYZ_MATRIX: [[f64; 3]; 3] = [
+    [0.4124564, 0.3575761, 0.1804375],
+    [0.2126729, 0.7151522, 0.072175],
+    [0.0193339, 0.119192, 0.9503041],
 ];
 
-static XYZ2RGB_COEFFS: [f64; 9] = [
-    3.2406, -1.5372, -0.4986, -0.9689, 1.8758, 0.0415, 0.0557, -0.204, 1.057,
+static XYZ2RGB_MATRIX: [[f64; 3]; 3] = [
+    [3.2406, -1.5372, -0.4986],
+    [-0.9689, 1.8758, 0.0415],
+    [0.0557, -0.204, 1.057],
 ];
 
 /// Convert RGB to XYZ.
@@ -17,9 +21,12 @@ pub fn rgb2xyz(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let g = rgb_xyz(g);
     let b = rgb_xyz(b);
 
-    let x = (r * RGB2XYZ_COEFFS[0] + g * RGB2XYZ_COEFFS[1] + b * RGB2XYZ_COEFFS[2]) / XN;
-    let y = (r * RGB2XYZ_COEFFS[3] + g * RGB2XYZ_COEFFS[4] + b * RGB2XYZ_COEFFS[5]) / YN;
-    let z = (r * RGB2XYZ_COEFFS[6] + g * RGB2XYZ_COEFFS[7] + b * RGB2XYZ_COEFFS[8]) / ZN;
+    let rgb2xyz_matrix = RGB2XYZ_MATRIX.map(|v| v.to_vec()).to_vec();
+    let xyz = multiply_matrices(rgb2xyz_matrix, vec![vec![r], vec![g], vec![b]]);
+
+    let x = xyz[0][0] / XN;
+    let y = xyz[1][0] / YN;
+    let z = xyz[2][0] / ZN;
 
     let x = xyz_lab(x);
     let y = xyz_lab(y);
@@ -31,9 +38,14 @@ pub fn rgb2xyz(color: (f64, f64, f64)) -> (f64, f64, f64) {
 /// Convert XYZ to RGB.
 pub fn xyz2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
     let (x, y, z) = color;
-    let r = XYZ2RGB_COEFFS[0] * x + XYZ2RGB_COEFFS[1] * y + XYZ2RGB_COEFFS[2] * z;
-    let g = XYZ2RGB_COEFFS[3] * x + XYZ2RGB_COEFFS[4] * y + XYZ2RGB_COEFFS[5] * z;
-    let b = XYZ2RGB_COEFFS[6] * x + XYZ2RGB_COEFFS[7] * y + XYZ2RGB_COEFFS[8] * z;
+
+    let xyz2rgb_matrix: Matrix = XYZ2RGB_MATRIX.map(|v| v.to_vec()).to_vec();
+    let rgb = multiply_matrices(xyz2rgb_matrix, vec![vec![x], vec![y], vec![z]]);
+
+    let r = rgb[0][0];
+    let g = rgb[1][0];
+    let b = rgb[2][0];
+
     (round(r * 255.0, 0), round(g * 255.0, 0), round(b * 255.0, 0))
 }
 
