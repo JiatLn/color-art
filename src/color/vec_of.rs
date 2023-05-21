@@ -75,7 +75,7 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use crate::*;
+    use crate::{ *, utils::round };
 
     #[test]
     fn test_vec_of_hsl() {
@@ -86,8 +86,23 @@ mod tests {
 
     #[test]
     fn test_vec_of_lab() {
-        let color = Color::from_name("orange").unwrap();
-        let vec = color.vec_of(ColorSpace::Lab);
-        assert_eq!(vec, vec![74.93565017306031, 23.933170767745093, 78.94977540341804]);
+        let color = color!(#7654CD);
+        let vec = color
+            .vec_of(ColorSpace::Lab)
+            .iter()
+            .map(|&v| round(v, 2))
+            .collect::<Vec<_>>();
+        assert_eq!(vec, vec![44.36, 36.05, -58.99]);
+    }
+
+    #[test]
+    fn test_vec_of_xyz() {
+        let color = color!(#7654CD);
+        let vec = color
+            .vec_of(ColorSpace::XYZ)
+            .iter()
+            .map(|&v| round(v, 5))
+            .collect::<Vec<_>>();
+        assert_eq!(vec, vec![0.2166, 0.146, 0.59437]);
     }
 }

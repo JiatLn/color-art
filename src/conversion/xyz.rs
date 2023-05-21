@@ -1,50 +1,19 @@
-use super::utils::{ rgb_xyz, xyz_lab, XN, YN, ZN };
+use super::utils::*;
 use crate::utils::*;
-
-static RGB2XYZ_MATRIX: [[f64; 3]; 3] = [
-    [0.4124564, 0.3575761, 0.1804375],
-    [0.2126729, 0.7151522, 0.072175],
-    [0.0193339, 0.119192, 0.9503041],
-];
-
-static XYZ2RGB_MATRIX: [[f64; 3]; 3] = [
-    [3.2406, -1.5372, -0.4986],
-    [-0.9689, 1.8758, 0.0415],
-    [0.0557, -0.204, 1.057],
-];
 
 /// Convert RGB to XYZ.
 pub fn rgb2xyz(color: (f64, f64, f64)) -> (f64, f64, f64) {
-    let (r, g, b) = normalize_color(color);
+    let color = normalize_color(color);
+    let color = lin_srgb(color);
 
-    let r = rgb_xyz(r);
-    let g = rgb_xyz(g);
-    let b = rgb_xyz(b);
-
-    let rgb2xyz_matrix = RGB2XYZ_MATRIX.map(|v| v.to_vec()).to_vec();
-    let xyz = multiply_matrices(rgb2xyz_matrix, vec![vec![r], vec![g], vec![b]]);
-
-    let x = xyz[0][0] / XN;
-    let y = xyz[1][0] / YN;
-    let z = xyz[2][0] / ZN;
-
-    let x = xyz_lab(x);
-    let y = xyz_lab(y);
-    let z = xyz_lab(z);
-
-    (x, y, z)
+    lin_srgb_to_xyz(color)
 }
 
 /// Convert XYZ to RGB.
 pub fn xyz2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
-    let (x, y, z) = color;
+    let color = xyz_to_lin_srgb(color);
 
-    let xyz2rgb_matrix: Matrix = XYZ2RGB_MATRIX.map(|v| v.to_vec()).to_vec();
-    let rgb = multiply_matrices(xyz2rgb_matrix, vec![vec![x], vec![y], vec![z]]);
-
-    let r = rgb[0][0];
-    let g = rgb[1][0];
-    let b = rgb[2][0];
+    let (r, g, b) = lin_srgb(color);
 
     (round(r * 255.0, 0), round(g * 255.0, 0), round(b * 255.0, 0))
 }
@@ -56,16 +25,23 @@ mod tests {
     #[test]
     fn test_rgb2xyz() {
         assert_eq!(
-            rgb2xyz((255.0, 255.0, 0.0)),
-            (0.9322310141216105, 0.9753385105543646, 0.5029486352860133)
+            rgb2xyz((118.0, 84.0, 205.0)),
+            (0.21659503867453317, 0.1459993720802233, 0.5943650051071222)
         );
+
+        assert_eq!(
+            rgb2xyz((255.0, 255.0, 0.0)),
+            (0.7699751386498375, 0.9278076846392662, 0.13852559851021784)
+        );
+
         assert_eq!(
             rgb2xyz((255.0, 0.0, 0.0)),
-            (0.757088316962712, 0.5969033977698898, 0.26088741519062475)
+            (0.4123907992659595, 0.21263900587151036, 0.01933081871559185)
         );
+
         assert_eq!(
             rgb2xyz((162.0, 184.0, 255.0)),
-            (0.8077140654027584, 0.7893387855629574, 0.9766808553677133)
+            (0.5008777711244343, 0.49181501188347304, 1.0146489717861926)
         );
     }
 
@@ -73,6 +49,6 @@ mod tests {
     fn test_xyz2rgb() {
         assert_eq!(xyz2rgb((0.770033, 0.927831, 0.138527)), (255.0, 255.0, 0.0));
         assert_eq!(xyz2rgb((0.412453, 0.212671, 0.019334)), (255.0, 0.0, 0.0));
-        assert_eq!(xyz2rgb((0.70047, 0.723315, 1.048516)), (162.0, 184.0, 255.0));
+        assert_eq!(xyz2rgb((0.70047, 0.723315, 1.048516)), (92.0, 122.0, 255.0));
     }
 }

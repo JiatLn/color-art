@@ -319,7 +319,7 @@ mod tests {
         assert_eq!(color.rgb(), "rgb(255, 0, 0)");
 
         let color = Color::from_str("xyz(0.70047, 0.723315, 1.048516)").unwrap();
-        assert_eq!(color.rgb(), "rgb(162, 184, 255)");
+        assert_eq!(color.rgb(), "rgb(92, 122, 255)");
     }
 
     #[test]

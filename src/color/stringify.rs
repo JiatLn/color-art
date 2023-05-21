@@ -178,7 +178,7 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::new(255.0, 0.0, 0.0, 1.0);
-    /// assert_eq!(color.xyz(), "xyz(0.757088, 0.596903, 0.260887)");
+    /// assert_eq!(color.xyz(), "xyz(0.412391, 0.212639, 0.019331)");
     /// ```
     pub fn xyz(self) -> String {
         let (x, y, z) = rgb2xyz(self.rgb);
@@ -206,7 +206,7 @@ impl Color {
     /// use color_art::Color;
     ///
     /// let color = Color::new(255.0, 255.0, 0.0, 1.0);
-    /// assert_eq!(color.lab(), "lab(97.14, -21.55, 94.48)");
+    /// assert_eq!(color.lab(), "lab(97.61, -15.75, 93.39)");
     /// ```
     pub fn lab(self) -> String {
         let (l, a, b) = rgb2lab(self.rgb);
@@ -274,7 +274,7 @@ mod tests {
         assert_eq!(color.hsv(), "hsv(0, 0%, 100%)");
         assert_eq!(color.hsi(), "hsi(0, 0%, 100%)");
         assert_eq!(color.hwb(), "hwb(0, 100%, 0%)");
-        assert_eq!(color.xyz(), "xyz(1, 1, 1)");
+        assert_eq!(color.xyz(), "xyz(0.950456, 1, 1.089058)");
         assert_eq!(color.ycbcr(), "YCbCr(255, 128, 128)");
         assert_eq!(color.lab(), "lab(100, 0, 0)");
         assert_eq!(color.name(), "white");
@@ -288,7 +288,7 @@ mod tests {
         assert_eq!(color.hsv(), "hsv(0, 0%, 0%)");
         assert_eq!(color.hsi(), "hsi(0, 0%, 0%)");
         assert_eq!(color.hwb(), "hwb(0, 0%, 100%)");
-        assert_eq!(color.xyz(), "xyz(0.137931, 0.137931, 0.137931)");
+        assert_eq!(color.xyz(), "xyz(0, 0, 0)");
         assert_eq!(color.ycbcr(), "YCbCr(0, 128, 128)");
         assert_eq!(color.lab(), "lab(0, 0, 0)");
         assert_eq!(color.name(), "#0003");
@@ -302,9 +302,9 @@ mod tests {
         assert_eq!(color.hsv(), "hsv(180, 100%, 50%)");
         assert_eq!(color.hsi(), "hsi(180, 100%, 33.46%)");
         assert_eq!(color.hwb(), "hwb(180, 0%, 50%)");
-        assert_eq!(color.xyz(), "xyz(0.496222, 0.553915, 0.596299)");
+        assert_eq!(color.xyz(), "xyz(0.116147, 0.16996, 0.230912)");
         assert_eq!(color.ycbcr(), "YCbCr(89.728, 149.5854, 64.0239)");
-        assert_eq!(color.lab(), "lab(48.25, -28.85, -8.48)");
+        assert_eq!(color.lab(), "lab(47.99, -30.39, -8.98)");
         assert_eq!(color.name(), "teal");
 
         let color = Color::new(161, 110, 87, 1.0);
@@ -316,9 +316,9 @@ mod tests {
         assert_eq!(color.hsv(), "hsv(19, 46%, 63%)");
         assert_eq!(color.hsi(), "hsi(18, 27.09%, 46.8%)");
         assert_eq!(color.hwb(), "hwb(19, 34%, 37%)");
-        assert_eq!(color.xyz(), "xyz(0.613946, 0.579082, 0.474123)");
+        assert_eq!(color.xyz(), "xyz(0.219934, 0.194179, 0.116068)");
         assert_eq!(color.ycbcr(), "YCbCr(122.627, 107.9064, 155.3599)");
-        assert_eq!(color.lab(), "lab(51.17, 17.43, 20.99)");
+        assert_eq!(color.lab(), "lab(51.48, 18.82, 21.44)");
         assert_eq!(color.name(), "#a16e57");
     }
 }
