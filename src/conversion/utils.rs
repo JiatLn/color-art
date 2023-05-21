@@ -19,24 +19,37 @@ static XYZ2RGB_MATRIX: [[f64; 3]; 3] = [
 /// convert an array of linear-light sRGB values to CIE XYZ
 ///
 /// using sRGB's own white, D65 (no chromatic adaptation)
-pub(crate) fn lin_srgb_to_xyz(rgb: (f64, f64, f64)) -> (f64, f64, f64) {
-    let rgb = vec![vec![rgb.0], vec![rgb.1], vec![rgb.2]];
+pub(crate) fn lin_srgb_to_xyz(rgb: &[f64]) -> Vec<f64> {
+    let rgb = rgb
+        .iter()
+        .map(|&v| vec![v])
+        .collect::<Vec<_>>();
+
     let rgb2xyz_matrix = RGB2XYZ_MATRIX.map(|v| v.to_vec()).to_vec();
-    let xyz: Vec<Vec<f64>> = multiply_matrices(rgb2xyz_matrix, rgb);
-    (xyz[0][0], xyz[1][0], xyz[2][0])
+
+    multiply_matrices(rgb2xyz_matrix, rgb)
+        .iter()
+        .map(|v| v[0])
+        .collect()
 }
 
 /// convert XYZ to linear-light sRGB
-pub(crate) fn xyz_to_lin_srgb(xyz: (f64, f64, f64)) -> (f64, f64, f64) {
-    let xyz = vec![vec![xyz.0], vec![xyz.1], vec![xyz.2]];
+pub(crate) fn xyz_to_lin_srgb(xyz: &[f64]) -> Vec<f64> {
+    let xyz = xyz
+        .iter()
+        .map(|&v| vec![v])
+        .collect::<Vec<_>>();
+
     let xyz2rgb_matrix = XYZ2RGB_MATRIX.map(|v| v.to_vec()).to_vec();
-    let rgb = multiply_matrices(xyz2rgb_matrix, xyz);
-    (rgb[0][0], rgb[1][0], rgb[2][0])
+
+    multiply_matrices(xyz2rgb_matrix, xyz)
+        .iter()
+        .map(|v| v[0])
+        .collect()
 }
 
-pub(crate) fn lin_srgb(rgb: (f64, f64, f64)) -> (f64, f64, f64) {
-    let rgb: Vec<f64> = [rgb.0, rgb.1, rgb.2]
-        .iter()
+pub(crate) fn lin_srgb(rgb: &[f64]) -> Vec<f64> {
+    rgb.iter()
         .map(|&v| {
             let sign = v.signum();
             let abs = v.abs();
@@ -46,8 +59,7 @@ pub(crate) fn lin_srgb(rgb: (f64, f64, f64)) -> (f64, f64, f64) {
                 sign * ((abs + 0.055) / 1.055).powf(2.4)
             }
         })
-        .collect();
-    (rgb[0], rgb[1], rgb[2])
+        .collect()
 }
 
 pub(crate) fn xyz2lab(xyz: Vec<f64>) -> Vec<f64> {
@@ -99,7 +111,7 @@ pub(crate) fn d50_to_d65(xyz: Vec<f64>) -> Vec<f64> {
 /// Convert Lab to D50-adapted XYZ
 ///
 /// <http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html>
-pub(crate) fn lab2xyz(lab: Vec<f64>) -> Vec<f64> {
+pub(crate) fn lab2xyz(lab: &[f64]) -> Vec<f64> {
     const K: f64 = 24389.0 / 27.0; // 29^3/3^3
     const E: f64 = 216.0 / 24389.0; // 6^3/29^3
 

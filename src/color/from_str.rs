@@ -42,78 +42,67 @@ impl FromStr for Color {
     /// ```
     fn from_str(s: &str) -> Result<Self> {
         let color_str = s.trim().to_lowercase();
-        let (r, g, b, a) = match &color_str {
-            s if s.starts_with("rgb(") => {
-                let (r, g, b) = parser::rgb::parse_rgb_str(s)?;
-                (r, g, b, 1.0)
-            }
+        let color_vec = match &color_str {
+            s if s.starts_with("rgb(") => parser::rgb::parse_rgb_str(s)?,
             s if s.starts_with("rgba(") => parser::rgba::parse_rgba_str(s)?,
             s if s.starts_with('#') => {
                 let hex_str = parser::hex::parse_hex_str(s)?;
-                let (r, g, b) = conversion::hex::hex2rgb(&hex_str);
-                (r, g, b, 1.0)
+                conversion::hex::hex2rgb(&hex_str)
             }
             s if s.starts_with("hsl(") => {
                 let hsl = parser::hsl::parse_hsl_str(s)?;
-                let (r, g, b) = conversion::hsl::hsl2rgb(hsl);
-                (r, g, b, 1.0)
+                conversion::hsl::hsl2rgb(&hsl)
             }
             s if s.starts_with("hsla(") => {
-                let (h, s, l, a) = parser::hsla::parse_hsla_str(s)?;
-                let (r, g, b) = conversion::hsl::hsl2rgb((h, s, l));
-                (r, g, b, a)
+                let hsla = parser::hsla::parse_hsla_str(s)?;
+                let mut rgb = conversion::hsl::hsl2rgb(&hsla);
+                rgb.push(hsla[3]);
+                rgb
             }
             s if s.starts_with("hsv(") => {
                 let hsv = parser::hsv::parse_hsv_str(s)?;
-                let (r, g, b) = conversion::hsv::hsv2rgb(hsv);
-                (r, g, b, 1.0)
+                conversion::hsv::hsv2rgb(&hsv)
             }
             s if s.starts_with("hsi(") => {
                 let hsi = parser::hsi::parse_hsi_str(s)?;
-                let (r, g, b) = conversion::hsi::hsi2rgb(hsi);
-                (r, g, b, 1.0)
+                conversion::hsi::hsi2rgb(&hsi)
             }
             s if s.starts_with("hwb(") => {
                 let hwb = parser::hwb::parse_hwb_str(s)?;
-                let (r, g, b) = conversion::hwb::hwb2rgb(hwb);
-                (r, g, b, 1.0)
+                conversion::hwb::hwb2rgb(&hwb)
             }
             s if s.starts_with("cmyk(") => {
                 let cmyk = parser::cmyk::parse_cmyk_str(s)?;
-                let (r, g, b) = conversion::cmyk::cmyk2rgb(cmyk);
-                (r, g, b, 1.0)
+                conversion::cmyk::cmyk2rgb(&cmyk)
             }
             s if s.starts_with("xyz(") => {
                 let xyz = parser::xyz::parse_xyz_str(s)?;
-                let (r, g, b) = conversion::xyz::xyz2rgb(xyz);
-                (r, g, b, 1.0)
+                conversion::xyz::xyz2rgb(&xyz)
             }
             s if s.starts_with("yuv(") => {
                 let yuv = parser::yuv::parse_yuv_str(s)?;
-                let (r, g, b) = conversion::yuv::yuv2rgb(yuv);
-                (r, g, b, 1.0)
+                conversion::yuv::yuv2rgb(&yuv)
             }
             s if s.starts_with("ycbcr(") => {
                 let ycbcr = parser::ycbcr::parse_ycbcr_str(s)?;
-                let (r, g, b) = conversion::ycbcr::ycbcr2rgb(ycbcr);
-                (r, g, b, 1.0)
+                conversion::ycbcr::ycbcr2rgb(&ycbcr)
             }
             s if s.starts_with("lab(") => {
                 let lab = parser::lab::parse_lab_str(s)?;
-                let (r, g, b) = conversion::lab::lab2rgb(lab);
-                (r, g, b, 1.0)
+                conversion::lab::lab2rgb(&lab)
             }
             _ => {
                 let found = hex_of_name(s);
                 match found {
-                    Some(hex) => {
-                        let (r, g, b) = conversion::hex::hex2rgb(hex);
-                        (r, g, b, 1.0)
-                    }
+                    Some(hex) => conversion::hex::hex2rgb(hex),
                     None => anyhow::bail!("{} is not a valid color", s),
                 }
             }
         };
+        let r = color_vec[0];
+        let g = color_vec[1];
+        let b = color_vec[2];
+        let a = if color_vec.len() == 4 { color_vec[3] } else { 1.0 };
         Ok(Color::new(r, g, b, a))
     }
 }

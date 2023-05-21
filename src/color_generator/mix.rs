@@ -25,9 +25,9 @@ impl Color {
             bail!("weight must be between 0.0 and 1.0");
         }
         let (w1, w2) = (weight, 1.0 - weight);
-        let r = color1.rgb.0 * w1 + color2.rgb.0 * w2;
-        let g = color1.rgb.1 * w1 + color2.rgb.1 * w2;
-        let b = color1.rgb.2 * w1 + color2.rgb.2 * w2;
+        let r = color1.rgb[0] * w1 + color2.rgb[0] * w2;
+        let g = color1.rgb[1] * w1 + color2.rgb[1] * w2;
+        let b = color1.rgb[2] * w1 + color2.rgb[2] * w2;
         let a = color1.alpha * w1 + color2.alpha * w2;
         Ok(Color::new(r, g, b, a))
     }

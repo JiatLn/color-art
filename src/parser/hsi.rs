@@ -1,10 +1,9 @@
 use crate::ColorSpace;
-use crate::utils::*;
 use anyhow::Result;
 use std::str::FromStr;
 
 /// Parse a string in HSI color space to an HSI tuple
-pub fn parse_hsi_str(hsi_str: impl ToString) -> Result<(f64, f64, f64)> {
+pub fn parse_hsi_str(hsi_str: impl ToString) -> Result<Vec<f64>> {
     // hsi_str like "hsi(240°, 100%, 33.33%)"
     let hsi_str = hsi_str
         .to_string()
@@ -28,7 +27,7 @@ pub fn parse_hsi_str(hsi_str: impl ToString) -> Result<(f64, f64, f64)> {
 
     ColorSpace::HSI.valid(&hsi_vec)?;
 
-    Ok(vec2tuple(hsi_vec))
+    Ok(hsi_vec)
 }
 
 #[cfg(test)]
@@ -38,9 +37,9 @@ mod tests {
     #[test]
     fn test_parse_hsi_str() {
         let s = "hsi(240°, 100%, 33.33%)";
-        let (h, s, i) = parse_hsi_str(s).unwrap();
-        assert_eq!(h, 240.0);
-        assert_eq!(s, 1.0);
-        assert_eq!(i, 0.3333);
+        let hsi = parse_hsi_str(s).unwrap();
+        assert_eq!(hsi[0], 240.0);
+        assert_eq!(hsi[1], 1.0);
+        assert_eq!(hsi[2], 0.3333);
     }
 }

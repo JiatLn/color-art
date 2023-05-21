@@ -1,10 +1,9 @@
 use crate::ColorSpace;
-use crate::utils::*;
 use anyhow::Result;
 use std::str::FromStr;
 
 /// HSV(Hue, Saturation, Value)
-pub fn parse_hsv_str(hsv_str: impl ToString) -> Result<(f64, f64, f64)> {
+pub fn parse_hsv_str(hsv_str: impl ToString) -> Result<Vec<f64>> {
     // hsv_str like "hsv(60°,100%,50%)"
     let hsv_str = hsv_str
         .to_string()
@@ -29,7 +28,7 @@ pub fn parse_hsv_str(hsv_str: impl ToString) -> Result<(f64, f64, f64)> {
 
     ColorSpace::HSV.valid(&hsv_vec)?;
 
-    Ok(vec2tuple(hsv_vec))
+    Ok(hsv_vec)
 }
 
 #[cfg(test)]
@@ -39,15 +38,15 @@ mod tests {
     #[test]
     fn test_parse_hsv_str() {
         let hsv_str = "hsv(60°,100%,50%)";
-        let (h, s, v) = parse_hsv_str(hsv_str).unwrap();
-        assert_eq!(h, 60.0);
-        assert_eq!(s, 1.0);
-        assert_eq!(v, 0.5);
+        let hsv_vec = parse_hsv_str(hsv_str).unwrap();
+        assert_eq!(hsv_vec[0], 60.0);
+        assert_eq!(hsv_vec[1], 1.0);
+        assert_eq!(hsv_vec[2], 0.5);
 
         let hsv_str = "hsv(60,1,0.5)";
-        let (h, s, v) = parse_hsv_str(hsv_str).unwrap();
-        assert_eq!(h, 60.0);
-        assert_eq!(s, 1.0);
-        assert_eq!(v, 0.5);
+        let hsv_vec = parse_hsv_str(hsv_str).unwrap();
+        assert_eq!(hsv_vec[0], 60.0);
+        assert_eq!(hsv_vec[1], 1.0);
+        assert_eq!(hsv_vec[2], 0.5);
     }
 }

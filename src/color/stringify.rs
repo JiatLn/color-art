@@ -35,8 +35,8 @@ impl Color {
         let hex = if self.alpha == 1.0 {
             rgb2hex(self.rgb)
         } else {
-            let (r, g, b) = self.rgb;
-            rgba2hex((r, g, b, self.alpha))
+            let [r, g, b] = self.rgb;
+            rgba2hex([r, g, b, self.alpha])
         };
         simplify_hex(hex)
     }
@@ -51,7 +51,7 @@ impl Color {
     /// assert_eq!(color.rgb(), "rgb(255, 255, 255)");
     /// ```
     pub fn rgb(self) -> String {
-        let (r, g, b) = self.rgb;
+        let [r, g, b] = self.rgb;
         let r = r.round() as u8;
         let g = g.round() as u8;
         let b = b.round() as u8;
@@ -68,7 +68,7 @@ impl Color {
     /// assert_eq!(color.rgba(), "rgba(255, 255, 255, 0.5)");
     /// ```
     pub fn rgba(self) -> String {
-        let (r, g, b) = self.rgb;
+        let [r, g, b] = self.rgb;
         let r = r.round() as u8;
         let g = g.round() as u8;
         let b = b.round() as u8;
@@ -85,8 +85,11 @@ impl Color {
     /// assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
     /// ```
     pub fn hsl(self) -> String {
-        let (h, s, l) = rgb2hsl(self.rgb);
-        format!("hsl({}, {}%, {}%)", round(h, 0), round(s * 100.0, 0), round(l * 100.0, 0))
+        let hsl = rgb2hsl(&self.rgb);
+        let h = round(hsl[0], 0);
+        let s = round(hsl[1] * 100.0, 0);
+        let l = round(hsl[2] * 100.0, 0);
+        format!("hsl({}, {}%, {}%)", h, s, l)
     }
     /// `hsla` string of the color
     ///
@@ -99,14 +102,12 @@ impl Color {
     /// assert_eq!(color.hsla(), "hsla(0, 0%, 100%, 0.3)");
     /// ```
     pub fn hsla(self) -> String {
-        let (h, s, l) = rgb2hsl(self.rgb);
-        format!(
-            "hsla({}, {}%, {}%, {})",
-            round(h, 0),
-            round(s * 100.0, 0),
-            round(l * 100.0, 0),
-            self.alpha()
-        )
+        let hsl = rgb2hsl(&self.rgb);
+        let h = round(hsl[0], 0);
+        let s = round(hsl[1] * 100.0, 0);
+        let l = round(hsl[2] * 100.0, 0);
+        dbg!(self.alpha());
+        format!("hsla({}, {}%, {}%, {})", h, s, l, self.alpha())
     }
     /// `hsv` string of the color
     ///
@@ -119,8 +120,11 @@ impl Color {
     /// assert_eq!(color.hsv(), "hsv(0, 0%, 100%)");
     /// ```
     pub fn hsv(self) -> String {
-        let (h, s, v) = rgb2hsv(self.rgb);
-        format!("hsv({}, {}%, {}%)", round(h, 0), round(s * 100.0, 0), round(v * 100.0, 0))
+        let hsv = rgb2hsv(&self.rgb);
+        let h = round(hsv[0], 0);
+        let s = round(hsv[1] * 100.0, 0);
+        let v = round(hsv[2] * 100.0, 0);
+        format!("hsv({}, {}%, {}%)", h, s, v)
     }
     /// `hsi` string of the color
     ///
@@ -133,8 +137,11 @@ impl Color {
     /// assert_eq!(color.hsi(), "hsi(0, 0%, 100%)");
     /// ```
     pub fn hsi(self) -> String {
-        let (h, s, i) = rgb2hsi(self.rgb);
-        format!("hsi({}, {}%, {}%)", round(h, 0), round(s * 100.0, 2), round(i * 100.0, 2))
+        let hsi = rgb2hsi(&self.rgb);
+        let h = round(hsi[0], 0);
+        let s = round(hsi[1] * 100.0, 2);
+        let i = round(hsi[2] * 100.0, 2);
+        format!("hsi({}, {}%, {}%)", h, s, i)
     }
     /// `hwb` string of the color
     ///
@@ -147,8 +154,11 @@ impl Color {
     /// assert_eq!(color.hwb(), "hwb(0, 100%, 0%)");
     /// ```
     pub fn hwb(self) -> String {
-        let (h, w, b) = rgb2hwb(self.rgb);
-        format!("hwb({}, {}%, {}%)", round(h, 0), round(w * 100.0, 0), round(b * 100.0, 0))
+        let hwb = rgb2hwb(&self.rgb);
+        let h = round(hwb[0], 0);
+        let w = round(hwb[1] * 100.0, 0);
+        let b = round(hwb[2] * 100.0, 0);
+        format!("hwb({}, {}%, {}%)", h, w, b)
     }
     /// `cmyk` string of the color
     ///
@@ -161,14 +171,11 @@ impl Color {
     /// assert_eq!(color.cmyk(), "cmyk(0%, 0%, 0%, 0%)");
     /// ```
     pub fn cmyk(self) -> String {
-        let (c, m, y, k) = rgb2cmyk(self.rgb);
-        format!(
-            "cmyk({}%, {}%, {}%, {}%)",
-            round(c * 100.0, 0),
-            round(m * 100.0, 0),
-            round(y * 100.0, 0),
-            round(k * 100.0, 0)
-        )
+        let cmyk = rgb2cmyk(&self.rgb)
+            .iter()
+            .map(|&v| round(v * 100.0, 0))
+            .collect::<Vec<_>>();
+        format!("cmyk({}%, {}%, {}%, {}%)", cmyk[0], cmyk[1], cmyk[2], cmyk[3])
     }
     /// `xyz` string of the color
     ///
@@ -181,8 +188,11 @@ impl Color {
     /// assert_eq!(color.xyz(), "xyz(0.412391, 0.212639, 0.019331)");
     /// ```
     pub fn xyz(self) -> String {
-        let (x, y, z) = rgb2xyz(self.rgb);
-        format!("xyz({}, {}, {})", round(x, 6), round(y, 6), round(z, 6))
+        let xyz = rgb2xyz(&self.rgb)
+            .iter()
+            .map(|&v| round(v, 6))
+            .collect::<Vec<_>>();
+        format!("xyz({}, {}, {})", xyz[0], xyz[1], xyz[2])
     }
     /// `yuv` string of the color
     ///
@@ -195,8 +205,11 @@ impl Color {
     /// assert_eq!(color.yuv(), "yuv(0.299, -0.1471, 0.6148)");
     /// ```
     pub fn yuv(self) -> String {
-        let (y, u, v) = rgb2yuv(self.rgb);
-        format!("yuv({}, {}, {})", round(y, 4), round(u, 4), round(v, 4))
+        let yuv = rgb2yuv(&self.rgb)
+            .iter()
+            .map(|&v| round(v, 4))
+            .collect::<Vec<_>>();
+        format!("yuv({}, {}, {})", yuv[0], yuv[1], yuv[2])
     }
     /// `lab` string of the color
     ///
@@ -209,8 +222,11 @@ impl Color {
     /// assert_eq!(color.lab(), "lab(97.61, -15.75, 93.39)");
     /// ```
     pub fn lab(self) -> String {
-        let (l, a, b) = rgb2lab(self.rgb);
-        format!("lab({}, {}, {})", round(l, 2), round(a, 2), round(b, 2))
+        let lab = rgb2lab(&self.rgb)
+            .iter()
+            .map(|&v| round(v, 2))
+            .collect::<Vec<_>>();
+        format!("lab({}, {}, {})", lab[0], lab[1], lab[2])
     }
     /// `YCbCr` string of the color
     ///
@@ -223,8 +239,11 @@ impl Color {
     /// assert_eq!(color.ycbcr(), "YCbCr(225.93, 0.5755, 148.7269)");
     /// ```
     pub fn ycbcr(self) -> String {
-        let (y, cb, cr) = rgb2ycbcr(self.rgb);
-        format!("YCbCr({}, {}, {})", round(y, 4), round(cb, 4), round(cr, 4))
+        let ycbcr = rgb2ycbcr(&self.rgb)
+            .iter()
+            .map(|&v| round(v, 4))
+            .collect::<Vec<_>>();
+        format!("YCbCr({}, {}, {})", ycbcr[0], ycbcr[1], ycbcr[2])
     }
     /// `name` of the color
     ///

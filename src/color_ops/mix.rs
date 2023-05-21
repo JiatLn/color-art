@@ -25,9 +25,9 @@ impl Color {
         let rgb1 = self.rgb;
         let rgb2 = new_color.rgb;
 
-        let r = rgb1.0 * old_weight + rgb2.0 * weight;
-        let g = rgb1.1 * old_weight + rgb2.1 * weight;
-        let b = rgb1.2 * old_weight + rgb2.2 * weight;
+        let r = rgb1[0] * old_weight + rgb2[0] * weight;
+        let g = rgb1[1] * old_weight + rgb2[1] * weight;
+        let b = rgb1[2] * old_weight + rgb2[2] * weight;
         let alpha = self.alpha * old_weight + new_color.alpha * weight;
 
         Color::new(r, g, b, alpha)

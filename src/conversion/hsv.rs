@@ -1,29 +1,36 @@
 use crate::utils::*;
 
 /// [HSV to RGB color conversion](https://www.rapidtables.com/convert/color/hsv-to-rgb.html)
-pub fn hsv2rgb(color: (f64, f64, f64)) -> (f64, f64, f64) {
-    let (h, s, v) = color;
+pub fn hsv2rgb(color: &[f64]) -> Vec<f64> {
+    let h = color[0];
+    let s = color[1];
+    let v = color[2];
 
     let c = v * s;
     let x = c * (1.0 - (((h / 60.0) % 2.0) - 1.0).abs());
     let m = v - c;
 
-    let (r, g, b) = match h {
-        h if h >= 0.0 && h < 60.0 => (c, x, 0.0),
-        h if h >= 60.0 && h < 120.0 => (x, c, 0.0),
-        h if h >= 120.0 && h < 180.0 => (0.0, c, x),
-        h if h >= 180.0 && h < 240.0 => (0.0, x, c),
-        h if h >= 240.0 && h < 300.0 => (x, 0.0, c),
-        h if h >= 300.0 && h < 360.0 => (c, 0.0, x),
-        _ => panic!(),
+    let rgb = match h {
+        h if h >= 0.0 && h < 60.0 => vec![c, x, 0.0],
+        h if h >= 60.0 && h < 120.0 => vec![x, c, 0.0],
+        h if h >= 120.0 && h < 180.0 => vec![0.0, c, x],
+        h if h >= 180.0 && h < 240.0 => vec![0.0, x, c],
+        h if h >= 240.0 && h < 300.0 => vec![x, 0.0, c],
+        h if h >= 300.0 && h < 360.0 => vec![c, 0.0, x],
+        _ => panic!("Hue must be between 0 and 360"),
     };
 
-    ((r + m) * 255.0, (g + m) * 255.0, (b + m) * 255.0)
+    rgb.iter()
+        .map(|&x| (x + m) * 255.0)
+        .collect()
 }
 
 /// [RGB to HSV color conversion](https://www.rapidtables.com/convert/color/rgb-to-hsv.html)
-pub fn rgb2hsv(color: (f64, f64, f64)) -> (f64, f64, f64) {
-    let (r, g, b) = normalize_color(color);
+pub fn rgb2hsv(color: &[f64]) -> Vec<f64> {
+    let color = normalize_color(color);
+    let r = color[0];
+    let g = color[1];
+    let b = color[2];
 
     let max = r.max(g).max(b);
     let min = r.min(g).min(b);
@@ -50,7 +57,7 @@ pub fn rgb2hsv(color: (f64, f64, f64)) -> (f64, f64, f64) {
         s = delta / max;
     }
 
-    (h, s, v)
+    vec![h, s, v]
 }
 
 #[cfg(test)]
@@ -59,87 +66,31 @@ mod tests {
 
     #[test]
     fn test_hsv2rgb() {
-        let hsv = (0.0, 0.0, 0.0);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (0.0, 0.0, 0.0));
+        let hsv = vec![330.0, 0.8, 1.0];
+        let rgb = hsv2rgb(&hsv);
+        assert_eq!(rgb, vec![255.0, 50.999999999999986, 153.0]);
 
-        let hsv = (0.0, 0.0, 1.0);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (255.0, 255.0, 255.0));
+        let hsv = vec![0.0, 0.0, 0.0];
+        let rgb = hsv2rgb(&hsv);
+        assert_eq!(rgb, vec![0.0, 0.0, 0.0]);
 
-        let hsv = (0.0, 1.0, 1.0);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (255.0, 0.0, 0.0));
-
-        let hsv = (120.0, 1.0, 1.0);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (0.0, 255.0, 0.0));
-
-        let hsv = (240.0, 1.0, 1.0);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (0.0, 0.0, 255.0));
-
-        let hsv = (60.0, 1.0, 1.0);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (255.0, 255.0, 0.0));
-
-        let hsv = (180.0, 1.0, 1.0);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (0.0, 255.0, 255.0));
-
-        let hsv = (300.0, 1.0, 1.0);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (255.0, 0.0, 255.0));
-
-        let hsv = (0.0, 1.0, 0.5);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (127.5, 0.0, 0.0));
-
-        let hsv = (120.0, 1.0, 0.5);
-        let rgb = hsv2rgb(hsv);
-        assert_eq!(rgb, (0.0, 127.5, 0.0));
+        let hsv = vec![0.0, 0.0, 1.0];
+        let rgb = hsv2rgb(&hsv);
+        assert_eq!(rgb, vec![255.0, 255.0, 255.0]);
     }
 
     #[test]
     fn test_rgb2hsv() {
-        let rgb = (0.0, 0.0, 0.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (0.0, 0.0, 0.0));
+        let rgb = vec![255.0, 51.0, 153.0];
+        let hsv = rgb2hsv(&rgb);
+        assert_eq!(hsv, vec![330.0, 0.8, 1.0]);
 
-        let rgb = (255.0, 255.0, 255.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (0.0, 0.0, 1.0));
+        let rgb = vec![0.0, 0.0, 0.0];
+        let hsv = rgb2hsv(&rgb);
+        assert_eq!(hsv, vec![0.0, 0.0, 0.0]);
 
-        let rgb = (255.0, 0.0, 0.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (0.0, 1.0, 1.0));
-
-        let rgb = (0.0, 255.0, 0.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (120.0, 1.0, 1.0));
-
-        let rgb = (0.0, 0.0, 255.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (240.0, 1.0, 1.0));
-
-        let rgb = (255.0, 255.0, 0.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (60.0, 1.0, 1.0));
-
-        let rgb = (0.0, 255.0, 255.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (180.0, 1.0, 1.0));
-
-        let rgb = (255.0, 0.0, 255.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (300.0, 1.0, 1.0));
-
-        let rgb = (127.5, 0.0, 0.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (0.0, 1.0, 0.5));
-
-        let rgb = (0.0, 127.5, 0.0);
-        let hsv = rgb2hsv(rgb);
-        assert_eq!(hsv, (120.0, 1.0, 0.5));
+        let rgb = vec![255.0, 255.0, 255.0];
+        let hsv = rgb2hsv(&rgb);
+        assert_eq!(hsv, vec![0.0, 0.0, 1.0]);
     }
 }

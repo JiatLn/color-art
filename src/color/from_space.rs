@@ -59,8 +59,12 @@ impl Color {
     /// assert_eq!(color.hex(), "#f39");
     /// ```
     pub fn from_hsl(h: f64, s: f64, l: f64) -> Result<Self> {
-        ColorSpace::HSL.valid(&vec![h, s, l])?;
-        let (r, g, b) = conversion::hsl::hsl2rgb((h, s, l));
+        let hsl = vec![h, s, l];
+        ColorSpace::HSL.valid(&hsl)?;
+        let rgb = conversion::hsl::hsl2rgb(&hsl);
+        let r = rgb[0];
+        let g = rgb[1];
+        let b = rgb[2];
         Ok(Color::new(r, g, b, 1.0))
     }
     /// Create a color from HSV values.
@@ -74,8 +78,12 @@ impl Color {
     /// assert_eq!(color.hex(), "#ffa500");
     /// ```
     pub fn from_hsv(h: f64, s: f64, v: f64) -> Result<Self> {
-        ColorSpace::HSV.valid(&vec![h, s, v])?;
-        let (r, g, b) = conversion::hsv::hsv2rgb((h, s, v));
+        let hsv = vec![h, s, v];
+        ColorSpace::HSV.valid(&hsv)?;
+        let rgb = conversion::hsv::hsv2rgb(&hsv);
+        let r = rgb[0];
+        let g = rgb[1];
+        let b = rgb[2];
         Ok(Color::new(r, g, b, 1.0))
     }
     /// Create a color from CMYK values.
@@ -89,8 +97,12 @@ impl Color {
     /// assert_eq!(color.hex(), "#f39");
     /// ```
     pub fn from_cmyk(c: f64, m: f64, y: f64, k: f64) -> Result<Self> {
-        ColorSpace::CMYK.valid(&vec![c, m, y, k])?;
-        let (r, g, b) = conversion::cmyk::cmyk2rgb((c, m, y, k));
+        let cmyk = vec![c, m, y, k];
+        ColorSpace::CMYK.valid(&cmyk)?;
+        let rgb = conversion::cmyk::cmyk2rgb(&cmyk);
+        let r = rgb[0];
+        let g = rgb[1];
+        let b = rgb[2];
         Ok(Color::new(r, g, b, 1.0))
     }
     /// Create a color from a hex string.
@@ -108,14 +120,15 @@ impl Color {
     /// ```
     pub fn from_hex(hex_str: &str) -> Result<Self> {
         ColorSpace::valid_hex(hex_str)?;
-        let (r, g, b, a) = match hex_str.len() {
-            4 | 7 => {
-                let (r, g, b) = conversion::hex::hex2rgb(hex_str);
-                (r, g, b, 1.0)
-            }
+        let color_vec = match hex_str.len() {
+            4 | 7 => conversion::hex::hex2rgb(hex_str),
             5 | 9 => conversion::hex::hex2rgba(hex_str),
             _ => anyhow::bail!("Got a error hex string!"),
         };
+        let r = color_vec[0];
+        let g = color_vec[1];
+        let b = color_vec[2];
+        let a = if color_vec.len() == 4 { color_vec[3] } else { 1.0 };
         Ok(Color::new(r, g, b, a))
     }
     /// Create a color from a color name.

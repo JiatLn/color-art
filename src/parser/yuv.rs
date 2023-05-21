@@ -1,9 +1,8 @@
 use crate::ColorSpace;
-use crate::utils::*;
 use anyhow::Result;
 use std::str::FromStr;
 
-pub fn parse_yuv_str(yuv_str: impl ToString) -> Result<(f64, f64, f64)> {
+pub fn parse_yuv_str(yuv_str: impl ToString) -> Result<Vec<f64>> {
     // yuv_str like "yuv(0.299, -0.1471, 0.6148)"
     let yuv_str = yuv_str
         .to_string()
@@ -20,7 +19,7 @@ pub fn parse_yuv_str(yuv_str: impl ToString) -> Result<(f64, f64, f64)> {
 
     ColorSpace::YUV.valid(&yuv_vec)?;
 
-    Ok(vec2tuple(yuv_vec))
+    Ok(yuv_vec)
 }
 
 #[cfg(test)]
@@ -30,9 +29,9 @@ mod tests {
     #[test]
     fn test_parse_yuv_str() {
         let yuv_str = "yuv(0.299, -0.1471, 0.6148)";
-        let (y, u, v) = parse_yuv_str(yuv_str).unwrap();
-        assert_eq!(y, 0.299);
-        assert_eq!(u, -0.1471);
-        assert_eq!(v, 0.6148);
+        let yuv = parse_yuv_str(yuv_str).unwrap();
+        assert_eq!(yuv[0], 0.299);
+        assert_eq!(yuv[1], -0.1471);
+        assert_eq!(yuv[2], 0.6148);
     }
 }

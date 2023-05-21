@@ -31,9 +31,9 @@ mod tests {
     fn test_random() {
         for _ in 0..100 {
             let color = Color::random();
-            assert!(color.rgb.0 >= 0.0 && color.rgb.0 <= 255.0);
-            assert!(color.rgb.1 >= 0.0 && color.rgb.1 <= 255.0);
-            assert!(color.rgb.2 >= 0.0 && color.rgb.2 <= 255.0);
+            assert!(color.rgb[0] >= 0.0 && color.rgb[0] <= 255.0);
+            assert!(color.rgb[1] >= 0.0 && color.rgb[1] <= 255.0);
+            assert!(color.rgb[2] >= 0.0 && color.rgb[2] <= 255.0);
             assert!(color.alpha >= 0.0 && color.alpha <= 1.0);
         }
     }

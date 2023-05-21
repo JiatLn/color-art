@@ -17,7 +17,7 @@ impl Color {
     /// ```
     pub fn fade(&self, amount: f64) -> Self {
         let alpha = amount.min(1.0).max(0.0);
-        let (r, g, b) = self.rgb;
+        let [r, g, b] = self.rgb;
         Color::new(r, g, b, alpha)
     }
     /// Decrease the transparency (or increase the opacity) of a color, making it more opaque.

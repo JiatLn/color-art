@@ -29,7 +29,7 @@ impl Color {
         let vec = colors
             .iter()
             .fold([0.0, 0.0, 0.0, 0.0], |acc, color| {
-                let (r, g, b) = color.rgb;
+                let [r, g, b] = color.rgb;
                 let a = color.alpha;
                 [acc[0] + r, acc[1] + g, acc[2] + b, acc[3] + a]
             })

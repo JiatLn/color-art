@@ -22,15 +22,15 @@ use crate::utils::*;
 impl Color {
     /// Extracts the red channel of color as a number between 0 and 255.
     pub fn red(&self) -> u8 {
-        round(self.rgb.0, 0) as u8
+        round(self.rgb[0], 0) as u8
     }
     /// Extracts the green channel of color as a number between 0 and 255.
     pub fn green(&self) -> u8 {
-        round(self.rgb.1, 0) as u8
+        round(self.rgb[1], 0) as u8
     }
     /// Extracts the blue channel of color as a number between 0 and 255.
     pub fn blue(&self) -> u8 {
-        round(self.rgb.2, 0) as u8
+        round(self.rgb[2], 0) as u8
     }
     /// Extracts the alpha channel of color as a number between 0.0 and 1.0.
     pub fn alpha(&self) -> f64 {
@@ -58,19 +58,23 @@ impl Color {
     }
     /// Calculates the [luma](http://en.wikipedia.org/wiki/Luma_%28video%29) (perceptual brightness) of color.
     pub fn luma(&self) -> f64 {
-        let (r, g, b) = normalize_color(self.rgb);
+        let color = normalize_color(&self.rgb)
+            .iter()
+            .map(|&x| if x <= 0.03928 { x / 12.92 } else { ((x + 0.055) / 1.055).powf(2.4) })
+            .collect::<Vec<_>>();
 
-        let r = if r <= 0.03928 { r / 12.92 } else { ((r + 0.055) / 1.055).powf(2.4) };
-
-        let g = if g <= 0.03928 { g / 12.92 } else { ((g + 0.055) / 1.055).powf(2.4) };
-
-        let b = if b <= 0.03928 { b / 12.92 } else { ((b + 0.055) / 1.055).powf(2.4) };
+        let r = color[0];
+        let g = color[1];
+        let b = color[2];
 
         round(0.2126 * r + 0.7152 * g + 0.0722 * b * self.alpha, 2)
     }
     /// Calculates the value of the luma without gamma correction.
     pub fn luminance(&self) -> f64 {
-        let (r, g, b) = normalize_color(self.rgb);
+        let color = normalize_color(&self.rgb);
+        let r = color[0];
+        let g = color[1];
+        let b = color[2];
         round(0.2126 * r + 0.7152 * g + 0.0722 * b * self.alpha, 2)
     }
     /// Extracts the hue channel of color in the HSV color space.
@@ -87,7 +91,7 @@ impl Color {
     }
     /// Calculates the [gray](http://en.wikipedia.org/wiki/Grayscale) value of color.
     pub fn gray(&self) -> f64 {
-        let (r, g, b) = self.rgb;
+        let [r, g, b] = self.rgb;
         round(0.299 * r + 0.587 * g + 0.114 * b, 4)
     }
 }

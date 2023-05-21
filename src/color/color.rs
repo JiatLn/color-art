@@ -3,7 +3,7 @@ use std::fmt::Display;
 /// Color is a struct that represents a color.
 #[derive(PartialEq, Debug, Clone, Copy)]
 pub struct Color {
-    pub(crate) rgb: (f64, f64, f64),
+    pub(crate) rgb: [f64; 3],
     pub(crate) alpha: f64,
 }
 
@@ -14,7 +14,7 @@ impl Color {
         let g = g.into();
         let b = b.into();
         Color {
-            rgb: (r, g, b),
+            rgb: [r, g, b],
             alpha,
         }
     }

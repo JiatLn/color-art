@@ -18,56 +18,27 @@ impl Color {
     /// assert_eq!(vec, vec![330.0, 0.8, 1.0]);
     /// ```
     pub fn vec_of(&self, color_space: ColorSpace) -> Vec<f64> {
-        let color = self.rgb;
+        let color = self.rgb.to_vec();
         match color_space {
-            ColorSpace::RGB => {
-                let (r, g, b) = color;
-                vec![r, g, b]
-            }
+            ColorSpace::RGB => color,
             ColorSpace::RGBA => {
-                let (r, g, b) = color;
+                let [r, g, b] = self.rgb;
                 vec![r, g, b, self.alpha]
             }
-            ColorSpace::HSI => {
-                let (h, s, i) = conversion::hsi::rgb2hsi(color);
-                vec![h, s, i]
-            }
-            ColorSpace::HSL => {
-                let (h, s, l) = conversion::hsl::rgb2hsl(color);
-                vec![h, s, l]
-            }
+            ColorSpace::HSI => conversion::hsi::rgb2hsi(&color),
+            ColorSpace::HSL => conversion::hsl::rgb2hsl(&color),
             ColorSpace::HSLA => {
-                let (h, s, l) = conversion::hsl::rgb2hsl(color);
-                vec![h, s, l, self.alpha]
+                let mut hsl = conversion::hsl::rgb2hsl(&color);
+                hsl.push(self.alpha);
+                hsl
             }
-            ColorSpace::HSV => {
-                let (h, s, v) = conversion::hsv::rgb2hsv(color);
-                vec![h, s, v]
-            }
-            ColorSpace::HWB => {
-                let (h, w, b) = conversion::hwb::rgb2hwb(color);
-                vec![h, w, b]
-            }
-            ColorSpace::CMYK => {
-                let (c, m, y, k) = conversion::cmyk::rgb2cmyk(color);
-                vec![c, m, y, k]
-            }
-            ColorSpace::XYZ => {
-                let (x, y, z) = conversion::xyz::rgb2xyz(color);
-                vec![x, y, z]
-            }
-            ColorSpace::YUV => {
-                let (y, u, v) = conversion::yuv::rgb2yuv(color);
-                vec![y, u, v]
-            }
-            ColorSpace::YCbCr => {
-                let (y, cb, cr) = conversion::ycbcr::rgb2ycbcr(color);
-                vec![y, cb, cr]
-            }
-            ColorSpace::Lab => {
-                let (l, a, b) = conversion::lab::rgb2lab(color);
-                vec![l, a, b]
-            }
+            ColorSpace::HSV => conversion::hsv::rgb2hsv(&color),
+            ColorSpace::HWB => conversion::hwb::rgb2hwb(&color),
+            ColorSpace::CMYK => conversion::cmyk::rgb2cmyk(&color),
+            ColorSpace::XYZ => conversion::xyz::rgb2xyz(&color),
+            ColorSpace::YUV => conversion::yuv::rgb2yuv(&color),
+            ColorSpace::YCbCr => conversion::ycbcr::rgb2ycbcr(&color),
+            ColorSpace::Lab => conversion::lab::rgb2lab(&color),
             ColorSpace::HEX | ColorSpace::Unknown => todo!("not implemented yet"),
         }
     }

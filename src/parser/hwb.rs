@@ -1,10 +1,9 @@
 use crate::ColorSpace;
-use crate::utils::*;
 use anyhow::Result;
 use std::str::FromStr;
 
 /// HWB (Hue, Whiteness, Blackness)
-pub fn parse_hwb_str(hwb_str: impl ToString) -> Result<(f64, f64, f64)> {
+pub fn parse_hwb_str(hwb_str: impl ToString) -> Result<Vec<f64>> {
     // hwb_str like "hwb(262, 23%, 48%)"
     let hwb_str = hwb_str
         .to_string()
@@ -28,7 +27,7 @@ pub fn parse_hwb_str(hwb_str: impl ToString) -> Result<(f64, f64, f64)> {
 
     ColorSpace::HWB.valid(&hwb_vec)?;
 
-    Ok(vec2tuple(hwb_vec))
+    Ok(hwb_vec)
 }
 
 #[cfg(test)]
@@ -38,15 +37,15 @@ mod tests {
     #[test]
     fn test_parse_hwb_str() {
         let hwb_str = "hwb(262, 23%, 48%)";
-        let (h, w, b) = parse_hwb_str(hwb_str).unwrap();
-        assert_eq!(h, 262.0);
-        assert_eq!(w, 0.23);
-        assert_eq!(b, 0.48);
+        let hwb_vec = parse_hwb_str(hwb_str).unwrap();
+        assert_eq!(hwb_vec[0], 262.0);
+        assert_eq!(hwb_vec[1], 0.23);
+        assert_eq!(hwb_vec[2], 0.48);
 
         let hwb_str = "hwb(262, 0.23, 0.48)";
-        let (h, w, b) = parse_hwb_str(hwb_str).unwrap();
-        assert_eq!(h, 262.0);
-        assert_eq!(w, 0.23);
-        assert_eq!(b, 0.48);
+        let hwb_vec = parse_hwb_str(hwb_str).unwrap();
+        assert_eq!(hwb_vec[0], 262.0);
+        assert_eq!(hwb_vec[1], 0.23);
+        assert_eq!(hwb_vec[2], 0.48);
     }
 }
