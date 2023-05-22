@@ -6,16 +6,13 @@ pub(crate) fn rgb2hsi(color: &[f64]) -> Vec<f64> {
     let g = color[1];
     let b = color[2];
 
-    let theta = (0.5 * (r - g + (r - b))) / ((r - g).powi(2) + (r - b) * (g - b)).sqrt();
+    let min = r.min(g).min(b);
 
+    let theta = (0.5 * (r - g + (r - b))) / ((r - g).powi(2) + (r - b) * (g - b)).sqrt();
     let theta = if theta.is_nan() { 0.0 } else { theta.acos().to_degrees() };
 
     let h = if b <= g { theta } else { 360.0 - theta };
-
-    let min = r.min(g).min(b);
-
     let i = (r + g + b) / 3.0;
-
     let s = if i == 0.0 { 0.0 } else { 1.0 - min / i };
 
     vec![h, s, i]
@@ -29,7 +26,7 @@ pub(crate) fn hsi2rgb(color: &[f64]) -> Vec<f64> {
     let h = h % 360.0;
     let h = if h < 0.0 { 360.0 + h } else { h };
 
-    let (r, g, b) = match h {
+    let rgb = match h {
         h if h >= 0.0 && h < 120.0 => {
             let h = h.to_radians();
 
@@ -37,7 +34,7 @@ pub(crate) fn hsi2rgb(color: &[f64]) -> Vec<f64> {
             let r = i * (1.0 + (s * h.cos()) / (std::f64::consts::FRAC_PI_3 - h).cos());
             let g = 3.0 * i - (r + b);
 
-            (r, g, b)
+            vec![r, g, b]
         }
         h if h >= 120.0 && h < 240.0 => {
             let h = (h - 120.0).to_radians();
@@ -46,7 +43,7 @@ pub(crate) fn hsi2rgb(color: &[f64]) -> Vec<f64> {
             let g = i * (1.0 + (s * h.cos()) / (std::f64::consts::FRAC_PI_3 - h).cos());
             let b = 3.0 * i - (r + g);
 
-            (r, g, b)
+            vec![r, g, b]
         }
         h if h >= 240.0 && h < 360.0 => {
             let h = (h - 240.0).to_radians();
@@ -55,12 +52,14 @@ pub(crate) fn hsi2rgb(color: &[f64]) -> Vec<f64> {
             let b = i * (1.0 + (s * h.cos()) / (std::f64::consts::FRAC_PI_3 - h).cos());
             let r = 3.0 * i - (g + b);
 
-            (r, g, b)
+            vec![r, g, b]
         }
         _ => panic!("Hue must be between 0 and 360"),
     };
 
-    vec![round(r * 255.0, 0), round(g * 255.0, 0), round(b * 255.0, 0)]
+    rgb.iter()
+        .map(|&x| round(x * 255.0, 0))
+        .collect()
 }
 
 #[cfg(test)]

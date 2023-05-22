@@ -92,8 +92,7 @@ impl FromStr for Color {
                 conversion::lab::lab2rgb(&lab)
             }
             _ => {
-                let found = hex_of_name(s);
-                match found {
+                match hex_of_name(s) {
                     Some(hex) => conversion::hex::hex2rgb(hex),
                     None => anyhow::bail!("{} is not a valid color", s),
                 }

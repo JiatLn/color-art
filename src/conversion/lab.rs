@@ -2,17 +2,13 @@ use super::{ utils::{ xyz2lab, d65_to_d50, lab2xyz, d50_to_d65 }, xyz::{ rgb2xyz
 
 pub fn rgb2lab(color: &[f64]) -> Vec<f64> {
     let xyz = rgb2xyz(color);
-
     let xyz = d65_to_d50(xyz);
-
     xyz2lab(xyz)
 }
 
 pub fn lab2rgb(color: &[f64]) -> Vec<f64> {
-    let xyz = lab2xyz(&color);
-
+    let xyz = lab2xyz(color);
     let xyz = d50_to_d65(xyz);
-
     xyz2rgb(&xyz)
 }
 
