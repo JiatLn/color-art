@@ -1,6 +1,6 @@
 [package]
 name = "color-art"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2021"
 description = "A rust crate for working with colors and color spaces."
 license = "MIT"
