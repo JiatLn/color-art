@@ -1,13 +1,4 @@
-pub(crate) mod cmyk;
 pub(crate) mod hex;
-pub(crate) mod hsi;
-pub(crate) mod hsl;
-pub(crate) mod hsla;
-pub(crate) mod hsv;
-pub(crate) mod hwb;
-pub(crate) mod lab;
-pub(crate) mod rgb;
-pub(crate) mod rgba;
-pub(crate) mod xyz;
-pub(crate) mod ycbcr;
-pub(crate) mod yuv;
+pub(crate) mod core;
+
+pub(crate) use self::core::Parser;

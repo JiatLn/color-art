@@ -59,6 +59,12 @@ pub enum ColorSpace {
     Unknown,
 }
 
+impl ColorSpace {
+    pub fn default() -> Self {
+        ColorSpace::RGB
+    }
+}
+
 impl<T> From<T> for ColorSpace where T: ToString {
     fn from(s: T) -> Self {
         match s.to_string().to_lowercase().as_str() {
@@ -76,6 +82,27 @@ impl<T> From<T> for ColorSpace where T: ToString {
             "ycbcr" => ColorSpace::YCbCr,
             "lab" => ColorSpace::Lab,
             _ => ColorSpace::Unknown,
+        }
+    }
+}
+
+impl ColorSpace {
+    pub(crate) fn value_count(&self) -> usize {
+        match self {
+            ColorSpace::RGB => 3,
+            ColorSpace::RGBA => 4,
+            ColorSpace::HSI => 3,
+            ColorSpace::HSL => 3,
+            ColorSpace::HSLA => 4,
+            ColorSpace::HSV => 3,
+            ColorSpace::HEX => 3,
+            ColorSpace::HWB => 3,
+            ColorSpace::CMYK => 4,
+            ColorSpace::XYZ => 3,
+            ColorSpace::YUV => 3,
+            ColorSpace::YCbCr => 3,
+            ColorSpace::Lab => 3,
+            ColorSpace::Unknown => 0,
         }
     }
 }

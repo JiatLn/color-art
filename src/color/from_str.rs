@@ -1,4 +1,4 @@
-use crate::{ conversion, data::hex_of_name, parser, Color };
+use crate::{ conversion, data::hex_of_name, parser, Color, ColorSpace };
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -41,68 +41,49 @@ impl FromStr for Color {
     /// assert_eq!(color, Color::new(140, 194, 105, 1.0));
     /// ```
     fn from_str(s: &str) -> Result<Self> {
-        let color_str = s.trim().to_lowercase();
-        let color_vec = match &color_str {
-            s if s.starts_with("rgb(") => parser::rgb::parse_rgb_str(s)?,
-            s if s.starts_with("rgba(") => parser::rgba::parse_rgba_str(s)?,
-            s if s.starts_with('#') => {
-                let hex_str = parser::hex::parse_hex_str(s)?;
-                conversion::hex::hex2rgb(&hex_str)
-            }
-            s if s.starts_with("hsl(") => {
-                let hsl = parser::hsl::parse_hsl_str(s)?;
-                conversion::hsl::hsl2rgb(&hsl)
-            }
-            s if s.starts_with("hsla(") => {
-                let hsla = parser::hsla::parse_hsla_str(s)?;
-                let mut rgb = conversion::hsl::hsl2rgb(&hsla);
-                rgb.push(hsla[3]);
-                rgb
-            }
-            s if s.starts_with("hsv(") => {
-                let hsv = parser::hsv::parse_hsv_str(s)?;
-                conversion::hsv::hsv2rgb(&hsv)
-            }
-            s if s.starts_with("hsi(") => {
-                let hsi = parser::hsi::parse_hsi_str(s)?;
-                conversion::hsi::hsi2rgb(&hsi)
-            }
-            s if s.starts_with("hwb(") => {
-                let hwb = parser::hwb::parse_hwb_str(s)?;
-                conversion::hwb::hwb2rgb(&hwb)
-            }
-            s if s.starts_with("cmyk(") => {
-                let cmyk = parser::cmyk::parse_cmyk_str(s)?;
-                conversion::cmyk::cmyk2rgb(&cmyk)
-            }
-            s if s.starts_with("xyz(") => {
-                let xyz = parser::xyz::parse_xyz_str(s)?;
-                conversion::xyz::xyz2rgb(&xyz)
-            }
-            s if s.starts_with("yuv(") => {
-                let yuv = parser::yuv::parse_yuv_str(s)?;
-                conversion::yuv::yuv2rgb(&yuv)
-            }
-            s if s.starts_with("ycbcr(") => {
-                let ycbcr = parser::ycbcr::parse_ycbcr_str(s)?;
-                conversion::ycbcr::ycbcr2rgb(&ycbcr)
-            }
-            s if s.starts_with("lab(") => {
-                let lab = parser::lab::parse_lab_str(s)?;
-                conversion::lab::lab2rgb(&lab)
-            }
-            _ => {
-                match hex_of_name(s) {
-                    Some(hex) => conversion::hex::hex2rgb(hex),
-                    None => anyhow::bail!("{} is not a valid color", s),
-                }
-            }
+        let input = s.trim().to_lowercase();
+
+        let (color_space, color_vec) = if input.starts_with('#') {
+            let hex_str = parser::hex::parse_hex_str(&input)?;
+            (ColorSpace::RGB, conversion::hex::hex2rgb(&hex_str))
+        } else if let Some(hex) = hex_of_name(&input) {
+            (ColorSpace::RGB, conversion::hex::hex2rgb(hex))
+        } else {
+            let mut parser = parser::Parser::new();
+            parser.tokenize(&input).validate()?;
+            dbg!(parser.tokens);
+            (parser.color_space, parser.values)
         };
+
+        let color_vec = convert_color_vec_by_color_space(&color_vec, &color_space);
+
         let r = color_vec[0];
         let g = color_vec[1];
         let b = color_vec[2];
-        let a = if color_vec.len() == 4 { color_vec[3] } else { 1.0 };
-        Ok(Color::new(r, g, b, a))
+        let alpha = if color_vec.len() > 3 { color_vec[3] } else { 1.0 };
+
+        Ok(Color::new(r, g, b, alpha))
+    }
+}
+
+fn convert_color_vec_by_color_space(color_vec: &[f64], color_space: &ColorSpace) -> Vec<f64> {
+    match color_space {
+        ColorSpace::RGB | ColorSpace::RGBA | ColorSpace::HEX => color_vec.to_vec(),
+        ColorSpace::HSI => conversion::hsi::hsi2rgb(color_vec),
+        ColorSpace::HSL => conversion::hsl::hsl2rgb(color_vec),
+        ColorSpace::HSV => conversion::hsv::hsv2rgb(color_vec),
+        ColorSpace::CMYK => conversion::cmyk::cmyk2rgb(color_vec),
+        ColorSpace::XYZ => conversion::xyz::xyz2rgb(color_vec),
+        ColorSpace::YUV => conversion::yuv::yuv2rgb(color_vec),
+        ColorSpace::YCbCr => conversion::ycbcr::ycbcr2rgb(color_vec),
+        ColorSpace::Lab => conversion::lab::lab2rgb(color_vec),
+        ColorSpace::HWB => conversion::hwb::hwb2rgb(color_vec),
+        ColorSpace::HSLA => {
+            let mut rgb = conversion::hsl::hsl2rgb(color_vec);
+            rgb.push(color_vec[3]);
+            rgb
+        }
+        ColorSpace::Unknown => todo!(),
     }
 }
 
@@ -225,7 +206,7 @@ mod tests {
         let s = "fff";
         let color = Color::from_str(s);
         match color {
-            Err(e) => assert_eq!(e.to_string(), "fff is not a valid color"),
+            Err(e) => assert_eq!(e.to_string(), "Invalid input"),
             _ => panic!("Should have failed"),
         }
     }
