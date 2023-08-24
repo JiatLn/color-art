@@ -14,8 +14,12 @@ use crate::{ Color, ColorSpace };
 /// let color1 = color!(#fefe0e);
 /// let color2 = color!(#fff);
 ///
+/// fn is_equal(a: f64, b: f64) -> bool {
+///   (a - b).abs() < 0.000001
+/// }
+///
 /// let d = delta_e(&color1, &color2);
-/// assert_eq!(d, 30.165629067733235);
+/// assert!(is_equal(d, 30.165629067733235));
 /// ```
 pub fn delta_e(color1: &Color, color2: &Color) -> f64 {
     let lab1 = color1.vec_of(ColorSpace::Lab);
@@ -99,25 +103,29 @@ pub fn delta_e(color1: &Color, color2: &Color) -> f64 {
 mod tests {
     use crate::*;
 
+    fn is_equal(a: f64, b: f64) -> bool {
+        (a - b).abs() < 0.000001
+    }
+
     #[test]
     fn test_distance() {
         let color1 = color!(#fefe0e);
         let color2 = color!(#fff);
 
         let d = delta_e(&color1, &color2);
-        assert_eq!(d, 30.165629067733235);
+        assert!(is_equal(d, 30.165629067733235));
 
         let color1 = color!(#ededee);
         let color2 = color!(#edeeed);
 
         let d = delta_e(&color1, &color2);
-        assert_eq!(d, 1.2364506278716838);
+        assert!(is_equal(d, 1.2364506278716838));
 
         let color1 = color!(#e0e0ee);
         let color2 = color!(#e0eee0);
 
         let d = delta_e(&color1, &color2);
-        assert_eq!(d, 14.618185117695797);
+        assert!(is_equal(d, 14.618185117695797));
 
         let color1 = color!(#fff);
         let color2 = color!(#000);
