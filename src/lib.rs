@@ -21,8 +21,9 @@ mod utils;
 
 pub use color::Color;
 pub use color_calc::blend::*;
-pub use color_calc::distance::*;
+pub use color_calc::contrast_ratio::*;
 pub use color_calc::delta_e::*;
+pub use color_calc::distance::*;
 pub use color_space::ColorSpace;
 use data::alpha_hex_map::ALPHA_HEX_MAP;
 use data::chinese_color::CHINESE_COLOR_HASHMAP as CHINESE_COLOR;
