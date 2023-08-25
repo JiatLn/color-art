@@ -56,26 +56,25 @@ impl Color {
     pub fn blackness(&self) -> f64 {
         round(self.vec_of(ColorSpace::HWB)[2], 4)
     }
-    /// Calculates the [luma](http://en.wikipedia.org/wiki/Luma_%28video%29) (perceptual brightness) of color.
+    /// Calculates the [relative luminance](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef) of color.
+    ///
+    /// the relative brightness of any point in a colorspace, normalized to 0 for darkest black and 1 for lightest white.
+    ///
+    /// same as `luminance()`
     pub fn luma(&self) -> f64 {
-        let color = normalize_color(&self.rgb)
-            .iter()
-            .map(|&x| if x <= 0.03928 { x / 12.92 } else { ((x + 0.055) / 1.055).powf(2.4) })
-            .collect::<Vec<_>>();
-
-        let r = color[0];
-        let g = color[1];
-        let b = color[2];
-
-        round(0.2126 * r + 0.7152 * g + 0.0722 * b * self.alpha, 2)
+        self.luminance()
     }
-    /// Calculates the value of the luma without gamma correction.
+    /// Calculates the [relative luminance](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef) of color.
+    ///
+    /// the relative brightness of any point in a colorspace, normalized to 0 for darkest black and 1 for lightest white.
+    ///
+    /// same as `luma()`
     pub fn luminance(&self) -> f64 {
         let color = normalize_color(&self.rgb);
-        let r = color[0];
-        let g = color[1];
-        let b = color[2];
-        round(0.2126 * r + 0.7152 * g + 0.0722 * b * self.alpha, 2)
+        let r = luminance_x(color[0]);
+        let g = luminance_x(color[1]);
+        let b = luminance_x(color[2]);
+        0.2126 * r + 0.7152 * g + 0.0722 * b
     }
     /// Extracts the hue channel of color in the HSV color space.
     pub fn hsv_hue(&self) -> f64 {
@@ -96,6 +95,10 @@ impl Color {
     }
 }
 
+fn luminance_x(x: f64) -> f64 {
+    if x <= 0.03928 { x / 12.92 } else { ((x + 0.055) / 1.055).powf(2.4) }
+}
+
 #[cfg(test)]
 mod tests {
     use std::{ str::FromStr, assert_eq };
@@ -113,8 +116,8 @@ mod tests {
         assert_eq!(color.whiteness(), 0.0392);
         assert_eq!(color.blackness(), 0.8824);
 
-        assert_eq!(color.luma(), 0.01);
-        assert_eq!(color.luminance(), 0.07);
+        assert_eq!(color.luma(), 0.006585790668061925);
+        assert_eq!(color.luminance(), 0.006585790668061925);
         assert_eq!(color.gray(), 18.15);
 
         let color = Color::from_str("hsl(90, 100%, 50%)").unwrap();
@@ -126,8 +129,8 @@ mod tests {
         assert_eq!(color.whiteness(), 0.0);
         assert_eq!(color.blackness(), 0.0);
 
-        assert_eq!(color.luma(), 0.76);
-        assert_eq!(color.luminance(), 0.82);
+        assert_eq!(color.luma(), 0.7607051464665225);
+        assert_eq!(color.luminance(), 0.7607051464665225);
         assert_eq!(color.gray(), 187.8075);
 
         let color = Color::from_str("hsv(90, 100%, 50%)").unwrap();
@@ -139,8 +142,8 @@ mod tests {
 
         let color = color!(rgb(100, 200, 30));
 
-        assert_eq!(color.luma(), 0.44);
-        assert_eq!(color.luminance(), 0.65);
+        assert_eq!(color.luma(), 0.44111615679100963);
+        assert_eq!(color.luminance(), 0.44111615679100963);
         assert_eq!(color.gray(), 150.72);
     }
 }
