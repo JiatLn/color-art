@@ -1,5 +1,5 @@
-use crate::{ Color, ColorSpace };
 use crate::utils::*;
+use crate::{Color, ColorSpace};
 
 /// Color channel extraction methods.
 ///
@@ -38,23 +38,23 @@ impl Color {
     }
     /// Extracts the hue channel of color as a number between 0.0 and 360.0.
     pub fn hue(&self) -> f64 {
-        round(self.vec_of(ColorSpace::HSL)[0], 4)
+        self.vec_of(ColorSpace::HSL)[0]
     }
     /// Extracts the HSL saturation of color as a number between 0.0 and 1.0.
     pub fn saturation(&self) -> f64 {
-        round(self.vec_of(ColorSpace::HSL)[1], 4)
+        self.vec_of(ColorSpace::HSL)[1]
     }
     /// Extracts the HSL lightness of color as a number between 0.0 and 1.0.
     pub fn lightness(&self) -> f64 {
-        round(self.vec_of(ColorSpace::HSL)[2], 4)
+        self.vec_of(ColorSpace::HSL)[2]
     }
     /// Extracts the HWB whiteness of color as a number between 0.0 and 1.0.
     pub fn whiteness(&self) -> f64 {
-        round(self.vec_of(ColorSpace::HWB)[1], 4)
+        self.vec_of(ColorSpace::HWB)[1]
     }
     /// Extracts the HWB blackness of color as a number between 0.0 and 1.0.
     pub fn blackness(&self) -> f64 {
-        round(self.vec_of(ColorSpace::HWB)[2], 4)
+        self.vec_of(ColorSpace::HWB)[2]
     }
     /// Calculates the [relative luminance](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef) of color.
     ///
@@ -78,31 +78,35 @@ impl Color {
     }
     /// Extracts the hue channel of color in the HSV color space.
     pub fn hsv_hue(&self) -> f64 {
-        round(self.vec_of(ColorSpace::HSV)[0], 4)
+        self.vec_of(ColorSpace::HSV)[0]
     }
     /// Extracts the saturation channel of color in the HSV color space.
     pub fn hsv_saturation(&self) -> f64 {
-        round(self.vec_of(ColorSpace::HSV)[1], 4)
+        self.vec_of(ColorSpace::HSV)[1]
     }
     /// Extracts the value channel of color in the HSV color space.
     pub fn hsv_value(&self) -> f64 {
-        round(self.vec_of(ColorSpace::HSV)[2], 4)
+        self.vec_of(ColorSpace::HSV)[2]
     }
     /// Calculates the [gray](http://en.wikipedia.org/wiki/Grayscale) value of color.
     pub fn gray(&self) -> f64 {
         let [r, g, b] = self.rgb;
-        round(0.299 * r + 0.587 * g + 0.114 * b, 4)
+        0.299 * r + 0.587 * g + 0.114 * b
     }
 }
 
 fn luminance_x(x: f64) -> f64 {
-    if x <= 0.03928 { x / 12.92 } else { ((x + 0.055) / 1.055).powf(2.4) }
+    if x <= 0.03928 {
+        x / 12.92
+    } else {
+        ((x + 0.055) / 1.055).powf(2.4)
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use std::{ str::FromStr, assert_eq };
     use crate::*;
+    use std::{assert_eq, str::FromStr};
 
     #[test]
     fn test_color_channel() {
@@ -113,8 +117,8 @@ mod tests {
         assert_eq!(color.blue(), 30);
         assert_eq!(color.alpha(), 0.8);
 
-        assert_eq!(color.whiteness(), 0.0392);
-        assert_eq!(color.blackness(), 0.8824);
+        assert_eq!(color.whiteness(), 0.0392156862745098);
+        assert_eq!(color.blackness(), 0.8823529411764706);
 
         assert_eq!(color.luma(), 0.006585790668061925);
         assert_eq!(color.luminance(), 0.006585790668061925);
@@ -138,12 +142,12 @@ mod tests {
         assert_eq!(color.hsv_hue(), 90.0);
         assert_eq!(color.hsv_saturation(), 1.0);
         assert_eq!(color.hsv_value(), 0.5);
-        assert_eq!(color.gray(), 93.9038);
+        assert_eq!(color.gray(), 93.90375);
 
         let color = color!(rgb(100, 200, 30));
 
         assert_eq!(color.luma(), 0.44111615679100963);
         assert_eq!(color.luminance(), 0.44111615679100963);
-        assert_eq!(color.gray(), 150.72);
+        assert_eq!(color.gray(), 150.71999999999997);
     }
 }
