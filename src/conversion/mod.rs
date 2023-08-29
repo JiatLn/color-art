@@ -8,4 +8,5 @@ pub(crate) mod lab;
 pub(crate) mod utils;
 pub(crate) mod xyz;
 pub(crate) mod ycbcr;
+pub(crate) mod yiq;
 pub(crate) mod yuv;

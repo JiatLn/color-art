@@ -1,4 +1,4 @@
-use crate::{ conversion, data::hex_of_name, parser, Color, ColorSpace };
+use crate::{conversion, data::hex_of_name, parser, Color, ColorSpace};
 use anyhow::Result;
 use std::str::FromStr;
 
@@ -51,7 +51,6 @@ impl FromStr for Color {
         } else {
             let mut parser = parser::Parser::new();
             parser.tokenize(&input).validate()?;
-            dbg!(parser.tokens);
             (parser.color_space, parser.values)
         };
 
@@ -60,7 +59,11 @@ impl FromStr for Color {
         let r = color_vec[0];
         let g = color_vec[1];
         let b = color_vec[2];
-        let alpha = if color_vec.len() > 3 { color_vec[3] } else { 1.0 };
+        let alpha = if color_vec.len() > 3 {
+            color_vec[3]
+        } else {
+            1.0
+        };
 
         Ok(Color::new(r, g, b, alpha))
     }
@@ -74,6 +77,7 @@ fn convert_color_vec_by_color_space(color_vec: &[f64], color_space: &ColorSpace)
         ColorSpace::HSV => conversion::hsv::hsv2rgb(color_vec),
         ColorSpace::CMYK => conversion::cmyk::cmyk2rgb(color_vec),
         ColorSpace::XYZ => conversion::xyz::xyz2rgb(color_vec),
+        ColorSpace::YIQ => conversion::yiq::yiq2rgb(color_vec),
         ColorSpace::YUV => conversion::yuv::yuv2rgb(color_vec),
         ColorSpace::YCbCr => conversion::ycbcr::ycbcr2rgb(color_vec),
         ColorSpace::Lab => conversion::lab::lab2rgb(color_vec),
@@ -304,5 +308,16 @@ mod tests {
     fn test_color_from_ycbcr_str() {
         let color = Color::from_str("YCbCr(225.93, 0.5755, 148.7269)").unwrap();
         assert_eq!(color.rgb(), "rgb(255, 255, 0)");
+    }
+
+    #[test]
+    fn test_color_from_yiq_str() {
+        let color = Color::from_str("yiq(0.42337, -0.07301, 0.17583)").unwrap();
+        assert_eq!(color.rgb(), "rgb(118, 84, 205)");
+        assert_eq!(color.hex(), "#7654cd");
+
+        let color = Color::from_str("yiq(0.886, 0.32126, -0.31114)").unwrap();
+        assert_eq!(color.rgb(), "rgb(255, 255, 0)");
+        assert_eq!(color.hex(), "#ff0");
     }
 }

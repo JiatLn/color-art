@@ -1,7 +1,7 @@
 use crate::{
     conversion::{
         cmyk::rgb2cmyk,
-        hex::{ rgb2hex, rgba2hex },
+        hex::{rgb2hex, rgba2hex},
         hsi::rgb2hsi,
         hsl::rgb2hsl,
         hsv::rgb2hsv,
@@ -9,10 +9,11 @@ use crate::{
         lab::rgb2lab,
         xyz::rgb2xyz,
         ycbcr::rgb2ycbcr,
+        yiq::rgb2yiq,
         yuv::rgb2yuv,
     },
     data::name_of_hex,
-    utils::{ hex::simplify_hex, round },
+    utils::{hex::simplify_hex, round},
     Color,
 };
 
@@ -106,7 +107,6 @@ impl Color {
         let h = round(hsl[0], 0);
         let s = round(hsl[1] * 100.0, 0);
         let l = round(hsl[2] * 100.0, 0);
-        dbg!(self.alpha());
         format!("hsla({}, {}%, {}%, {})", h, s, l, self.alpha())
     }
     /// `hsv` string of the color
@@ -175,7 +175,10 @@ impl Color {
             .iter()
             .map(|&v| round(v * 100.0, 0))
             .collect::<Vec<_>>();
-        format!("cmyk({}%, {}%, {}%, {}%)", cmyk[0], cmyk[1], cmyk[2], cmyk[3])
+        format!(
+            "cmyk({}%, {}%, {}%, {}%)",
+            cmyk[0], cmyk[1], cmyk[2], cmyk[3]
+        )
     }
     /// `xyz` string of the color
     ///
@@ -193,6 +196,23 @@ impl Color {
             .map(|&v| round(v, 6))
             .collect::<Vec<_>>();
         format!("xyz({}, {}, {})", xyz[0], xyz[1], xyz[2])
+    }
+    /// `yiq` string of the color
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255.0, 0.0, 0.0, 1.0);
+    /// assert_eq!(color.yiq(), "yiq(0.299, 0.59572, 0.21146)");
+    /// ```
+    pub fn yiq(self) -> String {
+        let yiq = rgb2yiq(&self.rgb)
+            .iter()
+            .map(|&v| round(v, 5))
+            .collect::<Vec<_>>();
+        format!("yiq({}, {}, {})", yiq[0], yiq[1], yiq[2])
     }
     /// `yuv` string of the color
     ///

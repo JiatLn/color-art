@@ -1,4 +1,4 @@
-use crate::{ conversion, Color, ColorSpace };
+use crate::{conversion, Color, ColorSpace};
 
 impl Color {
     /// Get the color space vector of the color instance.
@@ -36,6 +36,7 @@ impl Color {
             ColorSpace::HWB => conversion::hwb::rgb2hwb(&color),
             ColorSpace::CMYK => conversion::cmyk::rgb2cmyk(&color),
             ColorSpace::XYZ => conversion::xyz::rgb2xyz(&color),
+            ColorSpace::YIQ => conversion::yiq::rgb2yiq(&color),
             ColorSpace::YUV => conversion::yuv::rgb2yuv(&color),
             ColorSpace::YCbCr => conversion::ycbcr::rgb2ycbcr(&color),
             ColorSpace::Lab => conversion::lab::rgb2lab(&color),
@@ -46,7 +47,7 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use crate::{ *, utils::round };
+    use crate::{utils::round, *};
 
     #[test]
     fn test_vec_of_hsl() {
@@ -57,7 +58,7 @@ mod tests {
 
     #[test]
     fn test_vec_of_lab() {
-        let color = color!(#7654CD);
+        let color = color!(#7654cd);
         let vec = color
             .vec_of(ColorSpace::Lab)
             .iter()
@@ -68,12 +69,23 @@ mod tests {
 
     #[test]
     fn test_vec_of_xyz() {
-        let color = color!(#7654CD);
+        let color = color!(#7654cd);
         let vec = color
             .vec_of(ColorSpace::XYZ)
             .iter()
             .map(|&v| round(v, 5))
             .collect::<Vec<_>>();
         assert_eq!(vec, vec![0.2166, 0.146, 0.59437]);
+    }
+
+    #[test]
+    fn test_vec_of_yiq() {
+        let color = color!(#7654cd);
+        let vec = color
+            .vec_of(ColorSpace::YIQ)
+            .iter()
+            .map(|&v| round(v, 5))
+            .collect::<Vec<_>>();
+        assert_eq!(vec, vec![0.42337, -0.07301, 0.17583]);
     }
 }

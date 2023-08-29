@@ -41,6 +41,10 @@ pub enum ColorSpace {
     ///
     /// XYZ stands for X, Y, and Z.
     XYZ,
+    /// [YIQ](https://en.wikipedia.org/wiki/YIQ) color space.
+    ///
+    /// YIQ stands for luminance (Y), and the chrominance components I and Q.
+    YIQ,
     /// YUV color Space.
     ///
     /// YUV stands for luminance (Y), and the chrominance components U and V.
@@ -65,7 +69,10 @@ impl ColorSpace {
     }
 }
 
-impl<T> From<T> for ColorSpace where T: ToString {
+impl<T> From<T> for ColorSpace
+where
+    T: ToString,
+{
     fn from(s: T) -> Self {
         match s.to_string().to_lowercase().as_str() {
             "rgb" => ColorSpace::RGB,
@@ -78,6 +85,7 @@ impl<T> From<T> for ColorSpace where T: ToString {
             "hwb" => ColorSpace::HWB,
             "cmyk" => ColorSpace::CMYK,
             "xyz" => ColorSpace::XYZ,
+            "yiq" => ColorSpace::YIQ,
             "yuv" => ColorSpace::YUV,
             "ycbcr" => ColorSpace::YCbCr,
             "lab" => ColorSpace::Lab,
@@ -99,6 +107,7 @@ impl ColorSpace {
             ColorSpace::HWB => 3,
             ColorSpace::CMYK => 4,
             ColorSpace::XYZ => 3,
+            ColorSpace::YIQ => 3,
             ColorSpace::YUV => 3,
             ColorSpace::YCbCr => 3,
             ColorSpace::Lab => 3,

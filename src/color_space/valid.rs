@@ -107,10 +107,9 @@ impl ColorSpace {
                     }
                 }
             }
-            ColorSpace::HEX =>
-                todo!(
-                    "HEX color space not implemented yet, please use `ColorSpace::valid_hex` instead"
-                ),
+            ColorSpace::HEX => todo!(
+                "HEX color space not implemented yet, please use `ColorSpace::valid_hex` instead"
+            ),
             ColorSpace::HWB => {
                 if vec.len() != 3 {
                     anyhow::bail!("HWB color space requires 3 values");
@@ -159,6 +158,22 @@ impl ColorSpace {
                     }
                     if z < 0.0 || z > 1.088754 {
                         anyhow::bail!("Z must be between 0.0 and 1.088754, got {}", z);
+                    }
+                }
+            }
+            ColorSpace::YIQ => {
+                if vec.len() != 3 {
+                    anyhow::bail!("YIQ color space requires 3 values");
+                }
+                if let [y, i, q] = vec[..] {
+                    if y < 0.0 || y > 1.0 {
+                        anyhow::bail!("Y must be between 0.0 and 1.0, got {}", y);
+                    }
+                    if i < -0.5957 || i > 0.5957 {
+                        anyhow::bail!("I must be between -0.5957 and 0.5957, got {}", i);
+                    }
+                    if q < -0.5226 || q > 0.5226 {
+                        anyhow::bail!("Q must be between -0.5226 and 0.5226, got {}", q);
                     }
                 }
             }
@@ -216,12 +231,7 @@ impl ColorSpace {
     }
     /// Validate a hex color string
     pub(crate) fn valid_hex(hex: &str) -> Result<()> {
-        if
-            !hex
-                .chars()
-                .skip(1)
-                .all(|c| c.is_ascii_hexdigit())
-        {
+        if !hex.chars().skip(1).all(|c| c.is_ascii_hexdigit()) {
             anyhow::bail!("Hex color must be a valid hex string");
         }
         if hex.len() != 4 && hex.len() != 5 && hex.len() != 7 && hex.len() != 9 {

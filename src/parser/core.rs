@@ -61,8 +61,6 @@ impl Parser {
     }
 
     pub fn validate(&mut self) -> Result<()> {
-        dbg!(&self.tokens);
-
         let mut stack = Vec::new();
 
         while let Some(token) = self.tokens.get(self.current) {
@@ -242,7 +240,7 @@ mod tests {
         assert_eq!(values, vec![255.0, 255.0, 255.0]);
 
         let input = "hsl(60, 80%, 50%)";
-        
+
         let mut parser = Parser::new();
         parser.tokenize(input);
 

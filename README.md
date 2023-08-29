@@ -56,6 +56,7 @@ You can use the `from_str` method to construct a color from a string.
   <li><code>hwb</code></li>
   <li><code>cmyk</code></li>
   <li><code>xyz</code></li>
+  <li><code>yiq</code></li>
   <li><code>yuv</code></li>
   <li><code>YCbCr</code></li>
   <li><code>lab</code></li>
@@ -81,6 +82,7 @@ let color = Color::from_str("hsi(60, 100%, 66.67%)").unwrap();
 let color = Color::from_str("hwb(60, 0%, 0%)").unwrap();
 let color = Color::from_str("cmyk(0%, 0%, 100%, 0%)").unwrap();
 let color = Color::from_str("xyz(0.769975, 0.927808, 0.138526)").unwrap();
+let color = Color::from_str("yiq(0.886, 0.32126, -0.31114)").unwrap();
 let color = Color::from_str("yuv(0.886, -0.4359, 0.1)").unwrap();
 let color = Color::from_str("YCbCr(225.93, 0.5755, 148.7269)").unwrap();
 let color = Color::from_str("lab(97.14, -21.55, 94.48)").unwrap();
