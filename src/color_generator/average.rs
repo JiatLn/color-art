@@ -43,8 +43,8 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
     use crate::*;
+    use std::str::FromStr;
 
     #[test]
     fn test_average_colors() {

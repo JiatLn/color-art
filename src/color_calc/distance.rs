@@ -1,4 +1,4 @@
-use crate::{ Color, ColorSpace };
+use crate::{Color, ColorSpace};
 
 /// Computes the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance#Three_dimensions) between two colors in a given color space.
 ///
@@ -19,11 +19,9 @@ pub fn distance_with(color1: &Color, color2: &Color, color_space: ColorSpace) ->
 
     let mut d = 0.0;
 
-    vec1.iter()
-        .zip(vec2.iter())
-        .for_each(|(a, b)| {
-            d += (a - b).powf(2.0);
-        });
+    vec1.iter().zip(vec2.iter()).for_each(|(a, b)| {
+        d += (a - b).powf(2.0);
+    });
 
     d.sqrt()
 }

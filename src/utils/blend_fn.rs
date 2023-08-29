@@ -19,15 +19,31 @@ pub(crate) fn screen(a: f64, b: f64) -> f64 {
 }
 
 pub(crate) fn overlay(a: f64, b: f64) -> f64 {
-    if a <= 0.5 { multiply(a, 2.0 * b) } else { screen(a, 2.0 * b - 1.0) }
+    if a <= 0.5 {
+        multiply(a, 2.0 * b)
+    } else {
+        screen(a, 2.0 * b - 1.0)
+    }
 }
 
 pub(crate) fn burn(a: f64, b: f64) -> f64 {
-    if a == 1.0 { 1.0 } else if b == 0.0 { 0.0 } else { 1.0 - min(1.0, (1.0 - a) / b) }
+    if a == 1.0 {
+        1.0
+    } else if b == 0.0 {
+        0.0
+    } else {
+        1.0 - min(1.0, (1.0 - a) / b)
+    }
 }
 
 pub(crate) fn dodge(a: f64, b: f64) -> f64 {
-    if a == 0.0 { 0.0 } else if b == 1.0 { 1.0 } else { (a / (1.0 - b)).min(1.0) }
+    if a == 0.0 {
+        0.0
+    } else if b == 1.0 {
+        1.0
+    } else {
+        (a / (1.0 - b)).min(1.0)
+    }
 }
 
 pub(crate) fn hard_light(a: f64, b: f64) -> f64 {
@@ -39,7 +55,11 @@ pub(crate) fn soft_light(a: f64, b: f64) -> f64 {
         a - (1.0 - 2.0 * b) * a * (1.0 - a)
     } else {
         let d = |a: f64| {
-            if a <= 0.25 { ((16.0 * a - 12.0) * a + 4.0) * a } else { a.sqrt() }
+            if a <= 0.25 {
+                ((16.0 * a - 12.0) * a + 4.0) * a
+            } else {
+                a.sqrt()
+            }
         };
         a + (2.0 * b - 1.0) * (d(a) - a)
     }

@@ -1,5 +1,5 @@
 use crate::Color;
-use anyhow::{ bail, Ok, Result };
+use anyhow::{bail, Ok, Result};
 
 impl Color {
     /// Mix two colors with a weight.

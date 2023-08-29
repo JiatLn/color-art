@@ -1,4 +1,4 @@
-use color_art::{ distance, distance_with, color, ColorSpace };
+use color_art::{color, distance, distance_with, ColorSpace};
 
 #[test]
 fn test_color_calc() {

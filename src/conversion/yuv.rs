@@ -27,7 +27,11 @@ pub fn yuv2rgb(color: &[f64]) -> Vec<f64> {
     let r = y + YUV2RGB_COEFFS[3] * v;
     let g = y + YUV2RGB_COEFFS[1] * u + YUV2RGB_COEFFS[2] * v;
     let b = y + YUV2RGB_COEFFS[0] * u;
-    vec![round(r * 255.0, 0), round(g * 255.0, 0), round(b * 255.0, 0)]
+    vec![
+        round(r * 255.0, 0),
+        round(g * 255.0, 0),
+        round(b * 255.0, 0),
+    ]
 }
 
 #[cfg(test)]
@@ -40,7 +44,10 @@ mod tests {
             rgb2yuv(&[255.0, 255.0, 0.0]),
             vec![0.8859999999999999, -0.43591199999999997, 0.0999780000000001]
         );
-        assert_eq!(rgb2yuv(&vec![255.0, 0.0, 0.0]), vec![0.299, -0.147108, 0.614777]);
+        assert_eq!(
+            rgb2yuv(&vec![255.0, 0.0, 0.0]),
+            vec![0.299, -0.147108, 0.614777]
+        );
     }
 
     #[test]
@@ -49,6 +56,9 @@ mod tests {
             yuv2rgb(&[0.8859999999999999, -0.43591199999999997, 0.0999780000000001]),
             vec![255.0, 255.0, 0.0]
         );
-        assert_eq!(yuv2rgb(&[0.299, -0.147108, 0.614777]), vec![255.0, 0.0, 0.0]);
+        assert_eq!(
+            yuv2rgb(&[0.299, -0.147108, 0.614777]),
+            vec![255.0, 0.0, 0.0]
+        );
     }
 }

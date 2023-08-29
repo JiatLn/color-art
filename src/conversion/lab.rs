@@ -1,4 +1,7 @@
-use super::{ utils::{ xyz2lab, d65_to_d50, lab2xyz, d50_to_d65 }, xyz::{ rgb2xyz, xyz2rgb } };
+use super::{
+    utils::{d50_to_d65, d65_to_d50, lab2xyz, xyz2lab},
+    xyz::{rgb2xyz, xyz2rgb},
+};
 
 pub fn rgb2lab(color: &[f64]) -> Vec<f64> {
     let xyz = rgb2xyz(color);

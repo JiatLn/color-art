@@ -9,7 +9,11 @@ pub(crate) fn rgb2hsi(color: &[f64]) -> Vec<f64> {
     let min = r.min(g).min(b);
 
     let theta = (0.5 * (r - g + (r - b))) / ((r - g).powi(2) + (r - b) * (g - b)).sqrt();
-    let theta = if theta.is_nan() { 0.0 } else { theta.acos().to_degrees() };
+    let theta = if theta.is_nan() {
+        0.0
+    } else {
+        theta.acos().to_degrees()
+    };
 
     let h = if b <= g { theta } else { 360.0 - theta };
     let i = (r + g + b) / 3.0;
@@ -57,9 +61,7 @@ pub(crate) fn hsi2rgb(color: &[f64]) -> Vec<f64> {
         _ => panic!("Hue must be between 0 and 360"),
     };
 
-    rgb.iter()
-        .map(|&x| round(x * 255.0, 0))
-        .collect()
+    rgb.iter().map(|&x| round(x * 255.0, 0)).collect()
 }
 
 #[cfg(test)]

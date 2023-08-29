@@ -16,8 +16,5 @@ pub(crate) fn round(val: f64, precision: u32) -> f64 {
 
 /// normalize color values 0..255 to 0..1
 pub(crate) fn normalize_color(color: &[f64]) -> Vec<f64> {
-    color
-        .iter()
-        .map(|&c| c / 255.0)
-        .collect()
+    color.iter().map(|&c| c / 255.0).collect()
 }

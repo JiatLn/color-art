@@ -20,9 +20,7 @@ pub fn hsv2rgb(color: &[f64]) -> Vec<f64> {
         _ => panic!("Hue must be between 0 and 360"),
     };
 
-    rgb.iter()
-        .map(|&x| (x + m) * 255.0)
-        .collect()
+    rgb.iter().map(|&x| (x + m) * 255.0).collect()
 }
 
 /// [RGB to HSV color conversion](https://www.rapidtables.com/convert/color/rgb-to-hsv.html)

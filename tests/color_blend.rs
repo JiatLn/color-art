@@ -1,4 +1,4 @@
-use color_art::{ color, blend, BlendMode };
+use color_art::{blend, color, BlendMode};
 
 #[test]
 fn test_color_blend() {

@@ -1,4 +1,4 @@
-use crate::{ Color, ColorSpace };
+use crate::{Color, ColorSpace};
 
 /// Computes [color difference](https://en.wikipedia.org/wiki/Color_difference#CIEDE2000) as developed by the International Commission on Illumination (CIE) in 2000.
 ///
@@ -48,8 +48,16 @@ pub fn delta_e(color1: &Color, color2: &Color) -> f64 {
     let arctan1 = b1.atan2(a1p).to_degrees();
     let arctan2 = b2.atan2(a2p).to_degrees();
 
-    let h1p = if arctan1 >= 0.0 { arctan1 } else { arctan1 + 360.0 };
-    let h2p = if arctan2 >= 0.0 { arctan2 } else { arctan2 + 360.0 };
+    let h1p = if arctan1 >= 0.0 {
+        arctan1
+    } else {
+        arctan1 + 360.0
+    };
+    let h2p = if arctan2 >= 0.0 {
+        arctan2
+    } else {
+        arctan2 + 360.0
+    };
 
     let avg_hp = if (h1p - h2p).abs() > 180.0 {
         (h1p + h2p + 360.0) / 2.0
@@ -57,12 +65,10 @@ pub fn delta_e(color1: &Color, color2: &Color) -> f64 {
         (h1p + h2p) / 2.0
     };
 
-    let t =
-        1.0 -
-        0.17 * (avg_hp - 30.0).to_radians().cos() +
-        0.24 * (2.0 * avg_hp).to_radians().cos() +
-        0.32 * (3.0 * avg_hp + 6.0).to_radians().cos() -
-        0.2 * (4.0 * avg_hp - 63.0).to_radians().cos();
+    let t = 1.0 - 0.17 * (avg_hp - 30.0).to_radians().cos()
+        + 0.24 * (2.0 * avg_hp).to_radians().cos()
+        + 0.32 * (3.0 * avg_hp + 6.0).to_radians().cos()
+        - 0.2 * (4.0 * avg_hp - 63.0).to_radians().cos();
 
     let mut delta_hp = if (h2p - h1p).abs() <= 180.0 {
         h2p - h1p
@@ -89,12 +95,11 @@ pub fn delta_e(color1: &Color, color2: &Color) -> f64 {
     let kc = 1.0;
     let kh = 1.0;
 
-    let result = (
-        (delta_l / (kl * sl)).powi(2) +
-        (delta_cp / (kc * sc)).powi(2) +
-        (delta_hp / (kh * sh)).powi(2) +
-        rt * (delta_cp / (kc * sc)) * (delta_hp / (kh * sh))
-    ).sqrt();
+    let result = ((delta_l / (kl * sl)).powi(2)
+        + (delta_cp / (kc * sc)).powi(2)
+        + (delta_hp / (kh * sh)).powi(2)
+        + rt * (delta_cp / (kc * sc)) * (delta_hp / (kh * sh)))
+        .sqrt();
 
     result.min(100.0).max(0.0)
 }

@@ -1,4 +1,4 @@
-use crate::{ utils::blend_fn::*, Color, ColorSpace };
+use crate::{utils::blend_fn::*, Color, ColorSpace};
 
 /// ### blend mode enum
 ///

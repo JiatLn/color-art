@@ -1,4 +1,4 @@
-use crate::{ Color, ColorSpace };
+use crate::{Color, ColorSpace};
 
 impl Color {
     /// Decrease the lightness of a color in the HSL color space by an absolute amount.

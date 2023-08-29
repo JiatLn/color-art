@@ -1,4 +1,4 @@
-use crate::{ Color, ColorSpace };
+use crate::{Color, ColorSpace};
 
 impl Color {
     /// Rotate the hue angle of a color in either direction.

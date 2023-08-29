@@ -1,4 +1,4 @@
-use anyhow::{ anyhow, Result };
+use anyhow::{anyhow, Result};
 
 use crate::Color;
 
@@ -15,7 +15,9 @@ impl Color {
     /// ```
     pub fn from_num(num: u32) -> Result<Self> {
         if num > 0xffffff {
-            return Err(anyhow!("Invalid color number, must be between 0 and 16777215"));
+            return Err(anyhow!(
+                "Invalid color number, must be between 0 and 16777215"
+            ));
         }
         let r = ((num >> 16) & 0xff) as f64;
         let g = ((num >> 8) & 0xff) as f64;

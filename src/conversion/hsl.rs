@@ -20,9 +20,7 @@ pub fn hsl2rgb(color: &[f64]) -> Vec<f64> {
         _ => panic!(),
     };
 
-    rgb.iter()
-        .map(|x| (x + m) * 255.0)
-        .collect()
+    rgb.iter().map(|x| (x + m) * 255.0).collect()
 }
 
 /// [RGB to HSL color conversion](https://www.rapidtables.com/convert/color/rgb-to-hsl.html)
