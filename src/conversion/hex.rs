@@ -1,4 +1,4 @@
-use crate::{utils::*, ALPHA_HEX_MAP};
+use crate::utils::*;
 
 pub fn rgb2hex(color: [f64; 3]) -> String {
     let [r, g, b] = color;
@@ -10,14 +10,11 @@ pub fn rgb2hex(color: [f64; 3]) -> String {
 
 pub fn rgba2hex(color: [f64; 4]) -> String {
     let [r, g, b, a] = color;
-    let r = r.round() as u8;
-    let g = g.round() as u8;
-    let b = b.round() as u8;
-    let a = round(a, 2).to_string();
-    let a = ALPHA_HEX_MAP
-        .get(a.as_str())
-        .expect("alpha hex map error, please report this issue on github");
-    format!("#{:02x}{:02x}{:02x}{}", r, g, b, a)
+
+    let hex = rgb2hex([r, g, b]);
+    let alpha = round(a * 255.0, 0);
+
+    format!("{}{:02x}", hex, alpha as i64)
 }
 
 pub fn hex2rgb(hex: &str) -> Vec<f64> {
@@ -109,7 +106,7 @@ mod tests {
 
         let rgba = [0.0, 128.0, 128.0, 0.222222];
         let hex = rgba2hex(rgba);
-        assert_eq!(hex, "#00808038");
+        assert_eq!(hex, "#00808039");
 
         let rgba = [0.0, 128.0, 128.0, 0.0];
         let hex = rgba2hex(rgba);

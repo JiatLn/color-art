@@ -25,6 +25,7 @@ impl Color {
     ///
     /// For example:
     /// - `#ff00ff` -> `#f0f`
+    /// - `#ffffff88` -> `#fff8`
     ///
     /// # Examples
     ///
