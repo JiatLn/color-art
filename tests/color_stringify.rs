@@ -5,6 +5,7 @@ fn test_color_stringify() {
     let color = color!(#ffff00);
 
     assert_eq!(color.hex(), "#ff0");
+    assert_eq!(color.hex_full(), "#ffff00");
     assert_eq!(color.rgb(), "rgb(255, 255, 0)");
     assert_eq!(color.rgba(), "rgba(255, 255, 0, 1)");
     assert_eq!(color.hsl(), "hsl(60, 100%, 50%)");

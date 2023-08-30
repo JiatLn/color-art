@@ -21,25 +21,42 @@ use crate::{
 impl Color {
     /// `hex` string of the color
     ///
+    /// The hex string is simplified to a short hex string if possible.
+    ///
+    /// For example:
+    /// - `#ff00ff` -> `#f0f`
+    ///
     /// # Examples
     ///
     /// ```rust
     /// use color_art::Color;
     ///
-    /// let color = Color::new(255, 255, 255, 1.0);
-    /// assert_eq!(color.hex(), "#fff");
+    /// let color = Color::new(255, 0, 255, 1.0);
+    /// assert_eq!(color.hex(), "#f0f");
     ///
     /// let color = Color::new(255, 255, 255, 0.5);
     /// assert_eq!(color.hex(), "#ffffff80");
     /// ```
     pub fn hex(self) -> String {
-        let hex = if self.alpha == 1.0 {
+        simplify_hex(self.hex_full())
+    }
+    /// `hex` string of the color with the full length.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use color_art::Color;
+    ///
+    /// let color = Color::new(255, 0, 255, 1.0);
+    /// assert_eq!(color.hex_full(), "#ff00ff");
+    /// ```
+    pub fn hex_full(self) -> String {
+        if self.alpha == 1.0 {
             rgb2hex(self.rgb)
         } else {
             let [r, g, b] = self.rgb;
             rgba2hex([r, g, b, self.alpha])
-        };
-        simplify_hex(hex)
+        }
     }
     /// `rgb` string of the color
     ///
@@ -306,6 +323,7 @@ mod tests {
     fn test_stringify_color() {
         let color = Color::new(255.0, 255.0, 255.0, 1.0);
         assert_eq!(color.hex(), "#fff");
+        assert_eq!(color.hex_full(), "#ffffff");
         assert_eq!(color.rgb(), "rgb(255, 255, 255)");
         assert_eq!(color.rgba(), "rgba(255, 255, 255, 1)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 100%)");
@@ -320,6 +338,7 @@ mod tests {
 
         let color = Color::new(0.0, 0.0, 0.0, 0.2);
         assert_eq!(color.hex(), "#0003");
+        assert_eq!(color.hex_full(), "#00000033");
         assert_eq!(color.rgb(), "rgb(0, 0, 0)");
         assert_eq!(color.rgba(), "rgba(0, 0, 0, 0.2)");
         assert_eq!(color.hsl(), "hsl(0, 0%, 0%)");
@@ -334,6 +353,7 @@ mod tests {
 
         let color = Color::new(0.0, 128.0, 128.0, 1.0);
         assert_eq!(color.hex(), "#008080");
+        assert_eq!(color.hex_full(), "#008080");
         assert_eq!(color.rgb(), "rgb(0, 128, 128)");
         assert_eq!(color.rgba(), "rgba(0, 128, 128, 1)");
         assert_eq!(color.hsl(), "hsl(180, 100%, 25%)");
@@ -348,6 +368,7 @@ mod tests {
 
         let color = Color::new(161, 110, 87, 1.0);
         assert_eq!(color.hex(), "#a16e57");
+        assert_eq!(color.hex_full(), "#a16e57");
         assert_eq!(color.rgb(), "rgb(161, 110, 87)");
         assert_eq!(color.rgba(), "rgba(161, 110, 87, 1)");
         assert_eq!(color.hsl(), "hsl(19, 30%, 49%)");
