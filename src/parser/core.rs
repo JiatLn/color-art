@@ -1,5 +1,4 @@
-use crate::ColorSpace;
-use anyhow::Result;
+use crate::{ColorSpace, Error};
 
 #[derive(Debug)]
 pub struct Token {
@@ -60,7 +59,7 @@ impl Parser {
         self
     }
 
-    pub fn validate(&mut self) -> Result<()> {
+    pub fn validate(&mut self) -> Result<(), Error> {
         let mut stack = Vec::new();
 
         while let Some(token) = self.tokens.get(self.current) {
@@ -72,7 +71,9 @@ impl Parser {
                     if let Some(_) = stack.pop() {
                         // do nothing
                     } else {
-                        anyhow::bail!("Unmatched right parenthesis");
+                        return Err(Error::ColorParserError(
+                            "Unmatched right parenthesis".to_string(),
+                        ));
                     }
                 }
                 TokenKind::Value => {
@@ -81,20 +82,20 @@ impl Parser {
                         if let Ok(value) = value.parse::<f64>() {
                             self.values.push(value / 100.0);
                         } else {
-                            anyhow::bail!("Invalid value");
+                            return Err(Error::ColorParserError("Invalid value".to_string()));
                         }
                     } else {
                         if let Ok(value) = token.value.parse::<f64>() {
                             self.values.push(value);
                         } else {
-                            anyhow::bail!("Invalid value");
+                            return Err(Error::ColorParserError("Invalid value".to_string()));
                         }
                     }
                 }
                 TokenKind::Identifier => {
                     let color_space = ColorSpace::from(&token.value);
                     if color_space == ColorSpace::Unknown {
-                        anyhow::bail!("Invalid input");
+                        return Err(Error::ColorParserError("Invalid input".to_string()));
                     } else {
                         self.color_space = color_space;
                     }
@@ -106,10 +107,14 @@ impl Parser {
         }
 
         match self.color_space {
-            ColorSpace::Unknown => anyhow::bail!("No color space found"),
+            ColorSpace::Unknown => {
+                return Err(Error::ColorParserError("No color space found".to_string()))
+            }
             _ => {
                 if self.values.len() != self.color_space.value_count() {
-                    anyhow::bail!("Invalid number of values");
+                    return Err(Error::ColorParserError(
+                        "Invalid number of values".to_string(),
+                    ));
                 }
                 self.color_space.valid(&self.values)?;
             }
@@ -118,9 +123,11 @@ impl Parser {
         if !self.values.is_empty() && stack.is_empty() {
             Ok(())
         } else if self.values.is_empty() {
-            anyhow::bail!("No values found");
+            Err(Error::ColorParserError("No values found".to_string()))
         } else {
-            anyhow::bail!("Unmatched left parenthesis");
+            Err(Error::ColorParserError(
+                "Unmatched left parenthesis".to_string(),
+            ))
         }
     }
 

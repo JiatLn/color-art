@@ -1,6 +1,4 @@
-use anyhow::{anyhow, Result};
-
-use crate::Color;
+use crate::{Color, Error};
 
 impl Color {
     /// Returns the numeric representation of the hexadecimal color.
@@ -13,11 +11,12 @@ impl Color {
     /// let color = Color::from_num(0xff3399).unwrap();
     /// assert_eq!(color.hex(), "#f39");
     /// ```
-    pub fn from_num(num: u32) -> Result<Self> {
+    pub fn from_num(num: u32) -> Result<Self, Error> {
         if num > 0xffffff {
-            return Err(anyhow!(
-                "Invalid color number, must be between 0 and 16777215"
-            ));
+            return Err(Error::InvalidParamsError(format!(
+                "Invalid color number, must be between 0 and 16777215, but got {}",
+                num
+            )));
         }
         let r = ((num >> 16) & 0xff) as f64;
         let g = ((num >> 8) & 0xff) as f64;

@@ -1,5 +1,4 @@
-use crate::Color;
-use anyhow::{bail, Ok, Result};
+use crate::{Color, Error};
 
 impl Color {
     /// Mix two colors with a weight.
@@ -20,9 +19,11 @@ impl Color {
     /// let color3 = Color::mix(&color1, &color2, 0.5).unwrap();
     /// assert_eq!(color3.hex(), "#594d85");
     /// ```
-    pub fn mix(color1: &Color, color2: &Color, weight: f64) -> Result<Self> {
+    pub fn mix(color1: &Color, color2: &Color, weight: f64) -> Result<Self, Error> {
         if !(0.0..=1.0).contains(&weight) {
-            bail!("weight must be between 0.0 and 1.0");
+            return Err(Error::InvalidParamsError(
+                "weight must be between 0.0 and 1.0".to_string(),
+            ));
         }
         let (w1, w2) = (weight, 1.0 - weight);
         let r = color1.rgb[0] * w1 + color2.rgb[0] * w2;

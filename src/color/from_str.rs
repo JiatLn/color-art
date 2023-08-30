@@ -1,9 +1,8 @@
-use crate::{conversion, data::hex_of_name, parser, Color, ColorSpace};
-use anyhow::Result;
+use crate::{conversion, data::hex_of_name, parser, Color, ColorSpace, Error};
 use std::str::FromStr;
 
 impl FromStr for Color {
-    type Err = anyhow::Error;
+    type Err = Error;
     /// Creates a new [`Color`] from a string.
     ///
     /// # Examples
@@ -40,7 +39,7 @@ impl FromStr for Color {
     /// let color = Color::from_str(s).unwrap();
     /// assert_eq!(color, Color::new(140, 194, 105, 1.0));
     /// ```
-    fn from_str(s: &str) -> Result<Self> {
+    fn from_str(s: &str) -> Result<Self, Error> {
         let input = s.trim().to_lowercase();
 
         let (color_space, color_vec) = if input.starts_with('#') {
@@ -95,6 +94,8 @@ fn convert_color_vec_by_color_space(color_vec: &[f64], color_space: &ColorSpace)
 
 #[cfg(test)]
 mod tests {
+    use crate::Error;
+
     use super::*;
 
     #[test]
@@ -205,7 +206,10 @@ mod tests {
         let s = "#gggggg";
         let color = Color::from_str(s);
         match color {
-            Err(e) => assert_eq!(e.to_string(), "Invalid hex string: #gggggg"),
+            Err(err) => assert_eq!(
+                err,
+                Error::ColorParserError("Invalid hex string of '#gggggg'".to_string())
+            ),
             _ => panic!("Should have failed"),
         }
 

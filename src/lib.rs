@@ -16,6 +16,7 @@ mod color_ops;
 mod color_space;
 mod conversion;
 mod data;
+mod error;
 mod parser;
 mod utils;
 
@@ -27,3 +28,4 @@ pub use color_calc::distance::*;
 pub use color_space::ColorSpace;
 use data::chinese_color::CHINESE_COLOR_HASHMAP as CHINESE_COLOR;
 use data::w3cx11::W3CX11_HASHMAP as W3CX11;
+pub use error::Error;
