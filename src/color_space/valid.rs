@@ -107,7 +107,7 @@ impl ColorSpace {
                     }
                 }
             }
-            ColorSpace::HEX => todo!(
+            ColorSpace::HEX | ColorSpace::HEXA => todo!(
                 "HEX color space not implemented yet, please use `ColorSpace::valid_hex` instead"
             ),
             ColorSpace::HWB => {

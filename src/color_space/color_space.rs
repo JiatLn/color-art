@@ -25,10 +25,10 @@ pub enum ColorSpace {
     ///
     /// HSV stands for hue, saturation, and value.
     HSV,
-    /// Hex color space.
-    ///
-    /// Hex stands for hexadecimal.
+    /// HEX stands for hexadecimal of `RGB`.
     HEX,
+    /// HEXA stands for hexadecimal of `RGBA`.
+    HEXA,
     /// HWB color space.
     ///
     /// HWB stands for hue, whiteness, and blackness.
@@ -82,6 +82,7 @@ where
             "hsla" => ColorSpace::HSLA,
             "hsv" => ColorSpace::HSV,
             "hex" => ColorSpace::HEX,
+            "hexa" => ColorSpace::HEXA,
             "hwb" => ColorSpace::HWB,
             "cmyk" => ColorSpace::CMYK,
             "xyz" => ColorSpace::XYZ,
@@ -104,6 +105,7 @@ impl ColorSpace {
             ColorSpace::HSLA => 4,
             ColorSpace::HSV => 3,
             ColorSpace::HEX => 3,
+            ColorSpace::HEXA => 4,
             ColorSpace::HWB => 3,
             ColorSpace::CMYK => 4,
             ColorSpace::XYZ => 3,
