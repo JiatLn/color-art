@@ -71,7 +71,9 @@ impl FromStr for Color {
 
 fn convert_color_vec_by_color_space(color_vec: &[f64], color_space: &ColorSpace) -> Vec<f64> {
     match color_space {
-        ColorSpace::RGB | ColorSpace::RGBA | ColorSpace::HEX => color_vec.to_vec(),
+        ColorSpace::RGB | ColorSpace::RGBA | ColorSpace::HEX | ColorSpace::HEXA => {
+            color_vec.to_vec()
+        }
         ColorSpace::HSI => conversion::hsi::hsi2rgb(color_vec),
         ColorSpace::HSL => conversion::hsl::hsl2rgb(color_vec),
         ColorSpace::HSV => conversion::hsv::hsv2rgb(color_vec),

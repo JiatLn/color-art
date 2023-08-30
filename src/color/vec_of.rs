@@ -3,7 +3,7 @@ use crate::{conversion, Color, ColorSpace};
 impl Color {
     /// Get the color space vector of the color instance.
     ///
-    /// ⚗️ **Experimental**: This method is experimental and may change or be removed in the future.
+    /// ⚗️ **Experimental**: This method is experimental and may change frequently in the future.
     ///
     /// # Examples
     ///
@@ -17,11 +17,12 @@ impl Color {
     /// let vec = color.vec_of(ColorSpace::HSV);
     /// assert_eq!(vec, vec![330.0, 0.8, 1.0]);
     /// ```
-    pub fn vec_of(&self, color_space: ColorSpace) -> Vec<f64> {
+    pub fn vec_of(&self, color_space: impl Into<ColorSpace>) -> Vec<f64> {
         let color = self.rgb.to_vec();
+        let color_space = color_space.into();
         match color_space {
-            ColorSpace::RGB => color,
-            ColorSpace::RGBA => {
+            ColorSpace::RGB | ColorSpace::HEX => color,
+            ColorSpace::RGBA | ColorSpace::HEXA => {
                 let [r, g, b] = self.rgb;
                 vec![r, g, b, self.alpha]
             }
@@ -40,7 +41,7 @@ impl Color {
             ColorSpace::YUV => conversion::yuv::rgb2yuv(&color),
             ColorSpace::YCbCr => conversion::ycbcr::rgb2ycbcr(&color),
             ColorSpace::Lab => conversion::lab::rgb2lab(&color),
-            ColorSpace::HEX | ColorSpace::Unknown => todo!("not implemented yet"),
+            ColorSpace::Unknown => todo!("Unknown color space not yet implemented `vec_of`"),
         }
     }
 }
