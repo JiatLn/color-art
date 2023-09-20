@@ -25,6 +25,10 @@ fn test_color_darken() {
     let color = color!(rgb(0, 127, 255));
     let color = color.lighten(0.1);
     assert_eq!(color.rgb(), "rgb(51, 153, 255)");
+
+    let color = color!(rgb(41, 121, 255));
+    let color = color.darken(0.1);
+    assert_eq!(color.rgb(), "rgb(0, 92, 245)");
 }
 
 #[test]

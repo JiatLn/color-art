@@ -52,7 +52,20 @@ pub fn rgb2hsl(color: &[f64]) -> Vec<f64> {
         }
 
         s = delta / (1.0 - (2.0 * l - 1.0).abs());
+        s = s.max(0.0).min(1.0);
     }
 
     vec![h, s, l]
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_rgb2hsl() {
+        let rgb = [41.0, 121.0, 255.0];
+        let hsl = rgb2hsl(&rgb);
+        assert_eq!(hsl[1], 1.0);
+    }
 }
