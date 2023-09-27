@@ -1,4 +1,4 @@
-pub mod color_space;
+pub mod space;
 pub(crate) mod valid;
 
-pub use color_space::ColorSpace;
+pub use space::ColorSpace;

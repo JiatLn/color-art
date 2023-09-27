@@ -155,7 +155,7 @@ pub(crate) fn lab2xyz(lab: &[f64]) -> Vec<f64> {
         (116.0 * f2 - 16.0) / K
     };
 
-    vec![x, y, z]
+    [x, y, z]
         .iter()
         .zip(D50.iter())
         .map(|(v1, v2)| v1 * v2)

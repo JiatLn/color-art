@@ -33,10 +33,11 @@ pub fn hwb2rgb(color: &[f64]) -> Vec<f64> {
         return vec![gray, gray, gray];
     }
     let mut rgb_vec = hsl::hsl2rgb(&[hue, 1.0, 0.5]);
-    for i in 0..3 {
-        rgb_vec[i] *= 1.0 - whiteness - blackness;
-        rgb_vec[i] += whiteness * 255.0;
-        rgb_vec[i] = round(rgb_vec[i], 0);
+
+    for channel in rgb_vec.iter_mut().take(3) {
+        *channel *= 1.0 - whiteness - blackness;
+        *channel += whiteness * 255.0;
+        *channel = round(*channel, 0);
     }
     rgb_vec
 }

@@ -106,7 +106,7 @@ pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> C
     let backdrop_vec = backdrop_color.vec_of(ColorSpace::RGB);
     let source_vec = source_color.vec_of(ColorSpace::RGB);
 
-    let zip_vec: _ = backdrop_vec
+    let zip_vec = backdrop_vec
         .iter()
         .zip(source_vec.iter())
         .map(|(a, b)| (a / 255.0, b / 255.0));

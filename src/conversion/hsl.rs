@@ -11,12 +11,12 @@ pub fn hsl2rgb(color: &[f64]) -> Vec<f64> {
     let m = l - c / 2.0;
 
     let rgb = match h {
-        h if h >= 0.0 && h < 60.0 => vec![c, x, 0.0],
-        h if h >= 60.0 && h < 120.0 => vec![x, c, 0.0],
-        h if h >= 120.0 && h < 180.0 => vec![0.0, c, x],
-        h if h >= 180.0 && h < 240.0 => vec![0.0, x, c],
-        h if h >= 240.0 && h < 300.0 => vec![x, 0.0, c],
-        h if h >= 300.0 && h < 360.0 => vec![c, 0.0, x],
+        h if (0.0..60.0).contains(&h) => vec![c, x, 0.0],
+        h if (60.0..120.0).contains(&h) => vec![x, c, 0.0],
+        h if (120.0..180.0).contains(&h) => vec![0.0, c, x],
+        h if (180.0..240.0).contains(&h) => vec![0.0, x, c],
+        h if (240.0..300.0).contains(&h) => vec![x, 0.0, c],
+        h if (300.0..360.0).contains(&h) => vec![c, 0.0, x],
         _ => panic!(),
     };
 
@@ -48,7 +48,7 @@ pub fn rgb2hsl(color: &[f64]) -> Vec<f64> {
         };
 
         if h < 0.0 {
-            h = h + 360.0;
+            h += 360.0;
         }
 
         s = delta / (1.0 - (2.0 * l - 1.0).abs());

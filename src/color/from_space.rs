@@ -24,7 +24,7 @@ impl Color {
         let r = r.into();
         let g = g.into();
         let b = b.into();
-        ColorSpace::RGB.valid(&vec![r, g, b])?;
+        ColorSpace::RGB.valid(&[r, g, b])?;
         Ok(Color::new(r, g, b, 1.0))
     }
     /// Create a color from RGBA values.
@@ -50,7 +50,7 @@ impl Color {
         let r = r.into();
         let g = g.into();
         let b = b.into();
-        ColorSpace::RGBA.valid(&vec![r, g, b, a])?;
+        ColorSpace::RGBA.valid(&[r, g, b, a])?;
         Ok(Color::new(r, g, b, a))
     }
     /// Create a color from HSL values.

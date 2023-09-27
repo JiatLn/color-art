@@ -1,9 +1,10 @@
 /// Color space enum.
-#[derive(Clone, Copy, PartialEq, Debug)]
+#[derive(Clone, Copy, PartialEq, Debug, Default)]
 pub enum ColorSpace {
     /// RGB color space.
     ///
     /// RGB stands for red, green, and blue.
+    #[default]
     RGB,
     /// RGBA color space.
     ///
@@ -61,12 +62,6 @@ pub enum ColorSpace {
     ///
     /// To be used when the color space is not known.
     Unknown,
-}
-
-impl ColorSpace {
-    pub fn default() -> Self {
-        ColorSpace::RGB
-    }
 }
 
 impl<T> From<T> for ColorSpace

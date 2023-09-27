@@ -31,7 +31,7 @@ pub(crate) fn hsi2rgb(color: &[f64]) -> Vec<f64> {
     let h = if h < 0.0 { 360.0 + h } else { h };
 
     let rgb = match h {
-        h if h >= 0.0 && h < 120.0 => {
+        h if (0.0..120.0).contains(&h) => {
             let h = h.to_radians();
 
             let b = i * (1.0 - s);
@@ -40,7 +40,7 @@ pub(crate) fn hsi2rgb(color: &[f64]) -> Vec<f64> {
 
             vec![r, g, b]
         }
-        h if h >= 120.0 && h < 240.0 => {
+        h if (120.0..240.0).contains(&h) => {
             let h = (h - 120.0).to_radians();
 
             let r = i * (1.0 - s);
@@ -49,7 +49,7 @@ pub(crate) fn hsi2rgb(color: &[f64]) -> Vec<f64> {
 
             vec![r, g, b]
         }
-        h if h >= 240.0 && h < 360.0 => {
+        h if (240.0..360.0).contains(&h) => {
             let h = (h - 240.0).to_radians();
 
             let g = i * (1.0 - s);

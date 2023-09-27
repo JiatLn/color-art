@@ -46,11 +46,11 @@ impl ColorSpace {
 
 fn valid_yiq(vec: &[f64]) -> Option<String> {
     if let [y, i, q] = vec[..] {
-        if y < 0.0 || y > 1.0 {
+        if !(0.0..=1.0).contains(&y) {
             Some(format!("Y must be between 0.0 and 1.0, got {}", y))
-        } else if i < -0.5957 || i > 0.5957 {
+        } else if !(-0.5957..=0.5957).contains(&i) {
             Some(format!("I must be between -0.5957 and 0.5957, got {}", i))
-        } else if q < -0.5226 || q > 0.5226 {
+        } else if !(-0.5226..=0.5226).contains(&q) {
             Some(format!("Q must be between -0.5226 and 0.5226, got {}", q))
         } else {
             None
@@ -62,11 +62,11 @@ fn valid_yiq(vec: &[f64]) -> Option<String> {
 
 fn valid_xyz(vec: &[f64]) -> Option<String> {
     if let [x, y, z] = vec[..] {
-        if x < 0.0 || x > 0.950456 {
+        if !(0.0..=0.950456).contains(&x) {
             Some(format!("X must be between 0.0 and 0.950456, got {}", x))
-        } else if y < 0.0 || y > 1.0 {
+        } else if !(0.0..=1.0).contains(&y) {
             Some(format!("Y must be between 0.0 and 1.0, got {}", y))
-        } else if z < 0.0 || z > 1.088754 {
+        } else if !(0.0..=1.088754).contains(&z) {
             Some(format!("Z must be between 0.0 and 1.088754, got {}", z))
         } else {
             None
@@ -78,19 +78,19 @@ fn valid_xyz(vec: &[f64]) -> Option<String> {
 
 fn valid_cmyk(vec: &[f64]) -> Option<String> {
     if let [c, m, y, k] = vec[..] {
-        if c < 0.0 || c > 1.0 {
+        if !(0.0..=1.0).contains(&c) {
             Some(format!("cyan color must be between 0.0 and 1.0, got {}", c))
-        } else if m < 0.0 || m > 1.0 {
+        } else if !(0.0..=1.0).contains(&m) {
             Some(format!(
                 "magenta color must be between 0.0 and 1.0, got {}",
                 m
             ))
-        } else if y < 0.0 || y > 1.0 {
+        } else if !(0.0..=1.0).contains(&y) {
             Some(format!(
                 "yellow color must be between 0.0 and 1.0, got {}",
                 y
             ))
-        } else if k < 0.0 || k > 1.0 {
+        } else if !(0.0..=1.0).contains(&k) {
             Some(format!(
                 "black color must be between 0.0 and 1.0, got {}",
                 k
@@ -105,11 +105,11 @@ fn valid_cmyk(vec: &[f64]) -> Option<String> {
 
 fn valid_hwb(vec: &[f64]) -> Option<String> {
     if let [h, w, b] = vec[..] {
-        if h < 0.0 || h > 360.0 {
+        if !(0.0..=360.0).contains(&h) {
             Some(format!("Hue must be between 0.0 and 360.0, got {}", h))
-        } else if w < 0.0 || w > 1.0 {
+        } else if !(0.0..=1.0).contains(&w) {
             Some(format!("Whiteness must be between 0.0 and 1.0, got {}", w))
-        } else if b < 0.0 || b > 1.0 {
+        } else if !(0.0..=1.0).contains(&b) {
             Some(format!("Blackness must be between 0.0 and 1.0, got {}", b))
         } else {
             None
@@ -121,11 +121,11 @@ fn valid_hwb(vec: &[f64]) -> Option<String> {
 
 fn valid_rgb(vec: &[f64]) -> Option<String> {
     if let [r, g, b] = vec[..] {
-        if r < 0.0 || r > 255.0 {
+        if !(0.0..=255.0).contains(&r) {
             Some(format!("Red must be between 0 and 255, got {}", r))
-        } else if g < 0.0 || g > 255.0 {
+        } else if !(0.0..=255.0).contains(&g) {
             Some(format!("Green must be between 0 and 255, got {}", g))
-        } else if b < 0.0 || b > 255.0 {
+        } else if !(0.0..=255.0).contains(&b) {
             Some(format!("Blue must be between 0 and 255, got {}", b))
         } else {
             None
@@ -137,13 +137,13 @@ fn valid_rgb(vec: &[f64]) -> Option<String> {
 
 fn valid_rgba(vec: &[f64]) -> Option<String> {
     if let [r, g, b, a] = vec[..] {
-        if r < 0.0 || r > 255.0 {
+        if !(0.0..=255.0).contains(&r) {
             Some(format!("Red must be between 0 and 255, got {}", r))
-        } else if g < 0.0 || g > 255.0 {
+        } else if !(0.0..=255.0).contains(&g) {
             Some(format!("Green must be between 0 and 255, got {}", g))
-        } else if b < 0.0 || b > 255.0 {
+        } else if !(0.0..=255.0).contains(&b) {
             Some(format!("Blue must be between 0 and 255, got {}", b))
-        } else if a < 0.0 || a > 1.0 {
+        } else if !(0.0..=1.0).contains(&a) {
             Some(format!("Alpha must be between 0.0 and 1.0, got {}", a))
         } else {
             None
@@ -155,11 +155,11 @@ fn valid_rgba(vec: &[f64]) -> Option<String> {
 
 fn valid_hsi(vec: &[f64]) -> Option<String> {
     if let [h, s, i] = vec[..] {
-        if h < 0.0 || h > 360.0 {
+        if !(0.0..=360.0).contains(&h) {
             Some(format!("Hue must be between 0.0 and 360.0, got {}", h))
-        } else if s < 0.0 || s > 1.0 {
+        } else if !(0.0..=1.0).contains(&s) {
             Some(format!("Saturation must be between 0.0 and 1.0, got {}", s))
-        } else if i < 0.0 || i > 1.0 {
+        } else if !(0.0..=1.0).contains(&i) {
             Some(format!("Intensity must be between 0.0 and 1.0, got {}", i))
         } else {
             None
@@ -171,11 +171,11 @@ fn valid_hsi(vec: &[f64]) -> Option<String> {
 
 fn valid_hsl(vec: &[f64]) -> Option<String> {
     if let [h, s, l] = vec[..] {
-        if h < 0.0 || h > 360.0 {
+        if !(0.0..=360.0).contains(&h) {
             Some(format!("Hue must be between 0.0 and 360.0, got {}", h))
-        } else if s < 0.0 || s > 1.0 {
+        } else if !(0.0..=1.0).contains(&s) {
             Some(format!("Saturation must be between 0.0 and 1.0, got {}", s))
-        } else if l < 0.0 || l > 1.0 {
+        } else if !(0.0..=1.0).contains(&l) {
             Some(format!("Lightness must be between 0.0 and 1.0, got {}", l))
         } else {
             None
@@ -187,13 +187,13 @@ fn valid_hsl(vec: &[f64]) -> Option<String> {
 
 fn valid_hsla(vec: &[f64]) -> Option<String> {
     if let [h, s, l, a] = vec[..] {
-        if h < 0.0 || h > 360.0 {
+        if !(0.0..=360.0).contains(&h) {
             Some(format!("Hue must be between 0.0 and 360.0, got {}", h))
-        } else if s < 0.0 || s > 1.0 {
+        } else if !(0.0..=1.0).contains(&s) {
             Some(format!("Saturation must be between 0.0 and 1.0, got {}", s))
-        } else if l < 0.0 || l > 1.0 {
+        } else if !(0.0..=1.0).contains(&l) {
             Some(format!("Lightness must be between 0.0 and 1.0, got {}", l))
-        } else if a < 0.0 || a > 1.0 {
+        } else if !(0.0..=1.0).contains(&a) {
             Some(format!("Alpha must be between 0.0 and 1.0, got {}", a))
         } else {
             None
@@ -205,11 +205,11 @@ fn valid_hsla(vec: &[f64]) -> Option<String> {
 
 fn valid_hsv(vec: &[f64]) -> Option<String> {
     if let [h, s, v] = vec[..] {
-        if h < 0.0 || h > 360.0 {
+        if !(0.0..=360.0).contains(&h) {
             Some(format!("Hue must be between 0.0 and 360.0, got {}", h))
-        } else if s < 0.0 || s > 1.0 {
+        } else if !(0.0..=1.0).contains(&s) {
             Some(format!("Saturation must be between 0.0 and 1.0, got {}", s))
-        } else if v < 0.0 || v > 1.0 {
+        } else if !(0.0..=1.0).contains(&v) {
             Some(format!("Value must be between 0.0 and 1.0, got {}", v))
         } else {
             None
@@ -221,11 +221,11 @@ fn valid_hsv(vec: &[f64]) -> Option<String> {
 
 fn valid_lab(vec: &[f64]) -> Option<String> {
     if let [l, a, b] = vec[..] {
-        if l < 0.0 || l > 100.0 {
+        if !(0.0..=100.0).contains(&l) {
             Some(format!("L must be between 0.0 and 100.0, got {}", l))
-        } else if a < -128.0 || a > 127.0 {
+        } else if !(-128.0..=127.0).contains(&a) {
             Some(format!("A must be between -128.0 and 127.0, got {}", a))
-        } else if b < -128.0 || b > 127.0 {
+        } else if !(-128.0..=127.0).contains(&b) {
             Some(format!("B must be between -128.0 and 127.0, got {}", b))
         } else {
             None
@@ -237,11 +237,11 @@ fn valid_lab(vec: &[f64]) -> Option<String> {
 
 fn valid_yuv(vec: &[f64]) -> Option<String> {
     if let [y, u, v] = vec[..] {
-        if y < 0.0 || y > 1.0 {
+        if !(0.0..=1.0).contains(&y) {
             Some(format!("Y must be between 0.0 and 1.0, got {}", y))
-        } else if u < -0.436 || u > 0.436 {
+        } else if !(-0.436..=0.436).contains(&u) {
             Some(format!("U must be between -0.436 and 0.436, got {}", u))
-        } else if v < -0.615 || v > 0.615 {
+        } else if !(-0.615..=0.615).contains(&v) {
             Some(format!("V must be between -0.615 and 0.615, got {}", v))
         } else {
             None
@@ -253,11 +253,11 @@ fn valid_yuv(vec: &[f64]) -> Option<String> {
 
 fn valid_ycbcr(vec: &[f64]) -> Option<String> {
     if let [y, cb, cr] = vec[..] {
-        if y < 0.0 || y > 255.0 {
+        if !(0.0..=255.0).contains(&y) {
             Some(format!("Y must be between 0.0 and 255.0, got {}", y))
-        } else if cb < 0.0 || cb > 255.0 {
+        } else if !(0.0..=255.0).contains(&cb) {
             Some(format!("Cb must be between 0.0 and 255.0, got {}", cb))
-        } else if cr < 0.0 || cr > 255.0 {
+        } else if !(0.0..=255.0).contains(&cr) {
             Some(format!("Cr must be between 0.0 and 255.0, got {}", cr))
         } else {
             None

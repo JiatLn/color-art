@@ -14,7 +14,7 @@ pub enum TokenKind {
     RightParen,
     Comma,
     Whitespace,
-    EOF,
+    Eof,
 }
 
 #[derive(Debug)]
@@ -52,7 +52,7 @@ impl Parser {
         }
 
         self.tokens.push(Token {
-            kind: TokenKind::EOF,
+            kind: TokenKind::Eof,
             value: String::new(),
         });
 
@@ -68,7 +68,7 @@ impl Parser {
                     stack.push(token);
                 }
                 TokenKind::RightParen => {
-                    if let Some(_) = stack.pop() {
+                    if stack.pop().is_some() {
                         // do nothing
                     } else {
                         return Err(Error::ColorParserError(
@@ -78,18 +78,16 @@ impl Parser {
                 }
                 TokenKind::Value => {
                     if token.value.contains('%') {
-                        let value = token.value.replace("%", "");
+                        let value = token.value.replace('%', "");
                         if let Ok(value) = value.parse::<f64>() {
                             self.values.push(value / 100.0);
                         } else {
                             return Err(Error::ColorParserError("Invalid value".to_string()));
                         }
+                    } else if let Ok(value) = token.value.parse::<f64>() {
+                        self.values.push(value);
                     } else {
-                        if let Ok(value) = token.value.parse::<f64>() {
-                            self.values.push(value);
-                        } else {
-                            return Err(Error::ColorParserError("Invalid value".to_string()));
-                        }
+                        return Err(Error::ColorParserError("Invalid value".to_string()));
                     }
                 }
                 TokenKind::Identifier => {

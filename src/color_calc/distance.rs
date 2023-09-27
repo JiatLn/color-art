@@ -14,8 +14,8 @@ use crate::{Color, ColorSpace};
 /// assert_eq!(d, 60.01007164576413);
 /// ```
 pub fn distance_with(color1: &Color, color2: &Color, color_space: ColorSpace) -> f64 {
-    let vec1 = color1.vec_of(color_space.clone());
-    let vec2 = color2.vec_of(color_space.clone());
+    let vec1 = color1.vec_of(color_space);
+    let vec2 = color2.vec_of(color_space);
 
     let mut d = 0.0;
 
