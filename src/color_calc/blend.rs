@@ -1,8 +1,12 @@
 use crate::{utils::blend_fn::*, Color, ColorSpace};
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 /// ### blend mode enum
 ///
 /// The blend mode defines the formula that must be used to mix the colors with the backdrop.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum BlendMode {
     /// ### normal blend mode
     ///
