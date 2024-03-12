@@ -8,7 +8,11 @@ pub mod vec_of;
 
 use std::fmt::Display;
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 /// Color is a struct that represents a color.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(PartialEq, Debug, Clone, Copy)]
 pub struct Color {
     pub(crate) rgb: [f64; 3],

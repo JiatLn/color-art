@@ -1,12 +1,17 @@
 use crate::{ColorSpace, Error};
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Token {
     pub kind: TokenKind,
     pub value: String,
 }
 
 #[derive(Debug, PartialEq)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum TokenKind {
     Value,
     Identifier,
@@ -18,6 +23,7 @@ pub enum TokenKind {
 }
 
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Parser {
     pub tokens: Vec<Token>,
     pub current: usize,
