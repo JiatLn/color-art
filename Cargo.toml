@@ -1,6 +1,6 @@
 [package]
 name = "color-art"
-version = "0.3.7"
+version = "0.3.8"
 edition = "2021"
 description = "A rust crate for working with colors and color spaces."
 license = "MIT"
@@ -21,7 +21,7 @@ serde = ["dep:serde"]
 rand = "0.8"
 lazy_static = "1.4"
 thiserror = "1.0.47"
-serde = { version = "1.0.193", features = ["derive"] , optional = true}
+serde = { version = "1.0.193", features = ["derive"], optional = true }
 
 [dev-dependencies]
 serde_json = "1.0.108"
