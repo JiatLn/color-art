@@ -107,13 +107,22 @@ pub enum BlendMode {
 /// assert_eq!(blended_color.hex(), "#8ef6fa");
 /// ```
 pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> Color {
-    let backdrop_vec = backdrop_color.vec_of(ColorSpace::RGB);
-    let source_vec = source_color.vec_of(ColorSpace::RGB);
+    let backdrop_vec = backdrop_color.vec_of(ColorSpace::RGBA);
+    let source_vec = source_color.vec_of(ColorSpace::RGBA);
 
-    let zip_vec = backdrop_vec
-        .iter()
-        .zip(source_vec.iter())
-        .map(|(a, b)| (a / 255.0, b / 255.0));
+    let zip_vec =
+        backdrop_vec
+            .iter()
+            .zip(source_vec.iter())
+            .enumerate()
+            .map(|(index, (&a, &b))| {
+                // aplha
+                if index == 3 {
+                    (a, b)
+                } else {
+                    (a / 255.0, b / 255.0)
+                }
+            });
 
     let v: Vec<_> = match mode {
         BlendMode::Normal => zip_vec.map(|(a, b)| normal(a, b)).collect(),
@@ -133,8 +142,9 @@ pub fn blend(backdrop_color: &Color, source_color: &Color, mode: BlendMode) -> C
     let r = v[0] * 255.0;
     let g = v[1] * 255.0;
     let b = v[2] * 255.0;
+    let a = v[3];
 
-    Color::new(r, g, b, 1.0)
+    Color::new(r, g, b, a)
 }
 
 #[cfg(test)]
