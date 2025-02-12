@@ -49,7 +49,7 @@ impl Color {
     /// ```
     pub fn tint(&self, amount: f64) -> Self {
         let white = Color::new(255.0, 255.0, 255.0, 1.0);
-        self.mix_with(&white, 1.0 - amount)
+        self.mix_with(&white, amount)
     }
     /// Mix color with black in variable proportion.
     ///
@@ -68,7 +68,7 @@ impl Color {
     /// ```
     pub fn shade(&self, amount: f64) -> Self {
         let black = Color::default();
-        self.mix_with(&black, 1.0 - amount)
+        self.mix_with(&black, amount)
     }
 }
 
@@ -98,6 +98,18 @@ mod tests {
         let color = color!(rgb(255, 0, 0));
         let color = color.tint(0.5);
         assert_eq!(color.hex(), "#ff8080");
+
+        let color = color!(rgb(255, 0, 0));
+        let color = color.tint(0.3);
+        assert_eq!(color.hex(), "#ff4d4d");
+
+        let color = color!(rgb(255, 0, 0));
+        let color = color.tint(0.0);
+        assert_eq!(color.hex(), "#f00");
+
+        let color = color!(rgb(255, 0, 0));
+        let color = color.tint(1.0);
+        assert_eq!(color.hex(), "#fff");
     }
 
     #[test]
@@ -109,5 +121,17 @@ mod tests {
         let color = color!(rgb(255, 0, 0));
         let color = color.shade(0.5);
         assert_eq!(color.hex(), "#800000");
+
+        let color = color!(rgb(255, 0, 0));
+        let color = color.shade(0.3);
+        assert_eq!(color.hex(), "#b30000");
+
+        let color = color!(rgb(255, 0, 0));
+        let color = color.shade(0.0);
+        assert_eq!(color.hex(), "#f00");
+
+        let color = color!(rgb(255, 0, 0));
+        let color = color.shade(1.0);
+        assert_eq!(color.hex(), "#000");
     }
 }
